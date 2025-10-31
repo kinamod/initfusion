@@ -1,9 +1,19 @@
 .header {
   width: 100%;
-  background-color: var(--background);
-  color: var(--foreground);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
   transition: background-color 0.3s, color 0.3s;
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #54b6ae 0%, #3b98da 25%, #ed1443 50%, #f25c19 100%);
 }
 
 .header-top {
