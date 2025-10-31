@@ -48,20 +48,11 @@ export function FeatureGrid() {
         <div className={styles.grid}>
           {/* Featured large card */}
           <article className={`${styles.card} ${styles.cardLarge}`}>
-            <div className={styles.cardImage}>
-              <img
-                loading="lazy"
-                width="432"
-                height="384"
-                alt={cards[0].alt}
-                src={cards[0].image}
-              />
-            </div>
-            <div className={styles.cardOverlay}>
-              <a href={cards[0].link} title={cards[0].linkText}>
-                {cards[0].linkText}
-              </a>
-            </div>
+            <img
+              loading="lazy"
+              alt={cards[0].alt}
+              src={cards[0].image}
+            />
           </article>
 
           {/* Second card */}
