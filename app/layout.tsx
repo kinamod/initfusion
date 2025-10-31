@@ -4,7 +4,7 @@ import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import { Theme } from "@radix-ui/themes";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Header } from "@/components/Header";
+import { RootContent } from "@/components/RootContent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +33,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <Theme>
-            <Header />
-            {children}
+            <RootContent>{children}</RootContent>
           </Theme>
         </ThemeProvider>
       </body>
