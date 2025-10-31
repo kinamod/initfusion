@@ -186,13 +186,13 @@
 }
 
 .mainSection .container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   padding: 0 20px 0.5px 20px;
-  justify-content: center;
   align-items: flex-start;
   gap: 31.523px;
   align-self: stretch;
-  position: relative;
+  max-width: none;
 }
 
 .navLeft {
@@ -200,8 +200,7 @@
   padding: 18.5px 0 37.5px 0;
   align-items: flex-start;
   gap: 40px;
-  position: absolute;
-  left: 20px;
+  justify-self: start;
 }
 
 .navRight {
@@ -210,8 +209,7 @@
   justify-content: flex-end;
   align-items: flex-start;
   gap: 40px;
-  position: absolute;
-  right: 20px;
+  justify-self: end;
 }
 
 .navItem {
@@ -227,13 +225,14 @@
 .logoWrapper {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   background: #FFF;
+  justify-self: center;
 }
 
 .searchWrapper {
-  display: flex;
-  align-items: center;
+  display: none;
 }
 
 .searchIcon {
