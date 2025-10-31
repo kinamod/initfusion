@@ -24,6 +24,12 @@ export default function Home() {
 
       <FeatureGrid />
 
+      <Section py="9" style={{ background: 'linear-gradient(115.12deg, rgb(19, 123, 183), rgb(0, 68, 138))' }}>
+        <Container>
+          <FeatureGridAlt />
+        </Container>
+      </Section>
+
       <Section py="9">
         <Container>
           <Flex direction="column" gap="6">
