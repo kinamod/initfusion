@@ -1,10 +1,12 @@
 import { Flex, Container, Heading, Text, Section } from "@radix-ui/themes";
+import { FigmaHeader } from '@/components/FigmaHeader';
 
 export default function Home() {
   return (
     <main>
       <Section py="9">
         <Container>
+          <FigmaHeader />
           <Flex direction="column" gap="6">
             <div>
               <Heading as="h1" size="8" mb="2">
