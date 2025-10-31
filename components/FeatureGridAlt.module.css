@@ -1,0 +1,173 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.cardWrapper {
+  grid-area: 1 / 1 / 3 / 3;
+  overflow: hidden;
+}
+
+.cardWrapperSmall {
+  grid-area: auto;
+  overflow: hidden;
+}
+
+.cardContainer {
+  border-radius: 8px;
+  contain: paint;
+  overflow: hidden;
+  position: relative;
+}
+
+.cardInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.cardWrapper .cardInner {
+  height: 550px;
+  min-height: 265px;
+}
+
+.cardWrapperSmall .cardInner {
+  height: 265px;
+}
+
+.imageWrapper {
+  position: relative;
+  overflow: clip;
+}
+
+.cardImageContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.imageWrapper img {
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease-in-out;
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+}
+
+.cardWrapper .imageWrapper img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+.cardWrapperSmall .cardImageContainer {
+  height: 265px;
+  width: 100%;
+  position: relative;
+}
+
+.cardWrapperSmall .cardImageContainer img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.linkWrapper {
+  position: relative;
+}
+
+.linkWrapper a {
+  position: absolute;
+  inset: 0;
+  text-indent: -9999px;
+  z-index: 2;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+}
+
+.cardTitleWrapper {
+  display: none;
+  font-weight: 700;
+  margin-top: 20px;
+  max-width: 603px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.cardTitle {
+  font-weight: 700;
+  margin: 0;
+}
+
+.cardDescWrapper {
+  display: none;
+  font-weight: 700;
+  margin-top: 20px;
+  max-width: 603px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.cardDesc {
+  font-weight: 700;
+  margin: 0;
+  display: inline;
+}
+
+.heading {
+  font-family: Ubuntu, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: 27px;
+  max-width: 275px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cardWrapper {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cardWrapper {
+    grid-area: auto;
+  }
+
+  .cardWrapper .cardInner,
+  .cardWrapperSmall .cardInner {
+    height: 250px;
+  }
+
+  .heading {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .cardInner {
+    padding: 20px;
+  }
+}
