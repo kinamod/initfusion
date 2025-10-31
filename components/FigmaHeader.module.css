@@ -187,11 +187,12 @@
 
 .mainSection .container {
   display: flex;
-  padding: 0 49.75px 0.5px 20px;
-  justify-content: flex-end;
+  padding: 0 20px 0.5px 20px;
+  justify-content: center;
   align-items: flex-start;
   gap: 31.523px;
   align-self: stretch;
+  position: relative;
 }
 
 .navLeft {
