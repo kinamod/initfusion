@@ -125,22 +125,37 @@ const NavigationItem: React.FC<{ item: NavItem; isSecondary?: boolean }> = ({ it
             aria-hidden="true"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M12 5L19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M5 12H19" stroke="#1D1E20" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M12 5L19 12L12 19" stroke="#1D1E20" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
           {isOpen && (
             <div className={styles['submenu-container']}>
               <div className={styles['submenu-content']}>
+                <div className={styles['submenu-header']}>
+                  <h3 className={styles['submenu-title']}>
+                    <a href={item.href} className={styles['submenu-title-link']}>
+                      {item.label}
+                    </a>
+                  </h3>
+                  <div className={styles['submenu-description']}>
+                    <a href={item.href} className={styles['submenu-description-link']}>
+                      {item.label}
+                    </a>
+                  </div>
+                </div>
                 <ul className={styles['submenu-list']}>
                   {item.children.map((child) => (
-                    <li key={child.href}>
-                      <Link href={child.href} className={styles['submenu-link']}>
-                        {child.label}
-                      </Link>
+                    <li key={child.href} className={styles['submenu-item']}>
+                      <div className={styles['submenu-item-wrapper']}>
+                        <a href={child.href} className={styles['submenu-link']}>
+                          {child.label}
+                        </a>
+                      </div>
                     </li>
                   ))}
                 </ul>
+                <div className={styles['submenu-footer']}></div>
               </div>
             </div>
           )}
@@ -160,45 +175,64 @@ export function Header() {
         <div className={styles['container']}>
           <div className={styles['header-top-left']}>
             <ul className={styles['top-links']}>
-              <li><Link href="#accessibility">Adapt the display</Link></li>
-              <li><Link href="/en/contact">Contact</Link></li>
-              <li><Link href="/en/group/saint-gobain-worldwide">Saint-Gobain in the world</Link></li>
+              <li><a href="#accessibility" className={styles['top-link']}>Adapt the display</a></li>
+              <li><a href="/en/contact" className={styles['top-link']}>Contact</a></li>
+              <li><a href="/en/group/saint-gobain-worldwide" className={styles['top-link']}>Saint-Gobain in the world</a></li>
             </ul>
           </div>
           <div className={styles['header-top-right']}>
             <div className={styles['stock-info']}>
-              <span className={styles['stock-price']}>83.96 €</span>
-              <span className={styles['stock-change']}>- 3.72%</span>
-              <span className={styles['stock-time']}>12:35</span>
+              <span className={styles['stock-price']}>83.56 €</span>
+              <span className={styles['stock-change']}>
+                <span className={styles['stock-change-minus']}>-</span>
+                4.17%
+              </span>
+              <span className={styles['stock-time']}>13:00</span>
               <span className={styles['stock-location']}>(Paris)</span>
             </div>
+            <nav className={styles['language-nav']}>
+              <div className={styles['language-links']}>
+                <a href="/en" className={styles['language-link-current']}>
+                  <abbr title="English">en</abbr>
+                </a>
+                <a href="/fr" className={styles['language-link']}>
+                  <abbr title="Français">fr</abbr>
+                </a>
+              </div>
+            </nav>
             <div className={styles['theme-toggle']}>
               <button
                 className={`${styles['theme-button']} ${styles['light']}`}
                 onClick={() => setTheme('light')}
                 aria-label="Enable light mode"
-              />
-              <label className={styles['checkbox-label']}>
+              >
+                <span className={styles['sr-text']}>Enable the light color mode</span>
+              </button>
+              <div className={styles['theme-checkbox-wrapper']}>
                 <input
                   type="checkbox"
+                  id="dark-mode-switch"
                   checked={isDark}
                   onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}
                   className={styles['theme-checkbox']}
+                  role="switch"
                 />
-                <span>Dark Mode</span>
-              </label>
+                <label htmlFor="dark-mode-switch" className={styles['checkbox-label']}>Dark Mode</label>
+              </div>
               <button
                 className={`${styles['theme-button']} ${styles['dark']}`}
                 onClick={() => setTheme('dark')}
                 aria-label="Enable dark mode"
-              />
+              >
+                <span className={styles['sr-text']}>Enable the dark color mode</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
 
       <div className={styles['header-bottom']}>
-        <div className={styles['container']}>
+        <div className={styles['container-grid']}>
           <nav className={styles['navbar-left']}>
             {navigationLeft.map((item) => (
               <NavigationItem key={item.href} item={item} />
@@ -206,8 +240,8 @@ export function Header() {
           </nav>
 
           <div className={styles['logo-wrapper']}>
-            <Link href="/en" className={styles['logo-link']}>
-              <svg width="146" height="61" viewBox="0 0 45.74491 19.415368" xmlns="http://www.w3.org/2000/svg">
+            <a href="/en" className={styles['logo-link']} title="Home" rel="home">
+              <svg width="146" height="61" viewBox="0 0 45.74491 19.415368" xmlns="http://www.w3.org/2000/svg" role="img">
                 <defs>
                   <linearGradient id="sg-gradient" x1="0" x2="1" y1="0" y2="0">
                     <stop offset="0" stopColor="#54b6ae" />
@@ -223,7 +257,7 @@ export function Header() {
                   Saint-Gobain
                 </text>
               </svg>
-            </Link>
+            </a>
           </div>
 
           <nav className={styles['navbar-right']}>
@@ -232,9 +266,9 @@ export function Header() {
             ))}
           </nav>
 
-          <button className={styles['search-button']} aria-label="Search">
-            🔍
-          </button>
+          <div className={styles['search-wrapper']}>
+            <button className={styles['search-button']} aria-label="Toggle search form visibility"></button>
+          </div>
         </div>
       </div>
     </header>
