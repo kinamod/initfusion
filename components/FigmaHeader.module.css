@@ -197,17 +197,21 @@
 
 .navLeft {
   display: flex;
-  padding: 18.5px 168.734px 37.5px 0.25px;
+  padding: 18.5px 0 37.5px 0;
   align-items: flex-start;
   gap: 40px;
+  position: absolute;
+  left: 20px;
 }
 
 .navRight {
   display: flex;
-  padding: 18.5px 19.086px 37.5px 148.609px;
+  padding: 18.5px 0 37.5px 0;
   justify-content: flex-end;
   align-items: flex-start;
   gap: 40px;
+  position: absolute;
+  right: 20px;
 }
 
 .navItem {
