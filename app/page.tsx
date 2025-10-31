@@ -1,6 +1,7 @@
 import { Flex, Container, Heading, Text, Section } from "@radix-ui/themes";
 import { FigmaHeader } from '@/components/FigmaHeader';
 import { FeatureGrid } from '@/components/FeatureGrid';
+import { FeatureGridAlt } from '@/components/FeatureGridAlt';
 
 export default function Home() {
   return (
