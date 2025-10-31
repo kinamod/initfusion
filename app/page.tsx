@@ -17,7 +17,15 @@ export default function Home() {
                 Building the future of sustainable construction. This page includes the new header with navigation dropdowns and theme switching.
               </Text>
             </div>
+          </Flex>
+        </Container>
+      </Section>
 
+      <FeatureGrid />
+
+      <Section py="9">
+        <Container>
+          <Flex direction="column" gap="6">
             <div style={{ backgroundColor: 'var(--background)', border: '1px solid rgba(0,0,0,0.1)', padding: '20px', borderRadius: '8px' }}>
               <Heading as="h2" size="6" mb="3">
                 Header Features
