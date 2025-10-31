@@ -1,0 +1,146 @@
+.section {
+  background: linear-gradient(115.12deg, rgb(19, 123, 183), rgb(0, 68, 138));
+  color: rgb(255, 255, 255);
+  padding: 37.504px 0 75.008px 0;
+}
+
+.container {
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.card {
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background: rgb(255, 255, 255);
+}
+
+.cardLarge {
+  grid-area: 1 / 1 / 3 / 3;
+}
+
+.cardSmall {
+  grid-area: auto;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.cardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease-in-out;
+}
+
+.cardLarge .cardImage {
+  height: 550px;
+  min-height: 265px;
+}
+
+.cardSmall .cardImage {
+  height: 265px;
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  z-index: 1;
+}
+
+.cardOverlay a {
+  position: absolute;
+  inset: 0;
+  text-indent: -9999px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+.cardTitle {
+  color: rgb(255, 255, 255);
+  font-family: Ubuntu, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 27px;
+  margin: 0 0 20px 0;
+  max-width: 275px;
+  text-transform: uppercase;
+}
+
+.cardLink a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.cardLink a:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .cardLarge {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cardLarge {
+    grid-area: auto;
+  }
+
+  .cardLarge .cardImage,
+  .cardSmall .cardImage {
+    height: 250px;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .cardContent,
+  .cardOverlay {
+    padding: 20px;
+  }
+}
