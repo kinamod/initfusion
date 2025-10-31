@@ -60,6 +60,9 @@
 
 .cardLarge img {
   width: 145%;
+  height: auto;
+  object-fit: cover;
+  display: block;
 }
 
 .cardSmall .cardImage {
