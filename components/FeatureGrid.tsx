@@ -1,7 +1,5 @@
 'use client';
 
-import styles from './FeatureGrid.module.css';
-
 interface FeatureCard {
   image: string;
   title: string;
@@ -43,81 +41,355 @@ export function FeatureGrid() {
   ];
 
   return (
-    <section className={styles.section}>
-      <div className={styles.container}>
-        <div className={styles.grid}>
-          {/* Featured large card */}
-          <article className={`${styles.card} ${styles.cardLarge}`}>
+    <section
+      style={{
+        backgroundImage: 'linear-gradient(115.12deg, rgb(19, 123, 183), rgb(0, 68, 138))',
+        color: 'rgb(255, 255, 255)',
+        fontWeight: '400',
+        overflowWrap: 'break-word',
+        wordWrap: 'break-word',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '38px 0 75px',
+      }}
+    >
+      <div
+        style={{
+          display: 'grid',
+          fontWeight: '400',
+          gap: '10px',
+          overflowWrap: 'break-word',
+          wordWrap: 'break-word',
+          gridTemplateAreas: `'myArea myTop myTop ' 'myArea . . '`,
+          gridTemplateRows: '275px 275px',
+          gridTemplateColumns: '50% 1fr 1fr',
+          margin: '0 auto',
+          padding: '0 20px',
+        }}
+      >
+        {/* First card - featured image outside grid initially */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'relative',
+            height: '200px',
+            gridArea: 'myArea',
+          }}
+        >
+          <img
+            loading="lazy"
+            alt={cards[0].alt}
+            src={cards[0].image}
+            style={{
+              fontWeight: '400',
+              overflowWrap: 'break-word',
+              wordWrap: 'break-word',
+              gridArea: 'myArea',
+              objectFit: 'cover',
+              fontSize: '0px',
+              backgroundImage: `url(${cards[0].image})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+            }}
+          />
+        </div>
+
+        {/* Second card */}
+        <article
+          style={{
+            backgroundColor: 'rgb(255, 255, 255)',
+            borderRadius: '8px',
+            fontWeight: '400',
+            gridArea: 'myTop',
+            overflowWrap: 'break-word',
+            overflowX: 'hidden',
+            overflowY: 'hidden',
+            wordWrap: 'break-word',
+          }}
+        >
+          <div
+            style={{
+              fontWeight: '400',
+              height: '265px',
+              overflowWrap: 'break-word',
+              overflowX: 'hidden',
+              overflowY: 'hidden',
+              position: 'relative',
+              width: '100%',
+              wordWrap: 'break-word',
+            }}
+          >
             <img
               loading="lazy"
-              alt={cards[0].alt}
-              src={cards[0].image}
+              width="1280"
+              height="720"
+              alt={cards[1].alt}
+              src={cards[1].image}
+              style={{
+                display: 'block',
+                aspectRatio: 'auto 1280 / 720',
+                fontWeight: '400',
+                height: '100%',
+                objectFit: 'cover',
+                overflowWrap: 'break-word',
+                transitionDuration: '0.25s',
+                transitionProperty: 'transform',
+                transitionTimingFunction: 'ease-in-out',
+                width: '100%',
+                wordWrap: 'break-word',
+              }}
             />
-          </article>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%)',
+              flexDirection: 'column',
+              fontWeight: '400',
+              height: '100%',
+              justifyContent: 'flex-end',
+              overflowWrap: 'break-word',
+              position: 'relative',
+              wordWrap: 'break-word',
+              zIndex: '1',
+              padding: '30px',
+            }}
+          >
+            <div
+              style={{
+                marginBottom: '20px',
+                maxWidth: '275px',
+                overflowWrap: 'break-word',
+                textTransform: 'uppercase',
+                wordWrap: 'break-word',
+                font: '700 20px/27px Ubuntu, sans-serif ',
+              }}
+            >
+              {cards[1].title}
+            </div>
+            <div
+              style={{
+                fontWeight: '400',
+                overflowWrap: 'break-word',
+                wordWrap: 'break-word',
+              }}
+            >
+              <a
+                title={cards[1].linkText}
+                href={cards[1].link}
+                style={{
+                  display: 'inline',
+                  fontWeight: '700',
+                  overflowWrap: 'break-word',
+                  transitionDuration: '0.25s',
+                  transitionProperty: 'opacity',
+                  transitionTimingFunction: 'ease-in-out',
+                  wordWrap: 'break-word',
+                }}
+              >
+                {cards[1].linkText}
+              </a>
+            </div>
+          </div>
+        </article>
 
-          {/* Second card */}
-          <article className={`${styles.card} ${styles.cardSmall}`}>
-            <div className={styles.cardImage}>
-              <img
-                loading="lazy"
-                width="1280"
-                height="720"
-                alt={cards[1].alt}
-                src={cards[1].image}
-              />
+        {/* Third card */}
+        <article
+          style={{
+            backgroundColor: 'rgb(255, 255, 255)',
+            borderRadius: '8px',
+            fontWeight: '400',
+            overflowWrap: 'break-word',
+            overflowX: 'hidden',
+            overflowY: 'hidden',
+            wordWrap: 'break-word',
+          }}
+        >
+          <div
+            style={{
+              fontWeight: '400',
+              height: '265px',
+              overflowWrap: 'break-word',
+              overflowX: 'hidden',
+              overflowY: 'hidden',
+              position: 'relative',
+              width: '100%',
+              wordWrap: 'break-word',
+            }}
+          >
+            <img
+              loading="lazy"
+              width="1280"
+              height="720"
+              alt={cards[2].alt}
+              src={cards[2].image}
+              style={{
+                display: 'block',
+                aspectRatio: 'auto 1280 / 720',
+                fontWeight: '400',
+                height: '100%',
+                objectFit: 'cover',
+                overflowWrap: 'break-word',
+                transitionDuration: '0.25s',
+                transitionProperty: 'transform',
+                transitionTimingFunction: 'ease-in-out',
+                width: '100%',
+                wordWrap: 'break-word',
+              }}
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%)',
+              flexDirection: 'column',
+              fontWeight: '400',
+              height: '100%',
+              justifyContent: 'flex-end',
+              overflowWrap: 'break-word',
+              position: 'relative',
+              wordWrap: 'break-word',
+              zIndex: '1',
+              padding: '30px',
+            }}
+          >
+            <div
+              style={{
+                marginBottom: '20px',
+                maxWidth: '275px',
+                overflowWrap: 'break-word',
+                textTransform: 'uppercase',
+                wordWrap: 'break-word',
+                font: '700 20px/27px Ubuntu, sans-serif ',
+              }}
+            >
+              360° overview of our Group that's shaping sustainable construction
             </div>
-            <div className={styles.cardContent}>
-              <h3 className={styles.cardTitle}>{cards[1].title}</h3>
-              <div className={styles.cardLink}>
-                <a href={cards[1].link} title={cards[1].linkText}>
-                  {cards[1].linkText}
-                </a>
-              </div>
+            <div
+              style={{
+                fontWeight: '400',
+                overflowWrap: 'break-word',
+                wordWrap: 'break-word',
+              }}
+            >
+              <a
+                title={cards[2].linkText}
+                href={cards[2].link}
+                style={{
+                  display: 'inline',
+                  fontWeight: '700',
+                  overflowWrap: 'break-word',
+                  transitionDuration: '0.25s',
+                  transitionProperty: 'opacity',
+                  transitionTimingFunction: 'ease-in-out',
+                  wordWrap: 'break-word',
+                }}
+              >
+                {cards[2].linkText}
+              </a>
             </div>
-          </article>
+          </div>
+        </article>
 
-          {/* Third card */}
-          <article className={`${styles.card} ${styles.cardSmall}`}>
-            <div className={styles.cardImage}>
-              <img
-                loading="lazy"
-                width="1280"
-                height="720"
-                alt={cards[2].alt}
-                src={cards[2].image}
-              />
+        {/* Fourth card */}
+        <article
+          style={{
+            backgroundColor: 'rgb(255, 255, 255)',
+            borderRadius: '8px',
+            fontWeight: '400',
+            overflowWrap: 'break-word',
+            overflowX: 'hidden',
+            overflowY: 'hidden',
+            wordWrap: 'break-word',
+          }}
+        >
+          <div
+            style={{
+              fontWeight: '400',
+              height: '265px',
+              overflowWrap: 'break-word',
+              overflowX: 'hidden',
+              overflowY: 'hidden',
+              position: 'relative',
+              width: '100%',
+              wordWrap: 'break-word',
+            }}
+          >
+            <img
+              loading="lazy"
+              width="800"
+              height="490"
+              alt={cards[3].alt}
+              src={cards[3].image}
+              style={{
+                display: 'block',
+                aspectRatio: 'auto 800 / 490',
+                fontWeight: '400',
+                height: '100%',
+                objectFit: 'cover',
+                overflowWrap: 'break-word',
+                transitionDuration: '0.25s',
+                transitionProperty: 'transform',
+                transitionTimingFunction: 'ease-in-out',
+                width: '100%',
+                wordWrap: 'break-word',
+              }}
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%)',
+              flexDirection: 'column',
+              fontWeight: '400',
+              height: '100%',
+              justifyContent: 'flex-end',
+              overflowWrap: 'break-word',
+              position: 'relative',
+              wordWrap: 'break-word',
+              zIndex: '1',
+              padding: '30px',
+            }}
+          >
+            <div
+              style={{
+                marginBottom: '20px',
+                maxWidth: '275px',
+                overflowWrap: 'break-word',
+                textTransform: 'uppercase',
+                wordWrap: 'break-word',
+                font: '700 20px/27px Ubuntu, sans-serif ',
+              }}
+            >
+              {cards[3].title}
             </div>
-            <div className={styles.cardContent}>
-              <h3 className={styles.cardTitle}>{cards[2].title}</h3>
-              <div className={styles.cardLink}>
-                <a href={cards[2].link} title={cards[2].linkText}>
-                  {cards[2].linkText}
-                </a>
-              </div>
+            <div
+              style={{
+                fontWeight: '400',
+                overflowWrap: 'break-word',
+                wordWrap: 'break-word',
+              }}
+            >
+              <a
+                title={cards[3].linkText}
+                href={cards[3].link}
+                style={{
+                  display: 'inline',
+                  fontWeight: '700',
+                  overflowWrap: 'break-word',
+                  transitionDuration: '0.25s',
+                  transitionProperty: 'opacity',
+                  transitionTimingFunction: 'ease-in-out',
+                  wordWrap: 'break-word',
+                }}
+              >
+                {cards[3].linkText}
+              </a>
             </div>
-          </article>
-
-          {/* Fourth card */}
-          <article className={`${styles.card} ${styles.cardSmall}`}>
-            <div className={styles.cardImage}>
-              <img
-                loading="lazy"
-                width="800"
-                height="490"
-                alt={cards[3].alt}
-                src={cards[3].image}
-              />
-            </div>
-            <div className={styles.cardContent}>
-              <h3 className={styles.cardTitle}>{cards[3].title}</h3>
-              <div className={styles.cardLink}>
-                <a href={cards[3].link} title={cards[3].linkText}>
-                  {cards[3].linkText}
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
     </section>
   );

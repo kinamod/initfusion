@@ -1,7 +1,6 @@
 import { Flex, Container, Heading, Text, Section } from "@radix-ui/themes";
 import { FigmaHeader } from '@/components/FigmaHeader';
 import { FeatureGrid } from '@/components/FeatureGrid';
-import { FeatureGridAlt } from '@/components/FeatureGridAlt';
 
 export default function Home() {
   return (
@@ -23,12 +22,6 @@ export default function Home() {
       </Section>
 
       <FeatureGrid />
-
-      <Section py="9" style={{ background: 'linear-gradient(115.12deg, rgb(19, 123, 183), rgb(0, 68, 138))' }}>
-        <Container>
-          <FeatureGridAlt />
-        </Container>
-      </Section>
 
       <Section py="9">
         <Container>
