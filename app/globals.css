@@ -324,4 +324,49 @@ body {
     font-weight: 600;
     letter-spacing: 0.5px;
   }
+
+  .clocked-in-box {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .completed-shifts-box {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .clocked-in-item {
+    background: white;
+    border: 2px solid var(--primary-blue);
+    padding: 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .clocked-in-item:hover {
+    box-shadow: 0 4px 12px rgba(26, 77, 109, 0.15);
+  }
+
+  .clocked-in-duration {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: var(--font-geist-mono);
+    color: var(--primary-blue);
+  }
+
+  .completed-shift-item {
+    background: white;
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+
+  .completed-shift-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
 }
