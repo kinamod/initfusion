@@ -406,6 +406,7 @@ body {
     flex-direction: column;
     gap: 12px;
     min-height: 0;
+    max-height: 24rem;
   }
 
   .load-more-btn {
