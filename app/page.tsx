@@ -135,7 +135,11 @@ export default function ClockApp() {
     fetchUsers(currentPage + 1, searchQuery);
   };
 
-  const handleUserClick = async (user: User) => {
+  const handleUserClick = (user: User) => {
+    setSelectedUser(user);
+  };
+
+  const handleUserRightClick = async (user: User) => {
     setSelectedUser(user);
     setModalLoading(true);
     try {
@@ -143,7 +147,7 @@ export default function ClockApp() {
         cache: 'no-store',
       });
       const photoUrl = photoResponse.url;
-      
+
       setModalUser({
         ...user,
         photoUrl: photoUrl || 'https://thispersondoesnotexist.com/',
