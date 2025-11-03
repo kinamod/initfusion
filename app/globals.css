@@ -369,4 +369,25 @@ body {
   .completed-shift-item:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
+
+  .fitter-list-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .fitter-list {
+    flex: 1;
+    overflow-y: auto;
+    space-y: 0.75rem;
+  }
+
+  .fitter-list > * + * {
+    margin-top: 0.75rem;
+  }
+
+  .load-more-btn {
+    margin-top: 12px;
+    flex-shrink: 0;
+  }
 }
