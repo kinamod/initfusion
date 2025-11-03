@@ -362,7 +362,7 @@ export default function ClockApp() {
             {error && (
               <div className="mt-4">
                 <button
-                  onClick={fetchUsers}
+                  onClick={() => fetchUsers(1, '')}
                   className="w-full clock-btn-primary px-6 py-3 rounded-lg font-semibold"
                 >
                   ↻ Retry Loading Users
