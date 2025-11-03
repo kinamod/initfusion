@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Table } from 'antd';
 
 interface User {
   uuid?: string;
