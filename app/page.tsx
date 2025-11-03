@@ -22,6 +22,11 @@ interface UserModalData extends User {
   photoUrl: string;
 }
 
+interface ClockedInFitterCardProps {
+  record: ClockRecord;
+  onClockOut: () => void;
+}
+
 export default function ClockApp() {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
