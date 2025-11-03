@@ -112,12 +112,7 @@ export default function ClockApp() {
       if (!response.ok) throw new Error('Failed to fetch users');
       const data = await response.json();
 
-      if (page === 1) {
-        setUsers(data.data || []);
-      } else {
-        setUsers(prev => [...prev, ...(data.data || [])]);
-      }
-
+      setUsers(data.data || []);
       setTotalUsers(data.total || 0);
       setCurrentPage(page);
       setError(null);
