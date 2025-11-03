@@ -412,6 +412,7 @@ body {
 
   .fitter-table-container {
     flex: 1;
+    padding-top: 10px;
   }
 
   .fitter-table-container .ant-table {
