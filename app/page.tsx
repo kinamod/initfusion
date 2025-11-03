@@ -366,11 +366,6 @@ export default function ClockApp() {
                     },
                     style: {
                       cursor: 'pointer',
-                      backgroundColor:
-                        selectedUser?.uuid === record.uuid ||
-                        selectedUser?.login?.username === record.login?.username
-                          ? 'rgba(255, 193, 7, 0.15)'
-                          : undefined,
                     },
                   })}
                   locale={{
