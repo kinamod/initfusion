@@ -200,6 +200,54 @@ export default function ClockApp() {
     );
   });
 
+  const ClockedInFitterCard = ({ record, onClockOut }: ClockedInFitterCardProps) => {
+    const [duration, setDuration] = useState<string>('');
+
+    useEffect(() => {
+      const updateDuration = () => {
+        const elapsed = Date.now() - record.clockInTime;
+        const hours = Math.floor(elapsed / 3600000);
+        const minutes = Math.floor((elapsed % 3600000) / 60000);
+        const seconds = Math.floor((elapsed % 60000) / 1000);
+
+        setDuration(
+          `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+        );
+      };
+
+      updateDuration();
+      const timer = setInterval(updateDuration, 1000);
+      return () => clearInterval(timer);
+    }, [record.clockInTime]);
+
+    return (
+      <div className="clocked-in-item">
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex-1">
+            <div className="font-semibold text-lg text-gray-800">
+              {record.userName}
+            </div>
+            <div className="text-sm text-gray-600 mt-2">
+              📍 {record.jobLocation}
+            </div>
+            <div className="text-sm text-gray-600 mt-1">
+              Started: {formatTime(record.clockInTime)}
+            </div>
+          </div>
+          <div className="text-right">
+            <div className="clocked-in-duration">{duration}</div>
+            <button
+              onClick={onClockOut}
+              className="clock-btn-primary mt-3 px-4 py-2 rounded text-sm font-semibold"
+            >
+              Clock Out
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="clock-container">
       {/* Header */}
