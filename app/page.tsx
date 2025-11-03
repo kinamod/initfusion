@@ -49,7 +49,7 @@ export default function ClockApp() {
   const [useTestTime, setUseTestTime] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalUsers, setTotalUsers] = useState(0);
-  const [perPage] = useState(10);
+  const [perPage] = useState(20);
 
   const API_BASE = 'https://user-api.builder-io.workers.dev/api';
 
