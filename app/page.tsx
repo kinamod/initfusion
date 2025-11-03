@@ -373,6 +373,72 @@ export default function ClockApp() {
             </div>
           </div>
         </div>
+
+        {/* Test Time Section */}
+        <div className="test-time-box mt-8">
+          <div className="test-time-title">⚙ Test Time (for demo)</div>
+
+          <div className="mb-4">
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={useTestTime}
+                onChange={(e) => setUseTestTime(e.target.checked)}
+                className="w-4 h-4 cursor-pointer"
+              />
+              <span className="text-sm font-medium text-gray-700">Use Test Time</span>
+            </label>
+          </div>
+
+          {useTestTime && (
+            <div className="time-input-group">
+              <div className="flex-1 min-w-fit">
+                <div className="time-input-label mb-2">Hours</div>
+                <input
+                  type="number"
+                  min="1"
+                  max="12"
+                  value={testTime.hours}
+                  onChange={(e) => setTestTime({ ...testTime, hours: e.target.value || '1' })}
+                  className="time-input w-full"
+                />
+              </div>
+              <div className="flex-1 min-w-fit">
+                <div className="time-input-label mb-2">Minutes</div>
+                <input
+                  type="number"
+                  min="0"
+                  max="59"
+                  value={testTime.minutes}
+                  onChange={(e) => setTestTime({ ...testTime, minutes: String(Math.min(59, Math.max(0, parseInt(e.target.value) || 0))).padStart(2, '0') })}
+                  className="time-input w-full"
+                />
+              </div>
+              <div className="flex-1 min-w-fit">
+                <div className="time-input-label mb-2">Seconds</div>
+                <input
+                  type="number"
+                  min="0"
+                  max="59"
+                  value={testTime.seconds}
+                  onChange={(e) => setTestTime({ ...testTime, seconds: String(Math.min(59, Math.max(0, parseInt(e.target.value) || 0))).padStart(2, '0') })}
+                  className="time-input w-full"
+                />
+              </div>
+              <div className="flex-1 min-w-fit">
+                <div className="time-input-label mb-2">AM/PM</div>
+                <select
+                  value={testTime.ampm}
+                  onChange={(e) => setTestTime({ ...testTime, ampm: e.target.value })}
+                  className="time-input w-full"
+                >
+                  <option>AM</option>
+                  <option>PM</option>
+                </select>
+              </div>
+            </div>
+          )}
+        </div>
       </main>
 
       {/* User Modal */}
