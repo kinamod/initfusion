@@ -101,7 +101,8 @@ export default function ClockApp() {
 
   const fetchUsers = async (page: number = 1, search: string = '') => {
     try {
-      setLoading(true);
+      if (page === 1) setLoading(true);
+
       const params = new URLSearchParams({
         page: page.toString(),
         perPage: perPage.toString(),
@@ -125,6 +126,7 @@ export default function ClockApp() {
       if (page === 1) setUsers([]);
     } finally {
       setLoading(false);
+      if (initialLoading) setInitialLoading(false);
     }
   };
 
