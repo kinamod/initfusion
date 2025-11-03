@@ -39,13 +39,15 @@ export default function ClockApp() {
   const [modalUser, setModalUser] = useState<UserModalData | null>(null);
   const [modalLoading, setModalLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [testTime, setTestTime] = useState<{ hours: string; minutes: string; seconds: string; ampm: string }>({
-    hours: '12',
+  const [testTime, setTestTime] = useState<{ hours: string; minutes: string; seconds: string }>({
+    hours: '00',
     minutes: '00',
     seconds: '00',
-    ampm: 'AM',
   });
   const [useTestTime, setUseTestTime] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [perPage] = useState(10);
 
   const API_BASE = 'https://user-api.builder-io.workers.dev/api';
 
@@ -56,14 +58,14 @@ export default function ClockApp() {
   useEffect(() => {
     const timer = setInterval(() => {
       if (useTestTime) {
-        const display = `${String(testTime.hours).padStart(2, '0')}:${String(testTime.minutes).padStart(2, '0')}:${String(testTime.seconds).padStart(2, '0')} ${testTime.ampm}`;
+        const display = `${String(testTime.hours).padStart(2, '0')}:${String(testTime.minutes).padStart(2, '0')}:${String(testTime.seconds).padStart(2, '0')}`;
         setCurrentTime(display);
       } else {
         setCurrentTime(new Date().toLocaleTimeString('en-US', {
           hour: '2-digit',
           minute: '2-digit',
           second: '2-digit',
-          hour12: true
+          hour12: false
         }));
       }
     }, 1000);
@@ -95,20 +97,43 @@ export default function ClockApp() {
     return () => clearInterval(timer);
   }, [selectedUser, clockRecords]);
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (page: number = 1, search: string = '') => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE}/users?perPage=50`);
+      const params = new URLSearchParams({
+        page: page.toString(),
+        perPage: perPage.toString(),
+        ...(search && { search }),
+      });
+      const response = await fetch(`${API_BASE}/users?${params}`);
       if (!response.ok) throw new Error('Failed to fetch users');
       const data = await response.json();
-      setUsers(data.data || []);
+
+      if (page === 1) {
+        setUsers(data.data || []);
+      } else {
+        setUsers(prev => [...prev, ...(data.data || [])]);
+      }
+
+      setTotalUsers(data.total || 0);
+      setCurrentPage(page);
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load users');
-      setUsers([]);
+      if (page === 1) setUsers([]);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    setCurrentPage(1);
+    fetchUsers(1, query);
+  };
+
+  const loadMoreFitters = () => {
+    fetchUsers(currentPage + 1, searchQuery);
   };
 
   const handleUserClick = async (user: User) => {
