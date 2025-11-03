@@ -244,30 +244,36 @@ export default function ClockApp() {
               </div>
             ) : (
               <div className="space-y-3 max-h-96 overflow-y-auto">
-                {users.map((user) => (
-                  <button
-                    key={user.uuid || user.login?.username}
-                    onClick={() => handleUserClick(user)}
-                    className={`user-card w-full text-left p-4 rounded-lg transition-all ${
-                      selectedUser?.uuid === user.uuid || 
-                      selectedUser?.login?.username === user.login?.username
-                        ? 'active'
-                        : ''
-                    }`}
-                  >
-                    <div className="font-semibold text-lg">
-                      {user.name?.first} {user.name?.last}
-                    </div>
-                    <div className="text-sm opacity-75">
-                      {user.email}
-                    </div>
-                    {user.location?.city && (
-                      <div className="text-xs opacity-60 mt-1">
-                        📍 {user.location.city}{user.location.state ? ', ' + user.location.state : ''}, {user.location.country}
+                {filteredUsers.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">
+                    {searchQuery ? 'No fitters found matching your search' : 'No fitters available'}
+                  </div>
+                ) : (
+                  filteredUsers.map((user) => (
+                    <button
+                      key={user.uuid || user.login?.username}
+                      onClick={() => handleUserClick(user)}
+                      className={`user-card w-full text-left p-4 rounded-lg transition-all ${
+                        selectedUser?.uuid === user.uuid ||
+                        selectedUser?.login?.username === user.login?.username
+                          ? 'active'
+                          : ''
+                      }`}
+                    >
+                      <div className="font-semibold text-lg">
+                        {user.name?.first} {user.name?.last}
                       </div>
-                    )}
-                  </button>
-                ))}
+                      <div className="text-sm opacity-75">
+                        {user.email}
+                      </div>
+                      {user.location?.city && (
+                        <div className="text-xs opacity-60 mt-1">
+                          📍 {user.location.city}{user.location.state ? ', ' + user.location.state : ''}, {user.location.country}
+                        </div>
+                      )}
+                    </button>
+                  ))
+                )}
               </div>
             )}
 
