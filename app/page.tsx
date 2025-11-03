@@ -317,46 +317,62 @@ export default function ClockApp() {
                 <div className="text-gray-600">Loading users...</div>
               </div>
             ) : (
-              <div className="fitter-list-container">
-                <div className="fitter-list">
-                  {users.length === 0 ? (
-                    <div className="text-center py-8 text-gray-500">
-                      {searchQuery ? 'No fitters found matching your search' : 'No fitters available'}
-                    </div>
-                  ) : (
-                    users.map((user) => (
-                      <button
-                        key={user.uuid || user.login?.username}
-                        onClick={() => handleUserClick(user)}
-                        className={`user-card w-full text-left p-3 rounded-lg transition-all ${
-                          selectedUser?.uuid === user.uuid ||
-                          selectedUser?.login?.username === user.login?.username
-                            ? 'active'
-                            : ''
-                        }`}
-                      >
-                        <div className="flex justify-between items-center">
-                          <div className="font-semibold text-sm">
-                            {user.name?.first} {user.name?.last}
-                          </div>
-                          {user.location?.city && (
-                            <div className="text-xs opacity-60 ml-2">
-                              📍 {user.location.city}{user.location.state ? ', ' + user.location.state : ''}
-                            </div>
-                          )}
-                        </div>
-                      </button>
-                    ))
-                  )}
-                </div>
-                {users.length > 0 && users.length < totalUsers && (
-                  <button
-                    onClick={loadMoreFitters}
-                    className="load-more-btn w-full clock-btn-primary px-4 py-2 rounded-lg font-semibold text-sm"
-                  >
-                    Load More Fitters
-                  </button>
-                )}
+              <div className="fitter-table-container">
+                <Table
+                  columns={[
+                    {
+                      title: 'Name',
+                      key: 'name',
+                      render: (_, record) => `${record.name?.first} ${record.name?.last}`,
+                      width: '50%',
+                    },
+                    {
+                      title: 'Location',
+                      key: 'location',
+                      render: (_, record) =>
+                        record.location?.city ? (
+                          <span>
+                            📍 {record.location.city}
+                            {record.location.state ? ', ' + record.location.state : ''}
+                          </span>
+                        ) : (
+                          'Unknown'
+                        ),
+                      width: '50%',
+                    },
+                  ]}
+                  dataSource={users.map((user, idx) => ({
+                    ...user,
+                    key: user.uuid || user.login?.username || idx,
+                  }))}
+                  pagination={{
+                    pageSize: perPage,
+                    total: totalUsers,
+                    current: currentPage,
+                    onChange: (page) => {
+                      fetchUsers(page, searchQuery);
+                    },
+                    showSizeChanger: false,
+                  }}
+                  onRow={(record) => ({
+                    onClick: () => handleUserClick(record),
+                    style: {
+                      cursor: 'pointer',
+                      backgroundColor:
+                        selectedUser?.uuid === record.uuid ||
+                        selectedUser?.login?.username === record.login?.username
+                          ? 'rgba(255, 193, 7, 0.15)'
+                          : undefined,
+                    },
+                  })}
+                  locale={{
+                    emptyText: searchQuery
+                      ? 'No fitters found matching your search'
+                      : 'No fitters available',
+                  }}
+                  size="small"
+                  bordered={false}
+                />
               </div>
             )}
 
