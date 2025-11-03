@@ -152,13 +152,13 @@ export default function ClockApp() {
     setClockRecords([...clockRecords, newRecord]);
   };
 
-  const handleClockOut = () => {
-    if (!selectedUser) return;
+  const handleClockOut = (userId?: string) => {
+    const targetUserId = userId || (selectedUser ? selectedUser.uuid || selectedUser.login?.username : null);
+    if (!targetUserId) return;
 
-    const userId = selectedUser.uuid || selectedUser.login?.username;
     setClockRecords(
       clockRecords.map(record =>
-        record.userId === userId && !record.clockOutTime
+        record.userId === targetUserId && !record.clockOutTime
           ? { ...record, clockOutTime: Date.now() }
           : record
       )
