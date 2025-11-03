@@ -353,7 +353,7 @@ export default function ClockApp() {
                     showSizeChanger: false,
                     position: ['bottomCenter'],
                   }}
-                  scroll={{ y: 400 }}
+                  scroll={{ y: 600 }}
                   onRow={(record) => ({
                     onClick: () => handleUserClick(record),
                     style: {
