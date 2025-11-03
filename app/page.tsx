@@ -33,6 +33,7 @@ export default function ClockApp() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [clockRecords, setClockRecords] = useState<ClockRecord[]>([]);
   const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentTime, setCurrentTime] = useState<string>('');
   const [sessionDuration, setSessionDuration] = useState<string>('');
