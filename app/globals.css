@@ -3,11 +3,18 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary-blue: #1a4d6d;
+  --primary-yellow: #ffc107;
+  --secondary-blue: #2c3e50;
+  --light-gray: #f5f5f5;
+  --dark-navy: #1a3a52;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary-blue: var(--primary-blue);
+  --color-primary-yellow: var(--primary-yellow);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -23,4 +30,86 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.clock-container {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-navy) 100%);
+}
+
+.clock-btn-primary {
+  background-color: var(--primary-yellow);
+  color: #000;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.clock-btn-primary:hover {
+  background-color: #ffb300;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+}
+
+.clock-btn-primary:active {
+  transform: translateY(0);
+}
+
+.clock-btn-secondary {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.clock-btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.user-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.user-card:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.user-card.active {
+  background-color: var(--primary-yellow);
+  color: #000;
+  border-color: var(--primary-yellow);
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.clocked-in {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-badge.clocked-out {
+  background-color: #f44336;
+  color: white;
+}
+
+.time-display {
+  font-size: 48px;
+  font-weight: bold;
+  font-family: var(--font-geist-mono);
+  letter-spacing: 2px;
+}
+
+.duration-display {
+  font-size: 24px;
+  font-family: var(--font-geist-mono);
+  color: var(--primary-yellow);
 }
