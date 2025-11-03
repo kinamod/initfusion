@@ -356,10 +356,6 @@ export default function ClockApp() {
                   scroll={{ y: 600 }}
                   onRow={(record) => ({
                     onClick: () => handleUserClick(record),
-                    onContextMenu: (e) => {
-                      e.preventDefault();
-                      handleUserRightClick(record);
-                    },
                     style: {
                       cursor: 'pointer',
                     },
