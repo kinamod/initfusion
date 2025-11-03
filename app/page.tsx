@@ -533,18 +533,18 @@ export default function ClockApp() {
           {useTestTime && (
             <div className="time-input-group">
               <div className="flex-1 min-w-fit">
-                <div className="time-input-label mb-2">Hours</div>
+                <div className="time-input-label mb-2">Hours (00-23)</div>
                 <input
                   type="number"
-                  min="1"
-                  max="12"
+                  min="0"
+                  max="23"
                   value={testTime.hours}
-                  onChange={(e) => setTestTime({ ...testTime, hours: e.target.value || '1' })}
+                  onChange={(e) => setTestTime({ ...testTime, hours: String(Math.min(23, Math.max(0, parseInt(e.target.value) || 0))).padStart(2, '0') })}
                   className="time-input w-full"
                 />
               </div>
               <div className="flex-1 min-w-fit">
-                <div className="time-input-label mb-2">Minutes</div>
+                <div className="time-input-label mb-2">Minutes (00-59)</div>
                 <input
                   type="number"
                   min="0"
@@ -555,7 +555,7 @@ export default function ClockApp() {
                 />
               </div>
               <div className="flex-1 min-w-fit">
-                <div className="time-input-label mb-2">Seconds</div>
+                <div className="time-input-label mb-2">Seconds (00-59)</div>
                 <input
                   type="number"
                   min="0"
@@ -564,17 +564,6 @@ export default function ClockApp() {
                   onChange={(e) => setTestTime({ ...testTime, seconds: String(Math.min(59, Math.max(0, parseInt(e.target.value) || 0))).padStart(2, '0') })}
                   className="time-input w-full"
                 />
-              </div>
-              <div className="flex-1 min-w-fit">
-                <div className="time-input-label mb-2">AM/PM</div>
-                <select
-                  value={testTime.ampm}
-                  onChange={(e) => setTestTime({ ...testTime, ampm: e.target.value })}
-                  className="time-input w-full"
-                >
-                  <option>AM</option>
-                  <option>PM</option>
-                </select>
               </div>
             </div>
           )}
