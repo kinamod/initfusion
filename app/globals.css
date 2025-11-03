@@ -449,7 +449,7 @@ body {
     border-top: 1px solid #eee;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .fitter-table-container .ant-pagination-item-active {
