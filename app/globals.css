@@ -58,6 +58,8 @@ body {
   .select-fitter-box {
     background-color: transparent;
     border: 4px solid var(--primary-blue);
+    display: flex;
+    flex-direction: column;
   }
 
   .clock-btn-primary {
