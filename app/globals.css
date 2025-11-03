@@ -92,9 +92,28 @@ body {
   .user-card {
     background-color: transparent;
     border: 2px solid var(--primary-yellow);
-    border-radius: 8px;
+    border-radius: 6px;
     color: var(--primary-blue);
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .user-card > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .user-card > div:first-child {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .user-card > div:last-child {
+    flex-shrink: 0;
+    margin-left: auto;
   }
 
   .user-card:hover {
