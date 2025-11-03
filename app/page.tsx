@@ -161,6 +161,15 @@ export default function ClockApp() {
     }
   };
 
+  const getClockTime = () => {
+    if (useTestTime) {
+      const now = new Date();
+      now.setHours(parseInt(testTime.hours), parseInt(testTime.minutes), parseInt(testTime.seconds));
+      return now.getTime();
+    }
+    return Date.now();
+  };
+
   const handleClockIn = () => {
     if (!selectedUser) return;
 
@@ -170,7 +179,7 @@ export default function ClockApp() {
     const newRecord: ClockRecord = {
       userId,
       userName,
-      clockInTime: Date.now(),
+      clockInTime: getClockTime(),
       jobLocation: selectedUser.location?.city || 'Unknown location',
     };
 
@@ -184,7 +193,7 @@ export default function ClockApp() {
     setClockRecords(
       clockRecords.map(record =>
         record.userId === targetUserId && !record.clockOutTime
-          ? { ...record, clockOutTime: Date.now() }
+          ? { ...record, clockOutTime: getClockTime() }
           : record
       )
     );
@@ -198,7 +207,7 @@ export default function ClockApp() {
     return new Date(timestamp).toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit',
-      hour12: true
+      hour12: false
     });
   };
 
