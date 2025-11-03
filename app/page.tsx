@@ -315,7 +315,7 @@ export default function ClockApp() {
               </div>
             )}
 
-            {loading ? (
+            {initialLoading ? (
               <div className="flex justify-center py-8">
                 <div className="text-gray-600">Loading users...</div>
               </div>
