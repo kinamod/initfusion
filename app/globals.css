@@ -447,6 +447,9 @@ body {
     margin-top: 16px;
     padding-top: 12px;
     border-top: 1px solid #eee;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .fitter-table-container .ant-pagination-item-active {
