@@ -33,6 +33,14 @@ export default function ClockApp() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalUser, setModalUser] = useState<UserModalData | null>(null);
   const [modalLoading, setModalLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [testTime, setTestTime] = useState<{ hours: string; minutes: string; seconds: string; ampm: string }>({
+    hours: '12',
+    minutes: '00',
+    seconds: '00',
+    ampm: 'AM',
+  });
+  const [useTestTime, setUseTestTime] = useState(false);
 
   const API_BASE = 'https://user-api.builder-io.workers.dev/api';
 
@@ -42,15 +50,20 @@ export default function ClockApp() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString('en-US', { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit',
-        hour12: true 
-      }));
+      if (useTestTime) {
+        const display = `${String(testTime.hours).padStart(2, '0')}:${String(testTime.minutes).padStart(2, '0')}:${String(testTime.seconds).padStart(2, '0')} ${testTime.ampm}`;
+        setCurrentTime(display);
+      } else {
+        setCurrentTime(new Date().toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true
+        }));
+      }
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [useTestTime, testTime]);
 
   useEffect(() => {
     if (!selectedUser) return;
