@@ -282,7 +282,7 @@ export default function ClockApp() {
             className="page-header-logo"
           />
           <div>
-            <h1 className="page-header-title text-2xl">Window Fitting Jobs</h1>
+            <h1 className="page-header-title text-2xl"><p>Glass Clock In/Out</p></h1>
             <p className="text-sm text-gray-600">Clock In & Clock Out System</p>
           </div>
         </div>
