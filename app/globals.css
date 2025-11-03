@@ -395,21 +395,17 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    flex: 1;
-    min-height: 0;
   }
 
   .fitter-list {
-    flex: 1;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    min-height: 0;
     max-height: 24rem;
   }
 
   .load-more-btn {
-    flex-shrink: 0;
+    width: 100%;
   }
 }
