@@ -180,6 +180,21 @@ export default function ClockApp() {
     return `${hours}h ${minutes}m`;
   };
 
+  const filteredUsers = users.filter(user => {
+    const query = searchQuery.toLowerCase();
+    const firstName = user.name?.first?.toLowerCase() || '';
+    const lastName = user.name?.last?.toLowerCase() || '';
+    const email = user.email?.toLowerCase() || '';
+    const username = user.login?.username?.toLowerCase() || '';
+
+    return (
+      firstName.includes(query) ||
+      lastName.includes(query) ||
+      email.includes(query) ||
+      username.includes(query)
+    );
+  });
+
   return (
     <div className="clock-container">
       {/* Header */}
