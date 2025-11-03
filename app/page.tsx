@@ -301,7 +301,7 @@ export default function ClockApp() {
               type="text"
               placeholder="Search by name or email..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
               className="search-input mb-6"
             />
 
@@ -316,36 +316,45 @@ export default function ClockApp() {
                 <div className="text-gray-600">Loading users...</div>
               </div>
             ) : (
-              <div className="space-y-3 max-h-96 overflow-y-auto">
-                {filteredUsers.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
-                    {searchQuery ? 'No fitters found matching your search' : 'No fitters available'}
-                  </div>
-                ) : (
-                  filteredUsers.map((user) => (
-                    <button
-                      key={user.uuid || user.login?.username}
-                      onClick={() => handleUserClick(user)}
-                      className={`user-card w-full text-left p-4 rounded-lg transition-all ${
-                        selectedUser?.uuid === user.uuid ||
-                        selectedUser?.login?.username === user.login?.username
-                          ? 'active'
-                          : ''
-                      }`}
-                    >
-                      <div className="font-semibold text-lg">
-                        {user.name?.first} {user.name?.last}
-                      </div>
-                      <div className="text-sm opacity-75">
-                        {user.email}
-                      </div>
-                      {user.location?.city && (
-                        <div className="text-xs opacity-60 mt-1">
-                          📍 {user.location.city}{user.location.state ? ', ' + user.location.state : ''}, {user.location.country}
+              <div className="fitter-list-container">
+                <div className="fitter-list">
+                  {users.length === 0 ? (
+                    <div className="text-center py-8 text-gray-500">
+                      {searchQuery ? 'No fitters found matching your search' : 'No fitters available'}
+                    </div>
+                  ) : (
+                    users.map((user) => (
+                      <button
+                        key={user.uuid || user.login?.username}
+                        onClick={() => handleUserClick(user)}
+                        className={`user-card w-full text-left p-3 rounded-lg transition-all ${
+                          selectedUser?.uuid === user.uuid ||
+                          selectedUser?.login?.username === user.login?.username
+                            ? 'active'
+                            : ''
+                        }`}
+                      >
+                        <div className="flex justify-between items-center">
+                          <div className="font-semibold text-sm">
+                            {user.name?.first} {user.name?.last}
+                          </div>
+                          {user.location?.city && (
+                            <div className="text-xs opacity-60 ml-2">
+                              📍 {user.location.city}{user.location.state ? ', ' + user.location.state : ''}
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </button>
-                  ))
+                      </button>
+                    ))
+                  )}
+                </div>
+                {users.length > 0 && users.length < totalUsers && (
+                  <button
+                    onClick={loadMoreFitters}
+                    className="load-more-btn w-full clock-btn-primary px-4 py-2 rounded-lg font-semibold text-sm"
+                  >
+                    Load More Fitters
+                  </button>
                 )}
               </div>
             )}
