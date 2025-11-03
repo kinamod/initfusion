@@ -135,11 +135,7 @@ export default function ClockApp() {
     fetchUsers(currentPage + 1, searchQuery);
   };
 
-  const handleUserClick = (user: User) => {
-    setSelectedUser(user);
-  };
-
-  const handleUserRightClick = async (user: User) => {
+  const handleUserClick = async (user: User) => {
     setSelectedUser(user);
     setModalLoading(true);
     try {
