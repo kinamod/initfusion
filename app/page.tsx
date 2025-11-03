@@ -374,6 +374,64 @@ export default function ClockApp() {
           </div>
         </div>
 
+        {/* Clocked In Fitters Section */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="clocked-in-box rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Currently Clocked In</h2>
+
+            {clockRecords.filter(r => !r.clockOutTime).length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                No fitters currently clocked in
+              </div>
+            ) : (
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                {clockRecords
+                  .filter(r => !r.clockOutTime)
+                  .map((record) => (
+                    <ClockedInFitterCard
+                      key={record.userId}
+                      record={record}
+                      onClockOut={() => handleClockOut(record.userId)}
+                    />
+                  ))}
+              </div>
+            )}
+          </div>
+
+          {/* Completed Shifts Section */}
+          <div className="completed-shifts-box rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Completed Shifts</h2>
+
+            {clockRecords.filter(r => r.clockOutTime).length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                No completed shifts yet
+              </div>
+            ) : (
+              <div className="space-y-2 max-h-96 overflow-y-auto">
+                {clockRecords
+                  .filter(r => r.clockOutTime)
+                  .reverse()
+                  .map((record, idx) => (
+                    <div key={idx} className="completed-shift-item">
+                      <div className="font-semibold text-gray-800">
+                        {record.userName}
+                      </div>
+                      <div className="text-sm text-gray-600 mt-1">
+                        <div>📍 {record.jobLocation}</div>
+                        <div className="mt-1">
+                          {formatTime(record.clockInTime)} - {formatTime(record.clockOutTime!)}
+                        </div>
+                        <div className="text-gray-500 mt-1">
+                          ⏱ {formatDuration(record.clockInTime, record.clockOutTime)}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Test Time Section */}
         <div className="test-time-box mt-8">
           <div className="test-time-title">⚙ Test Time (for demo)</div>
