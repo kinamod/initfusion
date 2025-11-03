@@ -52,7 +52,7 @@ export default function ClockApp() {
   const API_BASE = 'https://user-api.builder-io.workers.dev/api';
 
   useEffect(() => {
-    fetchUsers();
+    fetchUsers(1, '');
   }, []);
 
   useEffect(() => {
