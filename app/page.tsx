@@ -222,8 +222,16 @@ export default function ClockApp() {
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column - User Selection */}
           <div className="select-fitter-box rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Select Fitter</h2>
-            
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Select Fitter</h2>
+
+            <input
+              type="text"
+              placeholder="Search by name or email..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input mb-6"
+            />
+
             {error && (
               <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded text-red-700 text-sm">
                 {error}
