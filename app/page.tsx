@@ -353,7 +353,9 @@ export default function ClockApp() {
                       fetchUsers(page, searchQuery);
                     },
                     showSizeChanger: false,
+                    position: ['bottomCenter'],
                   }}
+                  scroll={{ y: 400 }}
                   onRow={(record) => ({
                     onClick: () => handleUserClick(record),
                     style: {
