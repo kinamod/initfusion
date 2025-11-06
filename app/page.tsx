@@ -1,65 +1,386 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useEffect, useRef, useState } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+interface LatLng {
+  lat: number;
+  lng: number;
+}
+
+interface Zone {
+  id: string;
+  name: string;
+  coordinates: LatLng[];
+  color: string;
+}
+
+const BIRMINGHAM_UK = { lat: 52.5086, lng: -1.8755 };
+const COLORS = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dfe6e9'];
+
+export default function MapPage() {
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const mapInstance = useRef<L.Map | null>(null);
+  const [zones, setZones] = useState<Zone[]>([]);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [currentPolygon, setCurrentPolygon] = useState<LatLng[]>([]);
+  const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
+  const [editingVertexIndex, setEditingVertexIndex] = useState<number | null>(null);
+  const drawnItemsRef = useRef<L.FeatureGroup | null>(null);
+  const polygonMarkersRef = useRef<L.CircleMarker[]>([]);
+  const editMarkersRef = useRef<L.CircleMarker[]>([]);
+
+  // Initialize map
+  useEffect(() => {
+    if (!mapContainer.current || mapInstance.current) return;
+
+    mapInstance.current = L.map(mapContainer.current).setView(
+      [BIRMINGHAM_UK.lat, BIRMINGHAM_UK.lng],
+      12
+    );
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+    }).addTo(mapInstance.current);
+
+    drawnItemsRef.current = L.featureGroup().addTo(mapInstance.current);
+
+    const map = mapInstance.current;
+
+    const handleMapClick = (e: L.LeafletMouseEvent) => {
+      if (!isDrawing || editingVertexIndex !== null) return;
+
+      const clickedLatLng = e.latlng;
+      const newPolygon = [...currentPolygon, { lat: clickedLatLng.lat, lng: clickedLatLng.lng }];
+      setCurrentPolygon(newPolygon);
+
+      const marker = L.circleMarker([clickedLatLng.lat, clickedLatLng.lng], {
+        radius: 6,
+        fillColor: '#ff7300',
+        color: '#000',
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8,
+      }).addTo(drawnItemsRef.current!);
+      polygonMarkersRef.current.push(marker);
+
+      if (newPolygon.length > 1) {
+        const prevPoint = newPolygon[newPolygon.length - 2];
+        L.polyline(
+          [
+            [prevPoint.lat, prevPoint.lng],
+            [clickedLatLng.lat, clickedLatLng.lng],
+          ],
+          { color: '#ff7300', weight: 2 }
+        ).addTo(drawnItemsRef.current!);
+      }
+    };
+
+    map.on('click', handleMapClick);
+
+    return () => {
+      map.off('click', handleMapClick);
+    };
+  }, [isDrawing, editingVertexIndex, currentPolygon]);
+
+  // Load zones on mount
+  useEffect(() => {
+    fetchZones();
+  }, []);
+
+  const fetchZones = async () => {
+    try {
+      const response = await fetch('/api/zones');
+      const data = await response.json();
+      setZones(data);
+      renderZones(data);
+    } catch (error) {
+      console.error('Error fetching zones:', error);
+    }
+  };
+
+  const renderZones = (zonesToRender: Zone[]) => {
+    if (!drawnItemsRef.current) return;
+
+    zonesToRender.forEach((zone) => {
+      const coordinates = zone.coordinates.map((coord) => [coord.lat, coord.lng] as [number, number]);
+      if (coordinates.length > 1) {
+        L.polyline(coordinates, {
+          color: zone.color,
+          weight: 2,
+          opacity: selectedZoneId === zone.id ? 1 : 0.6,
+        }).addTo(drawnItemsRef.current!);
+
+        if (selectedZoneId === zone.id) {
+          zone.coordinates.forEach((coord, idx) => {
+            const marker = L.circleMarker([coord.lat, coord.lng], {
+              radius: 6,
+              fillColor: '#0066ff',
+              color: '#000',
+              weight: 2,
+              opacity: 1,
+              fillOpacity: 0.9,
+            }).addTo(drawnItemsRef.current!);
+
+            marker.on('mousedown', () => {
+              setEditingVertexIndex(idx);
+            });
+
+            editMarkersRef.current.push(marker);
+          });
+
+          const zoneNameText = L.popup()
+            .setLatLng([zone.coordinates[0].lat, zone.coordinates[0].lng])
+            .setContent(zone.name)
+            .openOn(mapInstance.current!);
+        }
+      }
+    });
+  };
+
+  const handleStartDrawing = () => {
+    setCurrentPolygon([]);
+    setIsDrawing(true);
+    polygonMarkersRef.current.forEach((m) => drawnItemsRef.current?.removeLayer(m));
+    polygonMarkersRef.current = [];
+  };
+
+  const handleCompletePolygon = async () => {
+    if (currentPolygon.length < 3) {
+      alert('Please draw at least 3 points to create a polygon');
+      return;
+    }
+
+    const newZone: Zone = {
+      id: Date.now().toString(),
+      name: `Zone ${zones.length + 1}`,
+      coordinates: currentPolygon,
+      color: COLORS[zones.length % COLORS.length],
+    };
+
+    try {
+      const response = await fetch('/api/zones', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newZone),
+      });
+
+      if (response.ok) {
+        setZones([...zones, newZone]);
+        renderZones([...zones, newZone]);
+        setCurrentPolygon([]);
+        setIsDrawing(false);
+        polygonMarkersRef.current.forEach((m) => drawnItemsRef.current?.removeLayer(m));
+        polygonMarkersRef.current = [];
+      }
+    } catch (error) {
+      console.error('Error saving zone:', error);
+    }
+  };
+
+  const handleCancelDrawing = () => {
+    setIsDrawing(false);
+    setCurrentPolygon([]);
+    polygonMarkersRef.current.forEach((m) => drawnItemsRef.current?.removeLayer(m));
+    polygonMarkersRef.current = [];
+  };
+
+  const handleSelectZone = (zoneId: string) => {
+    setSelectedZoneId(selectedZoneId === zoneId ? null : zoneId);
+    editMarkersRef.current.forEach((m) => drawnItemsRef.current?.removeLayer(m));
+    editMarkersRef.current = [];
+    if (drawnItemsRef.current) {
+      drawnItemsRef.current.clearLayers();
+    }
+    renderZones(zones);
+  };
+
+  const handleDeleteZone = async (zoneId: string) => {
+    try {
+      await fetch('/api/zones', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: zoneId }),
+      });
+
+      const updatedZones = zones.filter((z) => z.id !== zoneId);
+      setZones(updatedZones);
+      if (selectedZoneId === zoneId) {
+        setSelectedZoneId(null);
+      }
+      if (drawnItemsRef.current) {
+        drawnItemsRef.current.clearLayers();
+      }
+      renderZones(updatedZones);
+    } catch (error) {
+      console.error('Error deleting zone:', error);
+    }
+  };
+
+  // Handle vertex dragging
+  useEffect(() => {
+    if (editingVertexIndex === null || !selectedZoneId || !mapInstance.current) return;
+
+    const selectedZone = zones.find((z) => z.id === selectedZoneId);
+    if (!selectedZone) return;
+
+    const handleMouseMove = (e: L.LeafletMouseEvent) => {
+      const newCoordinates = [...selectedZone.coordinates];
+      newCoordinates[editingVertexIndex] = {
+        lat: e.latlng.lat,
+        lng: e.latlng.lng,
+      };
+
+      if (editMarkersRef.current[editingVertexIndex]) {
+        editMarkersRef.current[editingVertexIndex].setLatLng([
+          e.latlng.lat,
+          e.latlng.lng,
+        ]);
+      }
+    };
+
+    const handleMouseUp = async () => {
+      const newCoordinates = [...selectedZone.coordinates];
+      const updatedZone = { ...selectedZone, coordinates: newCoordinates };
+
+      try {
+        await fetch('/api/zones', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedZone),
+        });
+
+        const updatedZones = zones.map((z) => (z.id === selectedZoneId ? updatedZone : z));
+        setZones(updatedZones);
+      } catch (error) {
+        console.error('Error updating zone:', error);
+      }
+
+      setEditingVertexIndex(null);
+      mapInstance.current?.off('mousemove', handleMouseMove);
+      mapInstance.current?.off('mouseup', handleMouseUp);
+    };
+
+    mapInstance.current.on('mousemove', handleMouseMove);
+    mapInstance.current.on('mouseup', handleMouseUp);
+
+    return () => {
+      mapInstance.current?.off('mousemove', handleMouseMove);
+      mapInstance.current?.off('mouseup', handleMouseUp);
+    };
+  }, [editingVertexIndex, selectedZoneId, zones]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="flex h-screen w-full">
+      <div className="flex-1 relative">
+        <div ref={mapContainer} className="w-full h-full" />
+
+        {isDrawing && (
+          <div className="absolute bottom-4 left-4 bg-white shadow-lg rounded-lg p-4 z-10">
+            <p className="text-sm font-medium mb-3 text-gray-700">
+              Points: {currentPolygon.length}
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={handleCompletePolygon}
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium transition"
+              >
+                Complete
+              </button>
+              <button
+                onClick={handleCancelDrawing}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm font-medium transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+
+        {!isDrawing && (
+          <button
+            onClick={handleStartDrawing}
+            className="absolute bottom-4 left-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 z-10 font-medium transition"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Draw Zone
+          </button>
+        )}
+      </div>
+
+      <div className="w-80 bg-white shadow-lg overflow-hidden flex flex-col">
+        <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4">
+          <h2 className="text-lg font-bold">Zones</h2>
         </div>
-      </main>
+
+        <div className="flex-1 overflow-y-auto">
+          {zones.length === 0 ? (
+            <div className="p-4 text-center text-gray-500 text-sm">
+              No zones created yet. Click "Draw Zone" to start.
+            </div>
+          ) : (
+            <table className="w-full text-sm">
+              <thead className="bg-gray-100 border-b">
+                <tr>
+                  <th className="px-3 py-2 text-left font-semibold text-gray-700">Zone Name</th>
+                  <th className="px-3 py-2 text-left font-semibold text-gray-700">Points</th>
+                  <th className="px-3 py-2 text-left font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {zones.map((zone) => (
+                  <tr
+                    key={zone.id}
+                    className={`border-b cursor-pointer transition ${
+                      selectedZoneId === zone.id ? 'bg-blue-50' : 'hover:bg-gray-50'
+                    }`}
+                    onClick={() => handleSelectZone(zone.id)}
+                  >
+                    <td className="px-3 py-2">
+                      <div className="flex items-center gap-2">
+                        <div
+                          className="w-4 h-4 rounded"
+                          style={{ backgroundColor: zone.color }}
+                        />
+                        <span className="font-medium">{zone.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-3 py-2 text-gray-600">{zone.coordinates.length}</td>
+                    <td className="px-3 py-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteZone(zone.id);
+                        }}
+                        className="text-red-600 hover:text-red-800 text-xs font-medium"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+
+        {selectedZoneId && (
+          <div className="border-t bg-gray-50 p-4 max-h-48 overflow-y-auto">
+            <h3 className="text-xs font-bold text-gray-700 mb-2">COORDINATES</h3>
+            <div className="space-y-1 text-xs">
+              {zones
+                .find((z) => z.id === selectedZoneId)
+                ?.coordinates.map((coord, idx) => (
+                  <div key={idx} className="text-gray-600 font-mono">
+                    <strong>Point {idx + 1}:</strong> {coord.lat.toFixed(6)}, {coord.lng.toFixed(6)}
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
