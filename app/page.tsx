@@ -91,6 +91,17 @@ export default function MapPage() {
           { color: '#ff7300', weight: 2 }
         ).addTo(drawnItemsRef.current);
       }
+
+      // Show closing line preview when user has 3+ points
+      if (newPolygon.length >= 3) {
+        L.polyline(
+          [
+            [clickedLatLng.lat, clickedLatLng.lng],
+            [newPolygon[0].lat, newPolygon[0].lng],
+          ],
+          { color: '#ff7300', weight: 2, dashArray: '5, 5' }
+        ).addTo(drawnItemsRef.current);
+      }
     };
 
     map.on('click', handleMapClick);
