@@ -1,8 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+
+let L: typeof import('leaflet') | null = null;
+
+if (typeof window !== 'undefined') {
+  L = require('leaflet');
+}
 
 interface LatLng {
   lat: number;
