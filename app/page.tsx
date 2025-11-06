@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
-import dynamic from 'next/dynamic';
 
 interface LatLng {
   lat: number;
@@ -21,36 +20,51 @@ const COLORS = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dfe6e9'
 
 export default function MapPage() {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<L.Map | null>(null);
+  const mapInstance = useRef<any>(null);
   const [zones, setZones] = useState<Zone[]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentPolygon, setCurrentPolygon] = useState<LatLng[]>([]);
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [editingVertexIndex, setEditingVertexIndex] = useState<number | null>(null);
-  const drawnItemsRef = useRef<L.FeatureGroup | null>(null);
-  const polygonMarkersRef = useRef<L.CircleMarker[]>([]);
-  const editMarkersRef = useRef<L.CircleMarker[]>([]);
+  const drawnItemsRef = useRef<any>(null);
+  const polygonMarkersRef = useRef<any[]>([]);
+  const editMarkersRef = useRef<any[]>([]);
+  const LRef = useRef<any>(null);
 
-  // Initialize map
+  // Initialize Leaflet and map
   useEffect(() => {
     if (!mapContainer.current || mapInstance.current) return;
 
-    mapInstance.current = L.map(mapContainer.current).setView(
-      [BIRMINGHAM_UK.lat, BIRMINGHAM_UK.lng],
-      12
-    );
+    // Dynamically import Leaflet on client side only
+    const initMap = async () => {
+      const L = await import('leaflet');
+      LRef.current = L.default || L;
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      maxZoom: 19,
-    }).addTo(mapInstance.current);
+      mapInstance.current = LRef.current.map(mapContainer.current).setView(
+        [BIRMINGHAM_UK.lat, BIRMINGHAM_UK.lng],
+        12
+      );
 
-    drawnItemsRef.current = L.featureGroup().addTo(mapInstance.current);
+      LRef.current.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+      }).addTo(mapInstance.current);
+
+      drawnItemsRef.current = LRef.current.featureGroup().addTo(mapInstance.current);
+    };
+
+    initMap();
+  }, []);
+
+  // Handle map clicks for drawing
+  useEffect(() => {
+    if (!mapInstance.current || !LRef.current) return;
 
     const map = mapInstance.current;
+    const L = LRef.current;
 
-    const handleMapClick = (e: L.LeafletMouseEvent) => {
+    const handleMapClick = (e: any) => {
       if (!isDrawing || editingVertexIndex !== null) return;
 
       const clickedLatLng = e.latlng;
@@ -64,7 +78,7 @@ export default function MapPage() {
         weight: 1,
         opacity: 1,
         fillOpacity: 0.8,
-      }).addTo(drawnItemsRef.current!);
+      }).addTo(drawnItemsRef.current);
       polygonMarkersRef.current.push(marker);
 
       if (newPolygon.length > 1) {
@@ -75,7 +89,7 @@ export default function MapPage() {
             [clickedLatLng.lat, clickedLatLng.lng],
           ],
           { color: '#ff7300', weight: 2 }
-        ).addTo(drawnItemsRef.current!);
+        ).addTo(drawnItemsRef.current);
       }
     };
 
@@ -96,13 +110,15 @@ export default function MapPage() {
       const response = await fetch('/api/zones');
       const data = await response.json();
       setZones(data);
-      renderZones(data);
+      if (drawnItemsRef.current && LRef.current) {
+        renderZones(data, LRef.current);
+      }
     } catch (error) {
       console.error('Error fetching zones:', error);
     }
   };
 
-  const renderZones = (zonesToRender: Zone[]) => {
+  const renderZones = (zonesToRender: Zone[], L: any) => {
     if (!drawnItemsRef.current) return;
 
     zonesToRender.forEach((zone) => {
@@ -112,7 +128,7 @@ export default function MapPage() {
           color: zone.color,
           weight: 2,
           opacity: selectedZoneId === zone.id ? 1 : 0.6,
-        }).addTo(drawnItemsRef.current!);
+        }).addTo(drawnItemsRef.current);
 
         if (selectedZoneId === zone.id) {
           zone.coordinates.forEach((coord, idx) => {
@@ -123,7 +139,7 @@ export default function MapPage() {
               weight: 2,
               opacity: 1,
               fillOpacity: 0.9,
-            }).addTo(drawnItemsRef.current!);
+            }).addTo(drawnItemsRef.current);
 
             marker.on('mousedown', () => {
               setEditingVertexIndex(idx);
@@ -135,7 +151,7 @@ export default function MapPage() {
           const zoneNameText = L.popup()
             .setLatLng([zone.coordinates[0].lat, zone.coordinates[0].lng])
             .setContent(zone.name)
-            .openOn(mapInstance.current!);
+            .openOn(mapInstance.current);
         }
       }
     });
@@ -169,8 +185,11 @@ export default function MapPage() {
       });
 
       if (response.ok) {
-        setZones([...zones, newZone]);
-        renderZones([...zones, newZone]);
+        const updatedZones = [...zones, newZone];
+        setZones(updatedZones);
+        if (drawnItemsRef.current && LRef.current) {
+          renderZones(updatedZones, LRef.current);
+        }
         setCurrentPolygon([]);
         setIsDrawing(false);
         polygonMarkersRef.current.forEach((m) => drawnItemsRef.current?.removeLayer(m));
@@ -195,7 +214,9 @@ export default function MapPage() {
     if (drawnItemsRef.current) {
       drawnItemsRef.current.clearLayers();
     }
-    renderZones(zones);
+    if (LRef.current) {
+      renderZones(zones, LRef.current);
+    }
   };
 
   const handleDeleteZone = async (zoneId: string) => {
@@ -214,7 +235,9 @@ export default function MapPage() {
       if (drawnItemsRef.current) {
         drawnItemsRef.current.clearLayers();
       }
-      renderZones(updatedZones);
+      if (LRef.current) {
+        renderZones(updatedZones, LRef.current);
+      }
     } catch (error) {
       console.error('Error deleting zone:', error);
     }
@@ -227,7 +250,7 @@ export default function MapPage() {
     const selectedZone = zones.find((z) => z.id === selectedZoneId);
     if (!selectedZone) return;
 
-    const handleMouseMove = (e: L.LeafletMouseEvent) => {
+    const handleMouseMove = (e: any) => {
       const newCoordinates = [...selectedZone.coordinates];
       newCoordinates[editingVertexIndex] = {
         lat: e.latlng.lat,
