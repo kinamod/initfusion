@@ -2,12 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
-
-let L: typeof import('leaflet') | null = null;
-
-if (typeof window !== 'undefined') {
-  L = require('leaflet');
-}
+import dynamic from 'next/dynamic';
 
 interface LatLng {
   lat: number;
