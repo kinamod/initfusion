@@ -318,7 +318,7 @@ export default function MapPage() {
         <div ref={mapContainer} className="w-full h-full" />
 
         {isDrawing && (
-          <div className="absolute bottom-4 left-4 bg-white shadow-lg rounded-lg p-4" style={{ zIndex: 9999 }}>
+          <div className="absolute top-4 right-4 bg-white shadow-lg rounded-lg p-4" style={{ zIndex: 9999 }}>
             <p className="text-sm font-medium mb-3 text-gray-700">
               Points: {currentPolygon.length}
             </p>
