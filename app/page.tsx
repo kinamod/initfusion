@@ -135,17 +135,17 @@ export default function MapPage() {
     zonesToRender.forEach((zone) => {
       const coordinates = zone.coordinates.map((coord) => [coord.lat, coord.lng] as [number, number]);
       if (coordinates.length > 2) {
-        if (selectedZoneId === zone.id) {
-          // Render as filled polygon when selected
-          L.polygon(coordinates, {
-            color: zone.color,
-            weight: 2,
-            opacity: 1,
-            fillColor: zone.color,
-            fillOpacity: 0.35,
-          }).addTo(drawnItemsRef.current);
+        // Always render as closed filled polygon
+        L.polygon(coordinates, {
+          color: zone.color,
+          weight: 2,
+          opacity: selectedZoneId === zone.id ? 1 : 0.7,
+          fillColor: zone.color,
+          fillOpacity: selectedZoneId === zone.id ? 0.35 : 0.2,
+        }).addTo(drawnItemsRef.current);
 
-          // Add vertex markers for editing
+        if (selectedZoneId === zone.id) {
+          // Add vertex markers for editing when selected
           zone.coordinates.forEach((coord, idx) => {
             const marker = L.circleMarker([coord.lat, coord.lng], {
               radius: 6,
@@ -163,18 +163,11 @@ export default function MapPage() {
             editMarkersRef.current.push(marker);
           });
 
-          // Show zone name popup
+          // Show zone name popup when selected
           const zoneNameText = L.popup()
             .setLatLng([zone.coordinates[0].lat, zone.coordinates[0].lng])
             .setContent(zone.name)
             .openOn(mapInstance.current);
-        } else {
-          // Render as outline only when not selected
-          L.polyline(coordinates, {
-            color: zone.color,
-            weight: 2,
-            opacity: 0.6,
-          }).addTo(drawnItemsRef.current);
         }
       }
     });
