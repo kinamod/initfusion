@@ -129,22 +129,24 @@ export default function MapPage() {
     }
   };
 
-  const renderZones = (zonesToRender: Zone[], L: any) => {
+  const renderZones = (zonesToRender: Zone[], L: any, highlightedZoneId: string | null = null) => {
     if (!drawnItemsRef.current) return;
 
     zonesToRender.forEach((zone) => {
       const coordinates = zone.coordinates.map((coord) => [coord.lat, coord.lng] as [number, number]);
+      const isSelected = highlightedZoneId === zone.id;
+
       if (coordinates.length > 2) {
         // Always render as closed filled polygon
         L.polygon(coordinates, {
           color: zone.color,
           weight: 2,
-          opacity: selectedZoneId === zone.id ? 1 : 0.7,
+          opacity: isSelected ? 1 : 0.7,
           fillColor: zone.color,
-          fillOpacity: selectedZoneId === zone.id ? 0.55 : 0.2,
+          fillOpacity: isSelected ? 0.55 : 0.2,
         }).addTo(drawnItemsRef.current);
 
-        if (selectedZoneId === zone.id) {
+        if (isSelected) {
           // Add blue vertex markers for editing when selected
           zone.coordinates.forEach((coord, idx) => {
             const marker = L.circleMarker([coord.lat, coord.lng], {
