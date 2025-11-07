@@ -238,7 +238,8 @@ export default function MapPage() {
       drawnItemsRef.current.clearLayers();
     }
     if (LRef.current) {
-      renderZones(zones, LRef.current);
+      // Pass zoneId directly to renderZones for immediate highlighting
+      renderZones(zones, LRef.current, zoneId);
     }
 
     // Center map on selected zone
