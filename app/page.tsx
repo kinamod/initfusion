@@ -262,14 +262,16 @@ export default function MapPage() {
 
       const updatedZones = zones.filter((z) => z.id !== zoneId);
       setZones(updatedZones);
+      let newSelectedZoneId = selectedZoneId;
       if (selectedZoneId === zoneId) {
         setSelectedZoneId(null);
+        newSelectedZoneId = null;
       }
       if (drawnItemsRef.current) {
         drawnItemsRef.current.clearLayers();
       }
       if (LRef.current) {
-        renderZones(updatedZones, LRef.current);
+        renderZones(updatedZones, LRef.current, newSelectedZoneId);
       }
     } catch (error) {
       console.error('Error deleting zone:', error);
