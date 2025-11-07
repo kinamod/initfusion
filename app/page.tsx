@@ -233,6 +233,17 @@ export default function MapPage() {
     if (LRef.current) {
       renderZones(zones, LRef.current);
     }
+
+    // Center map on selected zone
+    if (selectedZoneId !== zoneId) {
+      const zone = zones.find((z) => z.id === zoneId);
+      if (zone && zone.coordinates.length > 0 && mapInstance.current) {
+        const bounds = LRef.current.latLngBounds(
+          zone.coordinates.map((coord) => [coord.lat, coord.lng])
+        );
+        mapInstance.current.fitBounds(bounds, { padding: [50, 50] });
+      }
+    }
   };
 
   const handleDeleteZone = async (zoneId: string) => {
