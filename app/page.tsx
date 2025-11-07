@@ -224,7 +224,12 @@ export default function MapPage() {
   };
 
   const handleSelectZone = (zoneId: string) => {
-    setSelectedZoneId(selectedZoneId === zoneId ? null : zoneId);
+    // Only select if not already selected; second click does nothing
+    if (selectedZoneId === zoneId) {
+      return;
+    }
+
+    setSelectedZoneId(zoneId);
     editMarkersRef.current.forEach((m) => drawnItemsRef.current?.removeLayer(m));
     editMarkersRef.current = [];
     if (drawnItemsRef.current) {
@@ -235,14 +240,12 @@ export default function MapPage() {
     }
 
     // Center map on selected zone
-    if (selectedZoneId !== zoneId) {
-      const zone = zones.find((z) => z.id === zoneId);
-      if (zone && zone.coordinates.length > 0 && mapInstance.current) {
-        const bounds = LRef.current.latLngBounds(
-          zone.coordinates.map((coord) => [coord.lat, coord.lng])
-        );
-        mapInstance.current.fitBounds(bounds, { padding: [50, 50] });
-      }
+    const zone = zones.find((z) => z.id === zoneId);
+    if (zone && zone.coordinates.length > 0 && mapInstance.current) {
+      const bounds = LRef.current.latLngBounds(
+        zone.coordinates.map((coord) => [coord.lat, coord.lng])
+      );
+      mapInstance.current.fitBounds(bounds, { padding: [50, 50] });
     }
   };
 
