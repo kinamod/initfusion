@@ -143,7 +143,7 @@ export default function MapPage() {
           weight: 2,
           opacity: isSelected ? 1 : 0.7,
           fillColor: zone.color,
-          fillOpacity: isSelected ? 0.70 : 0.2,
+          fillOpacity: isSelected ? 0.35 : 0.2,
         }).addTo(drawnItemsRef.current);
 
         if (isSelected) {
