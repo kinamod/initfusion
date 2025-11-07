@@ -141,19 +141,19 @@ export default function MapPage() {
           weight: 2,
           opacity: selectedZoneId === zone.id ? 1 : 0.7,
           fillColor: zone.color,
-          fillOpacity: selectedZoneId === zone.id ? 0.35 : 0.2,
+          fillOpacity: selectedZoneId === zone.id ? 0.55 : 0.2,
         }).addTo(drawnItemsRef.current);
 
         if (selectedZoneId === zone.id) {
-          // Add vertex markers for editing when selected
+          // Add blue vertex markers for editing when selected
           zone.coordinates.forEach((coord, idx) => {
             const marker = L.circleMarker([coord.lat, coord.lng], {
-              radius: 6,
+              radius: 8,
               fillColor: '#0066ff',
-              color: '#000',
-              weight: 2,
+              color: '#ffffff',
+              weight: 3,
               opacity: 1,
-              fillOpacity: 0.9,
+              fillOpacity: 1,
             }).addTo(drawnItemsRef.current);
 
             marker.on('mousedown', () => {
