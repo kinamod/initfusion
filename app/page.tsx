@@ -122,7 +122,7 @@ export default function MapPage() {
       const data = await response.json();
       setZones(data);
       if (drawnItemsRef.current && LRef.current) {
-        renderZones(data, LRef.current);
+        renderZones(data, LRef.current, selectedZoneId);
       }
     } catch (error) {
       console.error('Error fetching zones:', error);
