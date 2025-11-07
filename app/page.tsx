@@ -206,7 +206,7 @@ export default function MapPage() {
         const updatedZones = [...zones, newZone];
         setZones(updatedZones);
         if (drawnItemsRef.current && LRef.current) {
-          renderZones(updatedZones, LRef.current);
+          renderZones(updatedZones, LRef.current, selectedZoneId);
         }
         setCurrentPolygon([]);
         setIsDrawing(false);
