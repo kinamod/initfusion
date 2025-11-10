@@ -32,6 +32,8 @@ export default function MapPage() {
   const [currentPolygon, setCurrentPolygon] = useState<LatLng[]>([]);
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [editingVertexIndex, setEditingVertexIndex] = useState<number | null>(null);
+  const [showTariffModal, setShowTariffModal] = useState(false);
+  const [editingTariffs, setEditingTariffs] = useState<Tariff[]>([]);
   const drawnItemsRef = useRef<any>(null);
   const polygonMarkersRef = useRef<any[]>([]);
   const editMarkersRef = useRef<any[]>([]);
