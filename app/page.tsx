@@ -250,8 +250,21 @@ export default function MapPage() {
       renderZones(zones, LRef.current, zoneId);
     }
 
-    // Center map on selected zone
+    // Initialize tariffs for the selected zone
     const zone = zones.find((z) => z.id === zoneId);
+    if (zone) {
+      setEditingTariffs(
+        zone.tariffs || [
+          { duration: 'Up to 1 hour', price: 1.0 },
+          { duration: 'Up to 2 hours', price: 2.0 },
+          { duration: 'Up to 6 hours', price: 5.0 },
+          { duration: 'Up to 12 hours', price: 9.0 },
+          { duration: 'Up to 24 hours', price: 15.0 },
+        ]
+      );
+    }
+
+    // Center map on selected zone
     if (zone && zone.coordinates.length > 0 && mapInstance.current) {
       const bounds = LRef.current.latLngBounds(
         zone.coordinates.map((coord) => [coord.lat, coord.lng])
