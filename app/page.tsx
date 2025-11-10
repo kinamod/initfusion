@@ -525,6 +525,48 @@ export default function MapPage() {
           </>
         )}
       </div>
+
+      {showTariffModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+            <h2 className="text-xl font-bold mb-4 text-gray-900">Edit Tariffs</h2>
+            <div className="space-y-4">
+              {editingTariffs.map((tariff, idx) => (
+                <div key={idx} className="flex items-center gap-3">
+                  <label className="flex-1 text-sm font-medium text-gray-700">
+                    {tariff.duration}
+                  </label>
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm text-gray-600">£</span>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={tariff.price}
+                      onChange={(e) => handleUpdateTariffPrice(idx, parseFloat(e.target.value) || 0)}
+                      className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-2 mt-6">
+              <button
+                onClick={handleCloseTariffModal}
+                className="flex-1 px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 font-medium transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveTariffs}
+                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium transition"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
