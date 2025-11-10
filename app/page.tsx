@@ -352,6 +352,49 @@ export default function MapPage() {
     };
   }, [editingVertexIndex, selectedZoneId, zones]);
 
+  const handleOpenTariffModal = () => {
+    setShowTariffModal(true);
+  };
+
+  const handleCloseTariffModal = () => {
+    setShowTariffModal(false);
+  };
+
+  const handleUpdateTariffPrice = (index: number, newPrice: number) => {
+    const updatedTariffs = [...editingTariffs];
+    updatedTariffs[index] = {
+      ...updatedTariffs[index],
+      price: newPrice,
+    };
+    setEditingTariffs(updatedTariffs);
+  };
+
+  const handleSaveTariffs = async () => {
+    if (!selectedZoneId) return;
+
+    const selectedZone = zones.find((z) => z.id === selectedZoneId);
+    if (!selectedZone) return;
+
+    const updatedZone = {
+      ...selectedZone,
+      tariffs: editingTariffs,
+    };
+
+    try {
+      await fetch('/api/zones', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedZone),
+      });
+
+      const updatedZones = zones.map((z) => (z.id === selectedZoneId ? updatedZone : z));
+      setZones(updatedZones);
+      setShowTariffModal(false);
+    } catch (error) {
+      console.error('Error saving tariffs:', error);
+    }
+  };
+
   return (
     <div className="flex h-screen w-full">
       <div className="flex-1 relative">
