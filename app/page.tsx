@@ -8,11 +8,17 @@ interface LatLng {
   lng: number;
 }
 
+interface Tariff {
+  duration: string;
+  price: number;
+}
+
 interface Zone {
   id: string;
   name: string;
   coordinates: LatLng[];
   color: string;
+  tariffs?: Tariff[];
 }
 
 const BIRMINGHAM_UK = { lat: 52.5086, lng: -1.8755 };
