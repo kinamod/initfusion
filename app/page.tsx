@@ -490,18 +490,39 @@ export default function MapPage() {
         </div>
 
         {selectedZoneId && (
-          <div className="border-t bg-gray-50 p-4 max-h-48 overflow-y-auto">
-            <h3 className="text-xs font-bold text-gray-700 mb-2">COORDINATES</h3>
-            <div className="space-y-1 text-xs">
-              {zones
-                .find((z) => z.id === selectedZoneId)
-                ?.coordinates.map((coord, idx) => (
-                  <div key={idx} className="text-gray-600 font-mono">
-                    <strong>Point {idx + 1}:</strong> {coord.lat.toFixed(6)}, {coord.lng.toFixed(6)}
+          <>
+            <div className="border-t bg-gray-50 p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-xs font-bold text-gray-700">TARIFF</h3>
+                <button
+                  onClick={handleOpenTariffModal}
+                  className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                >
+                  Edit
+                </button>
+              </div>
+              <div className="space-y-1 text-xs bg-white rounded p-3 border border-gray-200">
+                {editingTariffs.map((tariff, idx) => (
+                  <div key={idx} className="flex justify-between text-gray-700">
+                    <span>{tariff.duration}</span>
+                    <span className="font-semibold">£{tariff.price.toFixed(2)}</span>
                   </div>
                 ))}
+              </div>
             </div>
-          </div>
+            <div className="border-t bg-gray-50 p-4 max-h-48 overflow-y-auto">
+              <h3 className="text-xs font-bold text-gray-700 mb-2">COORDINATES</h3>
+              <div className="space-y-1 text-xs">
+                {zones
+                  .find((z) => z.id === selectedZoneId)
+                  ?.coordinates.map((coord, idx) => (
+                    <div key={idx} className="text-gray-600 font-mono">
+                      <strong>Point {idx + 1}:</strong> {coord.lat.toFixed(6)}, {coord.lng.toFixed(6)}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </>
         )}
       </div>
     </div>
