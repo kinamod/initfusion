@@ -1,572 +1,206 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import 'leaflet/dist/leaflet.css';
+import Image from 'next/image';
+import Link from 'next/link';
+import { MapPin } from 'lucide-react';
 
-interface LatLng {
-  lat: number;
-  lng: number;
-}
-
-interface Tariff {
-  duration: string;
-  price: number;
-}
-
-interface Zone {
-  id: string;
-  name: string;
-  coordinates: LatLng[];
-  color: string;
-  tariffs?: Tariff[];
-}
-
-const BIRMINGHAM_UK = { lat: 52.5086, lng: -1.8755 };
-const COLORS = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dfe6e9'];
-
-export default function MapPage() {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<any>(null);
-  const [zones, setZones] = useState<Zone[]>([]);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [currentPolygon, setCurrentPolygon] = useState<LatLng[]>([]);
-  const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
-  const [editingVertexIndex, setEditingVertexIndex] = useState<number | null>(null);
-  const [showTariffModal, setShowTariffModal] = useState(false);
-  const [editingTariffs, setEditingTariffs] = useState<Tariff[]>([]);
-  const drawnItemsRef = useRef<any>(null);
-  const polygonMarkersRef = useRef<any[]>([]);
-  const editMarkersRef = useRef<any[]>([]);
-  const LRef = useRef<any>(null);
-
-  // Initialize Leaflet and map
-  useEffect(() => {
-    if (!mapContainer.current || mapInstance.current) return;
-
-    // Dynamically import Leaflet on client side only
-    const initMap = async () => {
-      const L = await import('leaflet');
-      LRef.current = L.default || L;
-
-      mapInstance.current = LRef.current.map(mapContainer.current).setView(
-        [BIRMINGHAM_UK.lat, BIRMINGHAM_UK.lng],
-        12
-      );
-
-      LRef.current.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 19,
-      }).addTo(mapInstance.current);
-
-      drawnItemsRef.current = LRef.current.featureGroup().addTo(mapInstance.current);
-    };
-
-    initMap();
-  }, []);
-
-  // Handle map clicks for drawing
-  useEffect(() => {
-    if (!mapInstance.current || !LRef.current) return;
-
-    const map = mapInstance.current;
-    const L = LRef.current;
-
-    const handleMapClick = (e: any) => {
-      if (!isDrawing || editingVertexIndex !== null) return;
-
-      const clickedLatLng = e.latlng;
-      const newPolygon = [...currentPolygon, { lat: clickedLatLng.lat, lng: clickedLatLng.lng }];
-      setCurrentPolygon(newPolygon);
-
-      const marker = L.circleMarker([clickedLatLng.lat, clickedLatLng.lng], {
-        radius: 6,
-        fillColor: '#ff7300',
-        color: '#000',
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.8,
-      }).addTo(drawnItemsRef.current);
-      polygonMarkersRef.current.push(marker);
-
-      if (newPolygon.length > 1) {
-        const prevPoint = newPolygon[newPolygon.length - 2];
-        L.polyline(
-          [
-            [prevPoint.lat, prevPoint.lng],
-            [clickedLatLng.lat, clickedLatLng.lng],
-          ],
-          { color: '#ff7300', weight: 2 }
-        ).addTo(drawnItemsRef.current);
-      }
-
-      // Show closing line preview when user has 3+ points
-      if (newPolygon.length >= 3) {
-        L.polyline(
-          [
-            [clickedLatLng.lat, clickedLatLng.lng],
-            [newPolygon[0].lat, newPolygon[0].lng],
-          ],
-          { color: '#ff7300', weight: 2, dashArray: '5, 5' }
-        ).addTo(drawnItemsRef.current);
-      }
-    };
-
-    map.on('click', handleMapClick);
-
-    return () => {
-      map.off('click', handleMapClick);
-    };
-  }, [isDrawing, editingVertexIndex, currentPolygon]);
-
-  // Load zones on mount
-  useEffect(() => {
-    fetchZones();
-  }, []);
-
-  const fetchZones = async () => {
-    try {
-      const response = await fetch('/api/zones');
-      const data = await response.json();
-      setZones(data);
-      if (drawnItemsRef.current && LRef.current) {
-        renderZones(data, LRef.current, selectedZoneId);
-      }
-    } catch (error) {
-      console.error('Error fetching zones:', error);
-    }
-  };
-
-  const renderZones = (zonesToRender: Zone[], L: any, highlightedZoneId: string | null = null) => {
-    if (!drawnItemsRef.current) return;
-
-    zonesToRender.forEach((zone) => {
-      const coordinates = zone.coordinates.map((coord) => [coord.lat, coord.lng] as [number, number]);
-      const isSelected = highlightedZoneId === zone.id;
-
-      if (coordinates.length > 2) {
-        // Always render as closed filled polygon
-        L.polygon(coordinates, {
-          color: zone.color,
-          weight: 2,
-          opacity: isSelected ? 1 : 0.7,
-          fillColor: zone.color,
-          fillOpacity: isSelected ? 0.35 : 0.2,
-        }).addTo(drawnItemsRef.current);
-
-        if (isSelected) {
-          // Add blue vertex markers for editing when selected
-          zone.coordinates.forEach((coord, idx) => {
-            const marker = L.circleMarker([coord.lat, coord.lng], {
-              radius: 8,
-              fillColor: '#0066ff',
-              color: '#ffffff',
-              weight: 3,
-              opacity: 1,
-              fillOpacity: 1,
-            }).addTo(drawnItemsRef.current);
-
-            marker.on('mousedown', () => {
-              setEditingVertexIndex(idx);
-            });
-
-            editMarkersRef.current.push(marker);
-          });
-
-          // Show zone name popup when selected
-          const zoneNameText = L.popup()
-            .setLatLng([zone.coordinates[0].lat, zone.coordinates[0].lng])
-            .setContent(zone.name)
-            .openOn(mapInstance.current);
-        }
-      }
-    });
-  };
-
-  const handleStartDrawing = () => {
-    setCurrentPolygon([]);
-    setIsDrawing(true);
-    polygonMarkersRef.current.forEach((m) => drawnItemsRef.current?.removeLayer(m));
-    polygonMarkersRef.current = [];
-  };
-
-  const handleCompletePolygon = async () => {
-    if (currentPolygon.length < 3) {
-      alert('Please draw at least 3 points to create a polygon');
-      return;
-    }
-
-    const newZone: Zone = {
-      id: Date.now().toString(),
-      name: `Zone ${zones.length + 1}`,
-      coordinates: currentPolygon,
-      color: COLORS[zones.length % COLORS.length],
-    };
-
-    try {
-      const response = await fetch('/api/zones', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newZone),
-      });
-
-      if (response.ok) {
-        const updatedZones = [...zones, newZone];
-        setZones(updatedZones);
-        if (drawnItemsRef.current && LRef.current) {
-          renderZones(updatedZones, LRef.current, selectedZoneId);
-        }
-        setCurrentPolygon([]);
-        setIsDrawing(false);
-        polygonMarkersRef.current.forEach((m) => drawnItemsRef.current?.removeLayer(m));
-        polygonMarkersRef.current = [];
-      }
-    } catch (error) {
-      console.error('Error saving zone:', error);
-    }
-  };
-
-  const handleCancelDrawing = () => {
-    setIsDrawing(false);
-    setCurrentPolygon([]);
-    polygonMarkersRef.current.forEach((m) => drawnItemsRef.current?.removeLayer(m));
-    polygonMarkersRef.current = [];
-  };
-
-  const handleSelectZone = (zoneId: string) => {
-    // Only select if not already selected; second click does nothing
-    if (selectedZoneId === zoneId) {
-      return;
-    }
-
-    setSelectedZoneId(zoneId);
-    editMarkersRef.current.forEach((m) => drawnItemsRef.current?.removeLayer(m));
-    editMarkersRef.current = [];
-    if (drawnItemsRef.current) {
-      drawnItemsRef.current.clearLayers();
-    }
-    if (LRef.current) {
-      // Pass zoneId directly to renderZones for immediate highlighting
-      renderZones(zones, LRef.current, zoneId);
-    }
-
-    // Initialize tariffs for the selected zone
-    const zone = zones.find((z) => z.id === zoneId);
-    if (zone) {
-      setEditingTariffs(
-        zone.tariffs || [
-          { duration: 'Up to 1 hour', price: 1.0 },
-          { duration: 'Up to 2 hours', price: 2.0 },
-          { duration: 'Up to 6 hours', price: 5.0 },
-          { duration: 'Up to 12 hours', price: 9.0 },
-          { duration: 'Up to 24 hours', price: 15.0 },
-        ]
-      );
-    }
-
-    // Center map on selected zone
-    if (zone && zone.coordinates.length > 0 && mapInstance.current) {
-      const bounds = LRef.current.latLngBounds(
-        zone.coordinates.map((coord) => [coord.lat, coord.lng])
-      );
-      mapInstance.current.fitBounds(bounds, { padding: [50, 50] });
-    }
-  };
-
-  const handleDeleteZone = async (zoneId: string) => {
-    try {
-      await fetch('/api/zones', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: zoneId }),
-      });
-
-      const updatedZones = zones.filter((z) => z.id !== zoneId);
-      setZones(updatedZones);
-      let newSelectedZoneId = selectedZoneId;
-      if (selectedZoneId === zoneId) {
-        setSelectedZoneId(null);
-        newSelectedZoneId = null;
-      }
-      if (drawnItemsRef.current) {
-        drawnItemsRef.current.clearLayers();
-      }
-      if (LRef.current) {
-        renderZones(updatedZones, LRef.current, newSelectedZoneId);
-      }
-    } catch (error) {
-      console.error('Error deleting zone:', error);
-    }
-  };
-
-  // Handle vertex dragging
-  useEffect(() => {
-    if (editingVertexIndex === null || !selectedZoneId || !mapInstance.current) return;
-
-    const selectedZone = zones.find((z) => z.id === selectedZoneId);
-    if (!selectedZone) return;
-
-    const handleMouseMove = (e: any) => {
-      const newCoordinates = [...selectedZone.coordinates];
-      newCoordinates[editingVertexIndex] = {
-        lat: e.latlng.lat,
-        lng: e.latlng.lng,
-      };
-
-      if (editMarkersRef.current[editingVertexIndex]) {
-        editMarkersRef.current[editingVertexIndex].setLatLng([
-          e.latlng.lat,
-          e.latlng.lng,
-        ]);
-      }
-    };
-
-    const handleMouseUp = async () => {
-      const newCoordinates = [...selectedZone.coordinates];
-      const updatedZone = { ...selectedZone, coordinates: newCoordinates };
-
-      try {
-        await fetch('/api/zones', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updatedZone),
-        });
-
-        const updatedZones = zones.map((z) => (z.id === selectedZoneId ? updatedZone : z));
-        setZones(updatedZones);
-      } catch (error) {
-        console.error('Error updating zone:', error);
-      }
-
-      setEditingVertexIndex(null);
-      mapInstance.current?.off('mousemove', handleMouseMove);
-      mapInstance.current?.off('mouseup', handleMouseUp);
-    };
-
-    mapInstance.current.on('mousemove', handleMouseMove);
-    mapInstance.current.on('mouseup', handleMouseUp);
-
-    return () => {
-      mapInstance.current?.off('mousemove', handleMouseMove);
-      mapInstance.current?.off('mouseup', handleMouseUp);
-    };
-  }, [editingVertexIndex, selectedZoneId, zones]);
-
-  const handleOpenTariffModal = () => {
-    setShowTariffModal(true);
-  };
-
-  const handleCloseTariffModal = () => {
-    setShowTariffModal(false);
-  };
-
-  const handleUpdateTariffPrice = (index: number, newPrice: number) => {
-    const updatedTariffs = [...editingTariffs];
-    updatedTariffs[index] = {
-      ...updatedTariffs[index],
-      price: newPrice,
-    };
-    setEditingTariffs(updatedTariffs);
-  };
-
-  const handleSaveTariffs = async () => {
-    if (!selectedZoneId) return;
-
-    const selectedZone = zones.find((z) => z.id === selectedZoneId);
-    if (!selectedZone) return;
-
-    const updatedZone = {
-      ...selectedZone,
-      tariffs: editingTariffs,
-    };
-
-    try {
-      await fetch('/api/zones', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedZone),
-      });
-
-      const updatedZones = zones.map((z) => (z.id === selectedZoneId ? updatedZone : z));
-      setZones(updatedZones);
-      setShowTariffModal(false);
-    } catch (error) {
-      console.error('Error saving tariffs:', error);
-    }
-  };
-
+export default function LandingPage() {
   return (
-    <div className="flex h-screen w-full">
-      <div className="flex-1 relative">
-        <div ref={mapContainer} className="w-full h-full" />
-
-        {isDrawing && (
-          <div className="absolute top-4 right-4 bg-white shadow-lg rounded-lg p-4" style={{ zIndex: 9999 }}>
-            <p className="text-sm font-medium mb-3 text-gray-700">
-              Points: {currentPolygon.length}
-            </p>
-            <div className="flex gap-2">
-              <button
-                onClick={handleCompletePolygon}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium transition"
-              >
-                Complete
-              </button>
-              <button
-                onClick={handleCancelDrawing}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm font-medium transition"
-              >
-                Cancel
-              </button>
-            </div>
+    <div className="flex flex-col min-h-screen bg-white">
+      {/* Header */}
+      <header className="border-b border-gray-200 bg-white sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img
+              src="https://a.storyblok.com/f/333594/109x31/6532cf8b92/logo_main_menu.svg"
+              alt="Arrive Tooling"
+              className="h-8"
+            />
+            <h1 className="text-xl font-semibold text-gray-900">Arrive Tooling Home</h1>
           </div>
-        )}
-
-        {!isDrawing && (
-          <button
-            onClick={handleStartDrawing}
-            className="absolute top-4 right-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium transition"
-            style={{ zIndex: 9999 }}
-          >
-            Draw Zone
-          </button>
-        )}
-      </div>
-
-      <div className="w-80 bg-white shadow-lg overflow-hidden flex flex-col">
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4">
-          <h2 className="text-lg font-bold">Zones</h2>
+          <nav className="flex items-center gap-6">
+            <a href="#" className="text-sm text-gray-700 hover:text-gray-900 transition">
+              Documentation
+            </a>
+            <a href="#" className="text-sm text-gray-700 hover:text-gray-900 transition">
+              Support
+            </a>
+          </nav>
         </div>
+      </header>
 
-        <div className="flex-1 overflow-y-auto">
-          {zones.length === 0 ? (
-            <div className="p-4 text-center text-gray-500 text-sm">
-              No zones created yet. Click "Draw Zone" to start.
-            </div>
-          ) : (
-            <table className="w-full text-sm">
-              <thead className="bg-gray-100 border-b">
-                <tr>
-                  <th className="px-3 py-2 text-left font-semibold text-gray-700">Zone Name</th>
-                  <th className="px-3 py-2 text-left font-semibold text-gray-700">Points</th>
-                  <th className="px-3 py-2 text-left font-semibold text-gray-700">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {zones.map((zone) => (
-                  <tr
-                    key={zone.id}
-                    className={`border-b cursor-pointer transition ${
-                      selectedZoneId === zone.id ? 'bg-blue-50' : 'hover:bg-gray-50'
-                    }`}
-                    onClick={() => handleSelectZone(zone.id)}
-                  >
-                    <td className="px-3 py-2">
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="w-4 h-4 rounded"
-                          style={{ backgroundColor: zone.color }}
-                        />
-                        <span className="font-medium">{zone.name}</span>
-                      </div>
-                    </td>
-                    <td className="px-3 py-2 text-gray-600">{zone.coordinates.length}</td>
-                    <td className="px-3 py-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteZone(zone.id);
-                        }}
-                        className="text-red-600 hover:text-red-800 text-xs font-medium"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
+      {/* Main Content */}
+      <main className="flex-1">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          {/* Hero Section */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Parking Management Tools
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Comprehensive solutions for managing parking zones, tariffs, and operations
+            </p>
+          </div>
 
-        {selectedZoneId && (
-          <>
-            <div className="border-t bg-gray-50 p-4">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-xs font-bold text-gray-700">TARIFF</h3>
-                <button
-                  onClick={handleOpenTariffModal}
-                  className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-                >
-                  Edit
-                </button>
-              </div>
-              <div className="space-y-1 text-xs bg-white rounded p-3 border border-gray-200">
-                {editingTariffs.map((tariff, idx) => (
-                  <div key={idx} className="flex justify-between text-gray-700">
-                    <span>{tariff.duration}</span>
-                    <span className="font-semibold">£{tariff.price.toFixed(2)}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="border-t bg-gray-50 p-4 max-h-48 overflow-y-auto">
-              <h3 className="text-xs font-bold text-gray-700 mb-2">COORDINATES</h3>
-              <div className="space-y-1 text-xs">
-                {zones
-                  .find((z) => z.id === selectedZoneId)
-                  ?.coordinates.map((coord, idx) => (
-                    <div key={idx} className="text-gray-600 font-mono">
-                      <strong>Point {idx + 1}:</strong> {coord.lat.toFixed(6)}, {coord.lng.toFixed(6)}
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-
-      {showTariffModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
-            <h2 className="text-xl font-bold mb-4 text-gray-900">Edit Tariffs</h2>
-            <div className="space-y-4">
-              {editingTariffs.map((tariff, idx) => (
-                <div key={idx} className="flex items-center gap-3">
-                  <label className="flex-1 text-sm font-medium text-gray-700">
-                    {tariff.duration}
-                  </label>
-                  <div className="flex items-center gap-1">
-                    <span className="text-sm text-gray-600">£</span>
-                    <input
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      value={tariff.price}
-                      onChange={(e) => handleUpdateTariffPrice(idx, parseFloat(e.target.value) || 0)}
-                      className="w-20 px-2 py-1 border border-gray-300 rounded text-sm"
-                    />
+          {/* Apps Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {/* Parking Zone Manager Card */}
+            <Link href="/zones">
+              <div className="h-full rounded-lg border border-gray-200 bg-white hover:shadow-lg hover:border-blue-300 transition-all duration-200 overflow-hidden cursor-pointer group">
+                {/* Card Header Background */}
+                <div className="h-32 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center">
+                  <div className="bg-blue-600 rounded-lg p-4 group-hover:bg-blue-700 transition">
+                    <MapPin className="w-8 h-8 text-white" />
                   </div>
                 </div>
-              ))}
-            </div>
-            <div className="flex gap-2 mt-6">
-              <button
-                onClick={handleCloseTariffModal}
-                className="flex-1 px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 font-medium transition"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSaveTariffs}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium transition"
-              >
-                Save
-              </button>
+
+                {/* Card Content */}
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition">
+                    Parking Zone Manager
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Create and manage parking zones on an interactive map, configure tariffs, and visualize parking areas with real-time coordinate tracking.
+                  </p>
+
+                  {/* Card Footer */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="text-xs font-medium text-gray-500">Launch Application</span>
+                    <span className="text-blue-600 group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          {/* Info Section */}
+          <div className="bg-gray-50 rounded-lg border border-gray-200 p-8 mb-12">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Start</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">1</div>
+                <h4 className="font-medium text-gray-900 mb-2">Create Zones</h4>
+                <p className="text-sm text-gray-600">
+                  Draw parking zones directly on the interactive map by clicking points to define boundaries.
+                </p>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">2</div>
+                <h4 className="font-medium text-gray-900 mb-2">Configure Tariffs</h4>
+                <p className="text-sm text-gray-600">
+                  Set pricing for different time durations and manage tariff structures for each zone.
+                </p>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">3</div>
+                <h4 className="font-medium text-gray-900 mb-2">Track & Optimize</h4>
+                <p className="text-sm text-gray-600">
+                  View coordinates, edit zone shapes, and maintain your parking infrastructure efficiently.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      )}
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-200 bg-gray-50 mt-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            {/* Company Info */}
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Arrive Tooling</h4>
+              <p className="text-sm text-gray-600">
+                Enterprise parking management solutions for modern cities.
+              </p>
+            </div>
+
+            {/* Product Links */}
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Product</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                    Features
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                    Pricing
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                    Updates
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Resources */}
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Resources</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                    Documentation
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                    API Reference
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                    Blog
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Legal</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                    Terms of Service
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Footer Bottom */}
+          <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between">
+            <p className="text-sm text-gray-600">
+              &copy; 2024 Arrive Tooling. All rights reserved.
+            </p>
+            <div className="flex items-center gap-6 mt-4 md:mt-0">
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                Twitter
+              </a>
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                LinkedIn
+              </a>
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
