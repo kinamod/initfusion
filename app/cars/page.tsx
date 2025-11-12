@@ -100,10 +100,14 @@ export default function CarsTrackingPage() {
     if (!simulationEnabled || zones.length === 0) return;
 
     const simulationInterval = setInterval(async () => {
-      // 70% chance to add a new car entry
-      if (Math.random() < 0.7) {
+      // 90% chance to add a new car entry every cycle
+      if (Math.random() < 0.9) {
         const randomZone = zones[Math.floor(Math.random() * zones.length)];
         const randomPlate = RANDOM_PLATES[Math.floor(Math.random() * RANDOM_PLATES.length)];
+
+        // Set entry time to 5-15 minutes ago (simulated time)
+        const minutesAgo = Math.floor(Math.random() * 10) + 5;
+        const entryTime = new Date(Date.now() - minutesAgo * 60 * 1000);
 
         try {
           await fetch('/api/cars', {
@@ -112,7 +116,7 @@ export default function CarsTrackingPage() {
             body: JSON.stringify({
               licensePlate: randomPlate,
               zoneId: randomZone.id,
-              entryTime: new Date().toISOString(),
+              entryTime: entryTime.toISOString(),
             }),
           });
         } catch (error) {
@@ -120,10 +124,10 @@ export default function CarsTrackingPage() {
         }
       }
 
-      // For each car in a zone without exit, 40% chance to simulate exit
+      // For each car in a zone without exit, 70% chance to simulate exit per cycle
       const activeCars = cars.filter((c) => !c.exitTime);
       for (const car of activeCars) {
-        if (Math.random() < 0.4) {
+        if (Math.random() < 0.7) {
           const zone = zones.find((z) => z.id === car.zoneId);
           const shouldBuyTicket = Math.random() < 0.65; // 65% buy tickets, 35% don't
           const hasPCN = !shouldBuyTicket; // PCN if no ticket
@@ -132,13 +136,18 @@ export default function CarsTrackingPage() {
             const randomTariff = zone.tariffs[Math.floor(Math.random() * zone.tariffs.length)];
             const minutes = parseInt(randomTariff.duration.match(/\d+/)?.[0] || '0') * 60;
 
+            // Ticket bought a few minutes after entry
+            const minutesAfterEntry = Math.floor(Math.random() * 3) + 1;
+            const entryTimeMs = new Date(car.entryTime).getTime();
+            const ticketTime = new Date(entryTimeMs + minutesAfterEntry * 60 * 1000);
+
             try {
               await fetch('/api/cars', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                   id: car.id,
-                  ticketBoughtTime: new Date().toISOString(),
+                  ticketBoughtTime: ticketTime.toISOString(),
                   ticketDuration: minutes,
                   ticketPrice: randomTariff.price,
                 }),
@@ -165,7 +174,7 @@ export default function CarsTrackingPage() {
       }
 
       await fetchCars();
-    }, 4000); // Simulate every 4 seconds
+    }, 1000); // Simulate every 1 second (equals 10 minutes of simulated time)
 
     return () => clearInterval(simulationInterval);
   }, [simulationEnabled, zones, cars]);
