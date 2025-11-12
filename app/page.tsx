@@ -185,6 +185,106 @@ export default function LandingPage() {
             </div>
           </div>
 
+          {/* RingGo Applications Section */}
+          <div className="mb-12 rounded-lg border border-gray-200 p-8" style={{ backgroundColor: '#f8f3fb' }}>
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">RingGo</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Parking Zone Manager Card - RingGo */}
+              <Link href="/ringgo1">
+                <div className="h-full rounded-lg border border-gray-200 bg-white hover:shadow-lg transition-all duration-200 overflow-hidden cursor-pointer group relative" style={{ borderColor: '#FE52A2' }}>
+                  {/* RingGo Badge */}
+                  <div className="absolute top-4 right-4 z-10">
+                    <span
+                      className="inline-block px-3 py-1 rounded-full text-xs font-bold text-white"
+                      style={{ backgroundColor: '#882877' }}
+                    >
+                      RingGo
+                    </span>
+                  </div>
+
+                  {/* Card Header Background */}
+                  <div
+                    className="h-32 flex items-center justify-center"
+                    style={{ backgroundImage: 'linear-gradient(135deg, #882877, #5d1d52)' }}
+                  >
+                    <div
+                      className="rounded-lg p-4 group-hover:opacity-80 transition"
+                      style={{ backgroundColor: '#FE52A2' }}
+                    >
+                      <MapPin className="w-8 h-8" style={{ color: '#882877' }} />
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="p-6">
+                    <h3
+                      className="text-lg font-semibold mb-2 group-hover:transition"
+                      style={{ color: '#882877' }}
+                    >
+                      Parking Zone Manager
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Create and manage parking zones on an interactive map, configure tariffs, and visualize parking areas with real-time coordinate tracking.
+                    </p>
+
+                    {/* Card Footer */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      <span className="text-xs font-medium text-gray-500">Launch Application</span>
+                      <span style={{ color: '#882877' }} className="group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              {/* Car Tracking Card - RingGo */}
+              <Link href="/ringgo2">
+                <div className="h-full rounded-lg border border-gray-200 bg-white hover:shadow-lg transition-all duration-200 overflow-hidden cursor-pointer group relative" style={{ borderColor: '#FE52A2' }}>
+                  {/* RingGo Badge */}
+                  <div className="absolute top-4 right-4 z-10">
+                    <span
+                      className="inline-block px-3 py-1 rounded-full text-xs font-bold text-white"
+                      style={{ backgroundColor: '#882877' }}
+                    >
+                      RingGo
+                    </span>
+                  </div>
+
+                  {/* Card Header Background */}
+                  <div
+                    className="h-32 flex items-center justify-center"
+                    style={{ backgroundImage: 'linear-gradient(135deg, #882877, #5d1d52)' }}
+                  >
+                    <div
+                      className="rounded-lg p-4 group-hover:opacity-80 transition"
+                      style={{ backgroundColor: '#FE52A2' }}
+                    >
+                      <Car className="w-8 h-8" style={{ color: '#882877' }} />
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="p-6">
+                    <h3
+                      className="text-lg font-semibold mb-2 group-hover:transition"
+                      style={{ color: '#882877' }}
+                    >
+                      Car Tracking & Enforcement
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Track vehicles entering and exiting your parking zones, manage ticket purchases, and identify unpaid parking violations in real-time.
+                    </p>
+
+                    {/* Card Footer */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      <span className="text-xs font-medium text-gray-500">Launch Application</span>
+                      <span style={{ color: '#882877' }} className="group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+
           {/* Info Section */}
           <div className="bg-gray-50 rounded-lg border border-gray-200 p-8 mb-12">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Start</h3>
