@@ -25,7 +25,7 @@ export default function LandingPage() {
 
           {/* Apps Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {/* Parking Zone Manager Card */}
+            {/* Parking Zone Manager Card - Arrive */}
             <Link href="/zones">
               <div className="h-full rounded-lg border border-gray-200 bg-white hover:shadow-lg hover:border-blue-300 transition-all duration-200 overflow-hidden cursor-pointer group">
                 {/* Card Header Background */}
@@ -53,7 +53,7 @@ export default function LandingPage() {
               </div>
             </Link>
 
-            {/* Car Tracking Card */}
+            {/* Car Tracking Card - Arrive */}
             <Link href="/cars">
               <div className="h-full rounded-lg border border-gray-200 bg-white hover:shadow-lg hover:border-green-300 transition-all duration-200 overflow-hidden cursor-pointer group">
                 {/* Card Header Background */}
@@ -76,6 +76,100 @@ export default function LandingPage() {
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                     <span className="text-xs font-medium text-gray-500">Launch Application</span>
                     <span className="text-green-600 group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* Parking Zone Manager Card - Parkopedia */}
+            <Link href="/parkzone2">
+              <div className="h-full rounded-lg border border-gray-200 bg-white hover:shadow-lg transition-all duration-200 overflow-hidden cursor-pointer group relative" style={{ borderColor: '#02FF7F' }}>
+                {/* Parkopedia Badge */}
+                <div className="absolute top-4 right-4 z-10">
+                  <span
+                    className="inline-block px-3 py-1 rounded-full text-xs font-bold text-white"
+                    style={{ backgroundColor: '#0A0944' }}
+                  >
+                    Parkopedia
+                  </span>
+                </div>
+
+                {/* Card Header Background */}
+                <div
+                  className="h-32 flex items-center justify-center"
+                  style={{ backgroundImage: 'linear-gradient(135deg, #0A0944, #1a0d5e)' }}
+                >
+                  <div
+                    className="rounded-lg p-4 group-hover:opacity-80 transition"
+                    style={{ backgroundColor: '#02FF7F' }}
+                  >
+                    <MapPin className="w-8 h-8" style={{ color: '#0A0944' }} />
+                  </div>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6">
+                  <h3
+                    className="text-lg font-semibold mb-2 group-hover:transition"
+                    style={{ color: '#0A0944' }}
+                  >
+                    Parking Zone Manager
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Create and manage parking zones on an interactive map, configure tariffs, and visualize parking areas with real-time coordinate tracking.
+                  </p>
+
+                  {/* Card Footer */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="text-xs font-medium text-gray-500">Launch Application</span>
+                    <span style={{ color: '#0A0944' }} className="group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* Car Tracking Card - Parkopedia */}
+            <Link href="/parkcar2">
+              <div className="h-full rounded-lg border border-gray-200 bg-white hover:shadow-lg transition-all duration-200 overflow-hidden cursor-pointer group relative" style={{ borderColor: '#02FF7F' }}>
+                {/* Parkopedia Badge */}
+                <div className="absolute top-4 right-4 z-10">
+                  <span
+                    className="inline-block px-3 py-1 rounded-full text-xs font-bold text-white"
+                    style={{ backgroundColor: '#0A0944' }}
+                  >
+                    Parkopedia
+                  </span>
+                </div>
+
+                {/* Card Header Background */}
+                <div
+                  className="h-32 flex items-center justify-center"
+                  style={{ backgroundImage: 'linear-gradient(135deg, #0A0944, #1a0d5e)' }}
+                >
+                  <div
+                    className="rounded-lg p-4 group-hover:opacity-80 transition"
+                    style={{ backgroundColor: '#02FF7F' }}
+                  >
+                    <Car className="w-8 h-8" style={{ color: '#0A0944' }} />
+                  </div>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6">
+                  <h3
+                    className="text-lg font-semibold mb-2 group-hover:transition"
+                    style={{ color: '#0A0944' }}
+                  >
+                    Car Tracking & Enforcement
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Track vehicles entering and exiting your parking zones, manage ticket purchases, and identify unpaid parking violations in real-time.
+                  </p>
+
+                  {/* Card Footer */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="text-xs font-medium text-gray-500">Launch Application</span>
+                    <span style={{ color: '#0A0944' }} className="group-hover:translate-x-1 transition-transform">→</span>
                   </div>
                 </div>
               </div>
