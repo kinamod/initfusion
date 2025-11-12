@@ -364,9 +364,10 @@ Cycles through palette as new zones are created.
 ### 7.2 Sidebar Sections
 
 **Header**:
-- Background: Gradient blue (from-blue-600 to-blue-700)
+- Background: RingGo purple gradient (from #882877 to #6b1d52)
 - Text: White, large font (text-lg), bold
 - Padding: 16px
+- Branding: RingGo color scheme
 
 **Zones Table**:
 - Header background: Gray (bg-gray-100)
