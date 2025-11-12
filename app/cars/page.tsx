@@ -421,10 +421,10 @@ export default function CarsTrackingPage() {
           </div>
 
           {/* All Left Cars Table */}
-          {getAlleftCars.length > 0 && (
+          {getAllLeftCars.length > 0 && (
             <div className="rounded-lg border border-gray-200 overflow-hidden">
               <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900">All Historical Records ({getAlleftCars.length})</h3>
+                <h3 className="text-lg font-semibold text-gray-900">All Historical Records ({getAllLeftCars.length})</h3>
               </div>
               <div className="p-6">
                 <div className="overflow-x-auto">
@@ -455,7 +455,7 @@ export default function CarsTrackingPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {getAlleftCars.map((car) => {
+                      {getAllLeftCars.map((car) => {
                         const zone = zones.find((z) => z.id === car.zoneId);
                         const status = getPaymentStatus(car, zone?.tariffs);
                         const parkedTime = car.exitTime
