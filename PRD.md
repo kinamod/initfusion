@@ -9,17 +9,22 @@ A web-based application for managing parking zones with interactive map-based zo
 ## 1. Overview
 
 ### Purpose
-Provide a user-friendly interface for parking administrators to:
+Provide a user-friendly interface for RingGo parking administrators to:
 - Create and manage parking zones on an interactive map
 - View and edit zone coordinates
 - Configure and manage tariff structures for each zone
 - Visualize zones on a map with color differentiation
+- Deliver a consistent RingGo branded experience
 
 ### Target Users
-Parking administrators and management staff
+RingGo parking administrators and management staff
 
 ### Platform
 Web application built with Next.js, React, and Leaflet
+
+### Brand
+RingGo - www.ringgo.co.uk
+Route: `/ringgo1`
 
 ---
 
