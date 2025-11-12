@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { MapPin } from 'lucide-react';
+import { MapPin, Car } from 'lucide-react';
 import { Header } from './components/Header';
 
 export default function LandingPage() {
