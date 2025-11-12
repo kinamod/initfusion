@@ -82,6 +82,7 @@ export default function CarsTrackingPage() {
   const [zones, setZones] = useState<Zone[]>([]);
   const [cars, setCars] = useState<Car[]>([]);
   const [expandedZones, setExpandedZones] = useState<Set<string>>(new Set());
+  const [simulationEnabled, setSimulationEnabled] = useState(false);
 
   useEffect(() => {
     fetchZones();
@@ -93,6 +94,81 @@ export default function CarsTrackingPage() {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Simulation logic
+  useEffect(() => {
+    if (!simulationEnabled || zones.length === 0) return;
+
+    const simulationInterval = setInterval(async () => {
+      // 70% chance to add a new car entry
+      if (Math.random() < 0.7) {
+        const randomZone = zones[Math.floor(Math.random() * zones.length)];
+        const randomPlate = RANDOM_PLATES[Math.floor(Math.random() * RANDOM_PLATES.length)];
+
+        try {
+          await fetch('/api/cars', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              licensePlate: randomPlate,
+              zoneId: randomZone.id,
+              entryTime: new Date().toISOString(),
+            }),
+          });
+        } catch (error) {
+          console.error('Error simulating car entry:', error);
+        }
+      }
+
+      // For each car in a zone without exit, 40% chance to simulate exit
+      const activeCars = cars.filter((c) => !c.exitTime);
+      for (const car of activeCars) {
+        if (Math.random() < 0.4) {
+          const zone = zones.find((z) => z.id === car.zoneId);
+          const shouldBuyTicket = Math.random() < 0.65; // 65% buy tickets, 35% don't
+          const hasPCN = !shouldBuyTicket; // PCN if no ticket
+
+          if (shouldBuyTicket && zone?.tariffs) {
+            const randomTariff = zone.tariffs[Math.floor(Math.random() * zone.tariffs.length)];
+            const minutes = parseInt(randomTariff.duration.match(/\d+/)?.[0] || '0') * 60;
+
+            try {
+              await fetch('/api/cars', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  id: car.id,
+                  ticketBoughtTime: new Date().toISOString(),
+                  ticketDuration: minutes,
+                  ticketPrice: randomTariff.price,
+                }),
+              });
+            } catch (error) {
+              console.error('Error simulating ticket purchase:', error);
+            }
+          }
+
+          try {
+            await fetch('/api/cars', {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                id: car.id,
+                exitTime: new Date().toISOString(),
+                hasPCN: hasPCN,
+              }),
+            });
+          } catch (error) {
+            console.error('Error simulating car exit:', error);
+          }
+        }
+      }
+
+      await fetchCars();
+    }, 4000); // Simulate every 4 seconds
+
+    return () => clearInterval(simulationInterval);
+  }, [simulationEnabled, zones, cars]);
 
   const fetchZones = async () => {
     try {
