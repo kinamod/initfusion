@@ -653,9 +653,31 @@ npm run dev
 
 ---
 
-## 19. Revision History
+## 19. RingGo Branding Standards
+
+### 19.1 RingGo Color Palette
+| Element | Color Code | Purpose |
+|---------|-----------|---------|
+| Primary Brand Color | #882877 | Buttons, headers, primary UI elements |
+| Accent Color | #FE52A2 | Highlights, interactive elements, drawing mode |
+| Logo | RingGo Arrive Logo | https://myringgo.co.uk/images/easypark/Ringgo_Arrive.png |
+| Success State | #10B981 | Positive actions |
+| Error State | #EF4444 | Destructive actions |
+
+### 19.2 Brand Guidelines
+- All primary buttons must use RingGo Purple (#882877)
+- Interactive elements and accents must use RingGo Pink (#FE52A2)
+- Header must display RingGo logo and purple gradient background
+- Maintain consistent RingGo branding across all pages and components
+- Sidebar header gradient: from #882877 to #6b1d52
+- Selected zone rows use purple-tinted background
+
+---
+
+## 20. Revision History
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 2.0 | 2024 | RingGo branded version - Purple/Pink theme with RingGo logo |
 | 1.0 | 2024 | Initial PRD - Complete feature set with tariff management |
 
