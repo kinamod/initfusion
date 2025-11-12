@@ -4,7 +4,7 @@
     "licensePlate": "UV31UVW",
     "zoneId": "1762448480725",
     "entryTime": "2025-11-12T14:02:25.549Z",
-    "exitTime": null,
+    "exitTime": "2025-11-12T14:12:41.648Z",
     "ticketBoughtTime": null,
     "ticketDuration": null,
     "ticketPrice": null
@@ -14,6 +14,46 @@
     "licensePlate": "IJ25IJK",
     "zoneId": "1762448480725",
     "entryTime": "2025-11-12T14:02:27.379Z",
+    "exitTime": null,
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null
+  },
+  {
+    "id": "1762956775834",
+    "licensePlate": "ST30STU",
+    "zoneId": "1762448501626",
+    "entryTime": "2025-11-12T14:12:55.814Z",
+    "exitTime": null,
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null
+  },
+  {
+    "id": "1762956781474",
+    "licensePlate": "AB21ABC",
+    "zoneId": "1762448501626",
+    "entryTime": "2025-11-12T14:13:01.455Z",
+    "exitTime": null,
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null
+  },
+  {
+    "id": "1762956783195",
+    "licensePlate": "KL26KLM",
+    "zoneId": "1762448501626",
+    "entryTime": "2025-11-12T14:13:03.173Z",
+    "exitTime": null,
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null
+  },
+  {
+    "id": "1762956786868",
+    "licensePlate": "WX32XYZ",
+    "zoneId": "1762871836199",
+    "entryTime": "2025-11-12T14:13:06.849Z",
     "exitTime": null,
     "ticketBoughtTime": null,
     "ticketDuration": null,
