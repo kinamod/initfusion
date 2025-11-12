@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
+import { Header } from '../components/Header';
 
 interface LatLng {
   lat: number;
