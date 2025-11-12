@@ -392,10 +392,12 @@ Cycles through palette as new zones are created.
 ### 7.3 Colors & Styling
 | Element | Color | Details |
 |---------|-------|---------|
-| Primary Button | Blue (#2563eb) | Hover: darker blue |
+| Primary Button | RingGo Purple (#882877) | Hover: darker purple |
+| Accent/Highlight | RingGo Pink (#FE52A2) | Drawing mode, complete button |
 | Delete Button | Red (#dc2626) | Text only, hover darker |
-| Edit Button (Tariff) | Blue (#2563eb) | Small, inline in section |
-| Selected Zone Row | Light Blue (bg-blue-50) | Background highlight |
+| Edit Button (Tariff) | RingGo Purple (#882877) | Small, inline in section |
+| Selected Zone Row | Purple tint (bg-purple-50) | Background highlight |
+| Sidebar Header | Purple gradient | From #882877 to #6b1d52 |
 | Modal Overlay | Black | 50% opacity |
 | Modal Background | White | Rounded corners, shadow |
 
