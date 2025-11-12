@@ -83,6 +83,8 @@ export default function CarsTrackingPage() {
   const [cars, setCars] = useState<Car[]>([]);
   const [expandedZones, setExpandedZones] = useState<Set<string>>(new Set());
   const [simulationEnabled, setSimulationEnabled] = useState(false);
+  const carsRef = useRef<Car[]>([]);
+  const zonesRef = useRef<Zone[]>([]);
 
   useEffect(() => {
     fetchZones();
@@ -95,14 +97,26 @@ export default function CarsTrackingPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Simulation logic
+  // Update refs when state changes
   useEffect(() => {
-    if (!simulationEnabled || zones.length === 0) return;
+    carsRef.current = cars;
+  }, [cars]);
+
+  useEffect(() => {
+    zonesRef.current = zones;
+  }, [zones]);
+
+  // Simulation logic - isolated from state changes
+  useEffect(() => {
+    if (!simulationEnabled || zonesRef.current.length === 0) return;
 
     const simulationInterval = setInterval(async () => {
+      const currentZones = zonesRef.current;
+      const currentCars = carsRef.current;
+
       // 90% chance to add a new car entry every cycle
       if (Math.random() < 0.9) {
-        const randomZone = zones[Math.floor(Math.random() * zones.length)];
+        const randomZone = currentZones[Math.floor(Math.random() * currentZones.length)];
         const randomPlate = RANDOM_PLATES[Math.floor(Math.random() * RANDOM_PLATES.length)];
 
         // Set entry time to 5-15 minutes ago (simulated time)
@@ -125,10 +139,10 @@ export default function CarsTrackingPage() {
       }
 
       // For each car in a zone without exit, 70% chance to simulate exit per cycle
-      const activeCars = cars.filter((c) => !c.exitTime);
+      const activeCars = currentCars.filter((c) => !c.exitTime);
       for (const car of activeCars) {
         if (Math.random() < 0.7) {
-          const zone = zones.find((z) => z.id === car.zoneId);
+          const zone = currentZones.find((z) => z.id === car.zoneId);
           const shouldBuyTicket = Math.random() < 0.65; // 65% buy tickets, 35% don't
           const hasPCN = !shouldBuyTicket; // PCN if no ticket
 
@@ -173,11 +187,12 @@ export default function CarsTrackingPage() {
         }
       }
 
-      await fetchCars();
+      // Fetch cars in background, don't wait for it
+      fetchCars().catch(console.error);
     }, 1000); // Simulate every 1 second (equals 10 minutes of simulated time)
 
     return () => clearInterval(simulationInterval);
-  }, [simulationEnabled, zones, cars]);
+  }, [simulationEnabled]);
 
   const fetchZones = async () => {
     try {
