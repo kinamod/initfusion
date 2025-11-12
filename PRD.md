@@ -77,7 +77,7 @@ Route: `/ringgo1`
 - When a zone is selected:
   - Fill opacity increases to 0.35
   - Stroke opacity increases to 1
-  - Blue vertices (radius: 8px) appear at all coordinates
+  - Purple vertices (radius: 8px, color: #882877) appear at all coordinates
   - Map automatically centers and fits the zone with padding [50, 50]
   - Vertices can be dragged to edit zone shape
   - Dragged vertices are persisted to storage
