@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1762956145579",
+    "licensePlate": "UV31UVW",
+    "zoneId": "1762448480725",
+    "entryTime": "2025-11-12T14:02:25.549Z",
+    "exitTime": null,
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null
+  },
+  {
+    "id": "1762956147405",
+    "licensePlate": "IJ25IJK",
+    "zoneId": "1762448480725",
+    "entryTime": "2025-11-12T14:02:27.379Z",
+    "exitTime": null,
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null
+  }
+]
