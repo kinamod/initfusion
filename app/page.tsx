@@ -52,6 +52,34 @@ export default function LandingPage() {
                 </div>
               </div>
             </Link>
+
+            {/* Car Tracking Card */}
+            <Link href="/cars">
+              <div className="h-full rounded-lg border border-gray-200 bg-white hover:shadow-lg hover:border-green-300 transition-all duration-200 overflow-hidden cursor-pointer group">
+                {/* Card Header Background */}
+                <div className="h-32 bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center">
+                  <div className="bg-green-600 rounded-lg p-4 group-hover:bg-green-700 transition">
+                    <Car className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-green-600 transition">
+                    Car Tracking & Enforcement
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Track vehicles entering and exiting your parking zones, manage ticket purchases, and identify unpaid parking violations in real-time.
+                  </p>
+
+                  {/* Card Footer */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="text-xs font-medium text-gray-500">Launch Application</span>
+                    <span className="text-green-600 group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
           </div>
 
           {/* Info Section */}
