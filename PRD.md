@@ -35,17 +35,19 @@ Route: `/ringgo1`
 - **Initial Location**: Birmingham, UK (coordinates: 52.5086, -1.8755)
 - **Zoom Level**: Level 12 on load
 - **Responsiveness**: Map fills the left side of the screen (flex-1 width)
+- **Branding**: RingGo branded header with primary color #882877
 
 ### 2.2 Zone Drawing
 - Click "Draw Zone" button to activate drawing mode
+  - Button background: RingGo primary purple (#882877)
 - Click on the map to place points (vertices) for zone polygon
-- Points are marked with orange circle markers (radius: 6px)
-- Lines connect consecutive points
+- Points are marked with pink circle markers (#FE52A2) (radius: 6px)
+- Lines connect consecutive points in RingGo accent pink (#FE52A2)
 - Dashed preview line connects the last point to the first point (when 3+ points)
 - Auto-close polygon (last point connects to first point)
 - Visual feedback showing current point count during drawing
-- "Complete" button to save the zone
-- "Cancel" button to discard the drawing
+- "Complete" button (RingGo accent pink background #FE52A2)
+- "Cancel" button to discard the drawing (red background)
 
 ### 2.3 Zone Management Table
 **Location**: Right sidebar (fixed width: 320px)
