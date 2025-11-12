@@ -405,8 +405,8 @@ Cycles through palette as new zones are created.
 
 **"Draw Zone" Button**:
 - Position: Absolute, top-right (top-4, right-4)
-- Background: Blue (bg-blue-600)
-- Hover: Darker blue (hover:bg-blue-700)
+- Background: RingGo Purple (#882877)
+- Hover: Darker purple with opacity change
 - Text: White, medium weight
 - Border-radius: rounded
 - Z-index: 9999
@@ -414,7 +414,7 @@ Cycles through palette as new zones are created.
 **"Complete" / "Cancel" Buttons** (Drawing mode):
 - Position: Floating overlay, top-right
 - Displayed together in a row
-- Complete: Green background (bg-green-600)
+- Complete: RingGo Pink (#FE52A2) with dark purple text
 - Cancel: Red background (bg-red-600)
 - Both have hover states
 
@@ -424,7 +424,7 @@ Cycles through palette as new zones are created.
 - Small font size
 
 **"Edit" Button** (Tariff):
-- Small blue button inline in tariff header
+- Small RingGo Purple (#882877) button inline in tariff header
 - Rounded, small padding
 
 ### 7.5 Modal Styling
