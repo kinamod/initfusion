@@ -105,8 +105,8 @@ Route: `/ringgo1`
 - Each tariff shows duration and price input field
 - Currency symbol: £ (GBP)
 - Input accepts decimal values (up to 2 decimal places)
-- "Cancel" button closes modal without saving
-- "Save" button persists changes to storage and closes modal
+- "Cancel" button closes modal without saving (gray background)
+- "Save" button persists changes to storage and closes modal (RingGo purple #882877)
 
 ### 2.6 Coordinates Display
 **Location**: Bottom of sidebar (below tariffs)
