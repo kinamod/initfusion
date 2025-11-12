@@ -373,7 +373,7 @@ Cycles through palette as new zones are created.
 - Header background: Gray (bg-gray-100)
 - Header border: Bottom border
 - Rows: Selectable, with hover effect
-- Selected row: Blue background (bg-blue-50)
+- Selected row: Purple-tinted background (derived from #882877)
 - Scrollable area
 
 **Tariff Section**:
