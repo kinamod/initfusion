@@ -639,7 +639,7 @@ npm run dev
 - [ ] Interactive map loads centered on Birmingham, UK
 - [ ] User can draw zones by clicking map points
 - [ ] Zones display in table with color indicators
-- [ ] Clicking zone highlights it on map with blue vertices
+- [ ] Clicking zone highlights it on map with purple vertices (#882877)
 - [ ] Vertices can be dragged to edit zone shape
 - [ ] Tariffs display in section above coordinates
 - [ ] Clicking "Edit" opens tariff modal
