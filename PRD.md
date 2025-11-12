@@ -452,7 +452,7 @@ Cycles through palette as new zones are created.
 **Modal Buttons**:
 - Two buttons in footer: Cancel and Save
 - Cancel: Gray background (bg-gray-300)
-- Save: Blue background (bg-blue-600)
+- Save: RingGo Purple background (#882877)
 - Equal flex distribution
 - Gap between buttons: 8px
 
