@@ -397,8 +397,10 @@ export default function MapPage() {
   };
 
   return (
-    <div className="flex h-screen w-full">
-      <div className="flex-1 relative">
+    <div className="flex flex-col h-screen w-full">
+      <Header />
+      <div className="flex flex-1">
+        <div className="flex-1 relative">
         <div ref={mapContainer} className="w-full h-full" />
 
         {isDrawing && (
@@ -525,6 +527,7 @@ export default function MapPage() {
             </div>
           </>
         )}
+        </div>
       </div>
 
       {showTariffModal && (
