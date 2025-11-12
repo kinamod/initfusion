@@ -21,6 +21,7 @@ interface Car {
   ticketBoughtTime: string | null;
   ticketDuration: number | null;
   ticketPrice: number | null;
+  hasPCN?: boolean;
 }
 
 const RANDOM_PLATES = [
