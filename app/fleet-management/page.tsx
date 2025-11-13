@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import 'leaflet/dist/leaflet.css';
 
 interface LatLng {
@@ -318,12 +317,10 @@ export default function ParkingZoneManagement() {
     <div className="flex flex-col h-screen">
       <header className="text-white p-4" style={{ background: '#0A0944' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Image
+          <img
             src="https://www.parkopedia.com/public/images/header-logo-new@2x.png"
             alt="Parkopedia"
-            width={150}
-            height={40}
-            className="w-auto brightness-0 invert self-stretch"
+            className="h-8 w-auto brightness-0 invert"
           />
           <div className="flex items-center gap-6">
             <span className="text-sm font-semibold">Parking Zone Manager</span>
