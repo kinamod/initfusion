@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --arrive-blue: #2563eb;
-  --arrive-blue-dark: #1d4ed8;
+  --arrive-purple: #5F016F;
+  --arrive-purple-dark: #4a0156;
+  --arrive-purple-light: #7a0a8a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --arrive-blue: #3b82f6;
-    --arrive-blue-dark: #2563eb;
+    --arrive-purple: #8a2a9a;
+    --arrive-purple-dark: #5F016F;
+    --arrive-purple-light: #a044b0;
   }
 }
 
@@ -18,7 +20,7 @@
 }
 
 .header-wrapper {
-  background: linear-gradient(135deg, var(--arrive-blue) 0%, var(--arrive-blue-dark) 100%);
+  background: linear-gradient(135deg, var(--arrive-purple) 0%, var(--arrive-purple-dark) 100%);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 2rem 0;
@@ -28,30 +30,9 @@
   padding: 0.5rem 0;
 }
 
-.logo-icon {
-  width: 3.5rem;
-  height: 3.5rem;
-  background: white;
-  border-radius: var(--radius-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.875rem;
-  font-weight: 700;
-  color: var(--arrive-blue);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.logo-title {
-  color: white;
-  line-height: 1;
-  margin: 0;
-}
-
-.logo-subtitle {
-  color: rgba(255, 255, 255, 0.9);
-  letter-spacing: 0.05em;
-  margin-top: 0.25rem;
+.arrive-logo {
+  height: auto;
+  filter: brightness(0) invert(1);
 }
 
 .tool-link {
@@ -73,7 +54,7 @@
 .tool-icon-wrapper {
   width: 4rem;
   height: 4rem;
-  background: var(--blue-3);
+  background: var(--purple-3);
   border-radius: var(--radius-3);
   display: flex;
   align-items: center;
@@ -81,7 +62,7 @@
 }
 
 .tool-arrow {
-  color: var(--blue-9);
+  color: var(--purple-9);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
   margin-top: auto;
