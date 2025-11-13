@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import 'leaflet/dist/leaflet.css';
 
 interface LatLng {
@@ -317,11 +318,14 @@ export default function ParkingZoneManagement() {
     <div className="flex flex-col h-screen">
       <header className="text-white p-4" style={{ background: '#0A0944' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets%2F76e39d6cb5b24501bed5149204e569f5%2Fb70e9ce726e84da6bb75c36c98e3fceb?format=webp&width=800"
-            alt="Parkopedia"
-            className="h-8 w-auto brightness-0 invert"
-          />
+          <Link href="/">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F76e39d6cb5b24501bed5149204e569f5%2Fb70e9ce726e84da6bb75c36c98e3fceb?format=webp&width=800"
+              alt="Parkopedia"
+              className="h-8 w-auto brightness-0 invert"
+              style={{ cursor: 'pointer' }}
+            />
+          </Link>
           <div className="flex items-center gap-6">
             <span className="text-sm font-semibold">Parking Zone Manager</span>
           </div>

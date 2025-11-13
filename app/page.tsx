@@ -1,5 +1,6 @@
 import { Container, Section, Flex, Grid, Card, Heading, Text, Link, Box } from "@radix-ui/themes";
 import Image from "next/image";
+import NextLink from "next/link";
 import { MapPin, Route, Car as CarIcon, BarChart3, MessageCircle, CreditCard, Wrench, TrendingUp } from "lucide-react";
 
 export default function Home() {
@@ -65,14 +66,17 @@ export default function Home() {
       <Box className="header-wrapper">
         <Container size="4">
           <Flex align="center" gap="3" className="logo-container">
-            <Image
-              src="https://a.storyblok.com/f/333594/109x31/6532cf8b92/logo_main_menu.svg"
-              alt="Arrive Mobility Solutions"
-              width={109}
-              height={31}
-              priority
-              className="arrive-logo"
-            />
+            <NextLink href="/">
+              <Image
+                src="https://a.storyblok.com/f/333594/109x31/6532cf8b92/logo_main_menu.svg"
+                alt="Arrive Mobility Solutions"
+                width={109}
+                height={31}
+                priority
+                className="arrive-logo"
+                style={{ cursor: 'pointer' }}
+              />
+            </NextLink>
           </Flex>
         </Container>
       </Box>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
 import { Car as CarIcon, MapPin } from 'lucide-react';
 
 interface Zone {
@@ -257,11 +258,14 @@ export default function ParkopediaCarTracking() {
     <div className="min-h-screen bg-gray-50">
       <header className="sticky top-0 z-50 p-4 shadow-md" style={{ background: 'white' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <img
-            src="https://myringgo.co.uk/images/easypark/Ringgo_Arrive.png"
-            alt="RingGo by Arrive"
-            className="h-8 w-auto"
-          />
+          <Link href="/">
+            <img
+              src="https://myringgo.co.uk/images/easypark/Ringgo_Arrive.png"
+              alt="RingGo by Arrive"
+              className="h-8 w-auto"
+              style={{ cursor: 'pointer' }}
+            />
+          </Link>
           <div className="flex items-center gap-4">
             <label className="flex items-center gap-2 cursor-pointer">
               <span className="text-sm text-gray-700">Simulation</span>
