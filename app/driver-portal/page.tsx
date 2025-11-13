@@ -125,7 +125,7 @@ export default function ParkopediaCarTracking() {
         await buyTicket(car.id);
       }
 
-      if (Math.random() < 0.7) {
+      if (Math.random() < 0.85) {
         await exitCar(car.id);
       }
     }
@@ -217,7 +217,7 @@ export default function ParkopediaCarTracking() {
 
     const ticketTime = new Date(car.ticketBoughtTime).getTime();
     const now = Date.now();
-    const elapsed = (now - ticketTime) / (1000 * 60);
+    const elapsed = ((now - ticketTime) / (1000 * 60)) * 10;
 
     if (elapsed > (car.ticketDuration || 0)) {
       return { text: 'Expired', color: '#EF4444' };
@@ -255,7 +255,7 @@ export default function ParkopediaCarTracking() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="text-white p-4" style={{ background: '#0A0944' }}>
+      <header className="sticky top-0 z-50 text-white p-4" style={{ background: '#0A0944' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <img
             src="https://cdn.builder.io/api/v1/image/assets%2F76e39d6cb5b24501bed5149204e569f5%2Fb70e9ce726e84da6bb75c36c98e3fceb?format=webp&width=800"
@@ -318,9 +318,10 @@ export default function ParkopediaCarTracking() {
 
                 <div className="p-4">
                   <h4 className="font-medium text-sm mb-2">In Zone</h4>
-                  <table className="w-full text-sm mb-4">
-                    <tbody>
-                      {inZoneCars.map(car => {
+                  <div className="max-h-80 overflow-y-auto">
+                    <table className="w-full text-sm mb-4">
+                      <tbody>
+                        {inZoneCars.map(car => {
                         const status = getTicketStatus(car);
                         return (
                           <tr key={car.id} className="border-b">
@@ -341,17 +342,19 @@ export default function ParkopediaCarTracking() {
                             </td>
                           </tr>
                         );
-                      })}
-                      {inZoneCars.length === 0 && (
-                        <tr><td colSpan={2} className="py-2 text-gray-400 text-center">No vehicles</td></tr>
-                      )}
-                    </tbody>
-                  </table>
+                        })}
+                        {inZoneCars.length === 0 && (
+                          <tr><td colSpan={2} className="py-2 text-gray-400 text-center">No vehicles</td></tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
 
                   <h4 className="font-medium text-sm mb-2">Left</h4>
-                  <table className="w-full text-sm">
-                    <tbody>
-                      {getZoneCars(zone.id, false).slice(0, 3).map(car => {
+                  <div className="max-h-60 overflow-y-auto">
+                    <table className="w-full text-sm">
+                      <tbody>
+                        {getZoneCars(zone.id, false).slice(0, 10).map(car => {
                         const status = getTicketStatus(car);
                         return (
                           <tr key={car.id} className="border-b">
@@ -372,12 +375,13 @@ export default function ParkopediaCarTracking() {
                             </td>
                           </tr>
                         );
-                      })}
-                      {getZoneCars(zone.id, false).length === 0 && (
-                        <tr><td colSpan={2} className="py-2 text-gray-400 text-center">No vehicles</td></tr>
-                      )}
-                    </tbody>
-                  </table>
+                        })}
+                        {getZoneCars(zone.id, false).length === 0 && (
+                          <tr><td colSpan={2} className="py-2 text-gray-400 text-center">No vehicles</td></tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             );
