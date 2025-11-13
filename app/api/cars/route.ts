@@ -16,6 +16,22 @@ interface Car {
   hasPCN?: boolean;
 }
 
+// Simple mutex to prevent race conditions
+let lock: Promise<void> = Promise.resolve();
+
+async function withLock<T>(fn: () => Promise<T>): Promise<T> {
+  const release = lock;
+  let resolve: () => void;
+  lock = new Promise(r => { resolve = r; });
+  
+  try {
+    await release;
+    return await fn();
+  } finally {
+    resolve!();
+  }
+}
+
 async function readCars(): Promise<Car[]> {
   try {
     const data = await fs.readFile(CARS_FILE, 'utf-8');
@@ -41,24 +57,29 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const cars = await readCars();
     
-    const newCar: Car = {
-      id: Date.now().toString(),
-      licensePlate: body.licensePlate,
-      zoneId: body.zoneId,
-      entryTime: body.entryTime || new Date().toISOString(),
-      exitTime: null,
-      ticketBoughtTime: null,
-      ticketDuration: null,
-      ticketPrice: null,
-      hasPCN: false
-    };
+    const result = await withLock(async () => {
+      const cars = await readCars();
+      
+      const newCar: Car = {
+        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+        licensePlate: body.licensePlate,
+        zoneId: body.zoneId,
+        entryTime: body.entryTime || new Date().toISOString(),
+        exitTime: null,
+        ticketBoughtTime: null,
+        ticketDuration: null,
+        ticketPrice: null,
+        hasPCN: false
+      };
+      
+      cars.push(newCar);
+      await writeCars(cars);
+      
+      return newCar;
+    });
     
-    cars.push(newCar);
-    await writeCars(cars);
-    
-    return NextResponse.json(newCar, { status: 201 });
+    return NextResponse.json(result, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create car entry' }, { status: 500 });
   }
@@ -67,18 +88,26 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const cars = await readCars();
     
-    const index = cars.findIndex(c => c.id === body.id);
-    if (index === -1) {
+    const result = await withLock(async () => {
+      const cars = await readCars();
+      
+      const index = cars.findIndex(c => c.id === body.id);
+      if (index === -1) {
+        throw new Error('Car not found');
+      }
+      
+      cars[index] = { ...cars[index], ...body };
+      await writeCars(cars);
+      
+      return cars[index];
+    });
+    
+    return NextResponse.json(result);
+  } catch (error: any) {
+    if (error.message === 'Car not found') {
       return NextResponse.json({ error: 'Car not found' }, { status: 404 });
     }
-    
-    cars[index] = { ...cars[index], ...body };
-    await writeCars(cars);
-    
-    return NextResponse.json(cars[index]);
-  } catch (error) {
     return NextResponse.json({ error: 'Failed to update car' }, { status: 500 });
   }
 }
@@ -86,10 +115,12 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const body = await request.json();
-    const cars = await readCars();
     
-    const filteredCars = cars.filter(c => c.id !== body.id);
-    await writeCars(filteredCars);
+    await withLock(async () => {
+      const cars = await readCars();
+      const filteredCars = cars.filter(c => c.id !== body.id);
+      await writeCars(filteredCars);
+    });
     
     return NextResponse.json({ success: true });
   } catch (error) {
