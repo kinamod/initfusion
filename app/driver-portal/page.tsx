@@ -262,7 +262,7 @@ export default function ParkopediaCarTracking() {
             alt="Parkopedia"
             width={150}
             height={40}
-            className="h-8 w-auto"
+            className="h-8 w-auto brightness-0 invert"
           />
           <div className="flex items-center gap-4">
             <label className="flex items-center gap-2 cursor-pointer">
