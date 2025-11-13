@@ -1,65 +1,161 @@
+import { Container, Section, Flex, Grid, Card, Heading, Text, Link, Box } from "@radix-ui/themes";
 import Image from "next/image";
+import NextLink from "next/link";
+import { MapPin, Route, Car as CarIcon, BarChart3, MessageCircle, CreditCard, Wrench, TrendingUp } from "lucide-react";
 
 export default function Home() {
+  const tools = [
+    {
+      title: "Parking Zone Manager",
+      description: "Create and manage parking zones with interactive map and tariff configuration",
+      icon: MapPin,
+      href: "/fleet-management",
+      brand: "parkopedia",
+      brandColor: "#0A0944",
+      accentColor: "#02FF7F"
+    },
+    {
+      title: "Route Optimization",
+      description: "Optimize routes for efficient mobility solutions",
+      icon: Route,
+      href: "/route-optimization"
+    },
+    {
+      title: "Parking Enforcement",
+      description: "Track vehicles, manage tickets, and identify parking violations in real-time",
+      icon: CarIcon,
+      href: "/driver-portal",
+      brand: "ringgo",
+      brandColor: "#7B3F8F",
+      accentColor: "#FF4B9D"
+    },
+    {
+      title: "Analytics Dashboard",
+      description: "Real-time analytics and reporting for mobility insights",
+      icon: BarChart3,
+      href: "/analytics"
+    },
+    {
+      title: "Customer Service",
+      description: "Manage customer inquiries and support tickets",
+      icon: MessageCircle,
+      href: "/customer-service"
+    },
+    {
+      title: "Billing & Payments",
+      description: "Handle invoicing, payments, and financial records",
+      icon: CreditCard,
+      href: "/billing"
+    },
+    {
+      title: "Maintenance Scheduler",
+      description: "Schedule and track vehicle maintenance operations",
+      icon: Wrench,
+      href: "/maintenance"
+    },
+    {
+      title: "Reporting Tools",
+      description: "Generate custom reports and export data",
+      icon: TrendingUp,
+      href: "/reporting"
+    }
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <Box className="page-wrapper">
+      <Box className="header-wrapper">
+        <Container size="4">
+          <Flex align="center" gap="3" className="logo-container">
+            <NextLink href="/">
+              <Image
+                src="https://a.storyblok.com/f/333594/109x31/6532cf8b92/logo_main_menu.svg"
+                alt="Arrive Mobility Solutions"
+                width={109}
+                height={31}
+                priority
+                className="arrive-logo"
+                style={{ cursor: 'pointer' }}
+              />
+            </NextLink>
+          </Flex>
+        </Container>
+      </Box>
+
+      <Section size="3">
+        <Container size="4">
+          <Flex direction="column" gap="6">
+            <Box style={{ textAlign: "center" }}>
+              <Heading as="h2" size="8" mb="2">
+                Consolidated Internal Tools
+              </Heading>
+              <Text size="4" color="gray">
+                Access all your Arrive mobility management tools in one place
+              </Text>
+            </Box>
+
+            <Grid columns={{ initial: "1", sm: "2", md: "3", lg: "4" }} gap="4">
+              {tools.map((tool) => {
+                const IconComponent = tool.icon;
+                const hasBrand = tool.brand;
+
+                return (
+                  <Link
+                    key={tool.title}
+                    href={tool.href}
+                    className="tool-link"
+                    style={!hasBrand ? {
+                      opacity: 0.5,
+                      filter: 'grayscale(1)',
+                      cursor: 'not-allowed',
+                      pointerEvents: 'none'
+                    } : {}}
+                  >
+                    <Card
+                      className="tool-card"
+                      style={hasBrand ? {
+                        borderTop: `3px solid ${tool.accentColor}`,
+                        position: 'relative'
+                      } : {}}
+                    >
+                      <Flex direction="column" gap="3">
+                        <Box
+                          className="tool-icon-wrapper"
+                          style={hasBrand ? {
+                            color: tool.brandColor
+                          } : {}}
+                        >
+                          <IconComponent size={32} strokeWidth={1.5} />
+                        </Box>
+                        <Heading
+                          as="h3"
+                          size="5"
+                          style={hasBrand ? {
+                            color: tool.brandColor
+                          } : {}}
+                        >
+                          {tool.title}
+                        </Heading>
+                        <Text size="2" color="gray">
+                          {tool.description}
+                        </Text>
+                        <Text
+                          size="4"
+                          className="tool-arrow"
+                          style={hasBrand ? {
+                            color: tool.accentColor
+                          } : {}}
+                        >
+                          →
+                        </Text>
+                      </Flex>
+                    </Card>
+                  </Link>
+                );
+              })}
+            </Grid>
+          </Flex>
+        </Container>
+      </Section>
+    </Box>
   );
 }
