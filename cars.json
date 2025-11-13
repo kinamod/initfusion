@@ -70,16 +70,49 @@
     "licensePlate": "AA34AAB",
     "zoneId": "1762448480725",
     "entryTime": "2025-11-12T15:41:46.549Z",
-    "exitTime": null,
+    "exitTime": "2025-11-13T14:26:14.526Z",
     "ticketBoughtTime": null,
     "ticketDuration": null,
-    "ticketPrice": null
+    "ticketPrice": null,
+    "hasPCN": true
   },
   {
     "id": "1762962647688",
     "licensePlate": "YZ33YZA",
     "zoneId": "1762448501626",
     "entryTime": "2025-11-12T15:40:47.550Z",
+    "exitTime": "2025-11-13T14:26:15.499Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1763043974519",
+    "licensePlate": "AB21ABC",
+    "zoneId": "1762448501626",
+    "entryTime": "2025-11-13T14:19:14.499Z",
+    "exitTime": "2025-11-13T14:26:15.527Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1763043976981",
+    "licensePlate": "UV31UVW",
+    "zoneId": "1762871836199",
+    "entryTime": "2025-11-13T14:14:16.499Z",
+    "exitTime": null,
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null
+  },
+  {
+    "id": "1763043977516",
+    "licensePlate": "EF23EFG",
+    "zoneId": "1762448501626",
+    "entryTime": "2025-11-13T14:13:17.499Z",
     "exitTime": null,
     "ticketBoughtTime": null,
     "ticketDuration": null,
