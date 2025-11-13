@@ -22,6 +22,22 @@ interface Zone {
   tariffs?: Tariff[];
 }
 
+// Simple mutex to prevent race conditions
+let lock: Promise<void> = Promise.resolve();
+
+async function withLock<T>(fn: () => Promise<T>): Promise<T> {
+  const release = lock;
+  let resolve: () => void;
+  lock = new Promise(r => { resolve = r; });
+  
+  try {
+    await release;
+    return await fn();
+  } finally {
+    resolve!();
+  }
+}
+
 async function readZones(): Promise<Zone[]> {
   try {
     const data = await fs.readFile(ZONES_FILE, 'utf-8');
@@ -47,20 +63,25 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const zones = await readZones();
     
-    const newZone: Zone = {
-      id: Date.now().toString(),
-      name: body.name,
-      coordinates: body.coordinates,
-      color: body.color,
-      tariffs: body.tariffs || null
-    };
+    const result = await withLock(async () => {
+      const zones = await readZones();
+      
+      const newZone: Zone = {
+        id: Date.now().toString(),
+        name: body.name,
+        coordinates: body.coordinates,
+        color: body.color,
+        tariffs: body.tariffs || null
+      };
+      
+      zones.push(newZone);
+      await writeZones(zones);
+      
+      return newZone;
+    });
     
-    zones.push(newZone);
-    await writeZones(zones);
-    
-    return NextResponse.json(newZone, { status: 201 });
+    return NextResponse.json(result, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create zone' }, { status: 500 });
   }
@@ -69,18 +90,26 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const zones = await readZones();
     
-    const index = zones.findIndex(z => z.id === body.id);
-    if (index === -1) {
+    const result = await withLock(async () => {
+      const zones = await readZones();
+      
+      const index = zones.findIndex(z => z.id === body.id);
+      if (index === -1) {
+        throw new Error('Zone not found');
+      }
+      
+      zones[index] = body;
+      await writeZones(zones);
+      
+      return zones[index];
+    });
+    
+    return NextResponse.json(result);
+  } catch (error: any) {
+    if (error.message === 'Zone not found') {
       return NextResponse.json({ error: 'Zone not found' }, { status: 404 });
     }
-    
-    zones[index] = body;
-    await writeZones(zones);
-    
-    return NextResponse.json(zones[index]);
-  } catch (error) {
     return NextResponse.json({ error: 'Failed to update zone' }, { status: 500 });
   }
 }
@@ -88,10 +117,12 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const body = await request.json();
-    const zones = await readZones();
     
-    const filteredZones = zones.filter(z => z.id !== body.id);
-    await writeZones(filteredZones);
+    await withLock(async () => {
+      const zones = await readZones();
+      const filteredZones = zones.filter(z => z.id !== body.id);
+      await writeZones(filteredZones);
+    });
     
     return NextResponse.json({ success: true });
   } catch (error) {
