@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'a.storyblok.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'myringgo.co.uk',
+      },
     ],
   },
 };
