@@ -315,25 +315,43 @@ export default function ParkingZoneManagement() {
   const selectedZone = zones.find(z => z.id === selectedZoneId);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex flex-col h-screen">
+      <header className="text-white p-4" style={{ background: '#0A0944' }}>
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <Image
+            src="https://www.parkopedia.com/public/images/header-logo-new@2x.png"
+            alt="Parkopedia"
+            width={150}
+            height={40}
+            className="h-8 w-auto"
+          />
+          <div className="flex items-center gap-6">
+            <span className="text-sm font-semibold">Parking Zone Manager</span>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex flex-1 overflow-hidden">
       <div className="flex-1 relative">
         <div ref={mapContainer} className="w-full h-full" />
         
         {!isDrawing ? (
           <button
             onClick={handleStartDrawing}
-            className="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium z-[9999]"
+            className="absolute top-4 right-4 text-white px-4 py-2 rounded font-medium z-[9999] hover:opacity-90"
+            style={{ background: '#0A0944' }}
           >
             Draw Zone
           </button>
         ) : (
           <div className="absolute top-4 right-4 flex gap-2 z-[9999]">
-            <div className="bg-white px-4 py-2 rounded shadow-lg font-medium">
+            <div className="bg-white px-4 py-2 rounded shadow-lg font-medium" style={{ borderLeft: '3px solid #02FF7F' }}>
               Points: {currentPolygon.length}
             </div>
             <button
               onClick={handleCompletePolygon}
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-medium"
+              className="text-white px-4 py-2 rounded font-medium hover:opacity-90"
+              style={{ background: '#02FF7F', color: '#0A0944' }}
             >
               Complete
             </button>
@@ -348,7 +366,7 @@ export default function ParkingZoneManagement() {
       </div>
 
       <div className="w-80 bg-white shadow-lg overflow-y-auto flex flex-col">
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white text-lg font-bold p-4">
+        <div className="text-white text-lg font-bold p-4" style={{ background: '#0A0944' }}>
           Parking Zones
         </div>
 
@@ -472,6 +490,7 @@ export default function ParkingZoneManagement() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }
