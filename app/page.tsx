@@ -6,7 +6,7 @@ export default function Home() {
   const tools = [
     {
       title: "Fleet Management",
-      description: "Monitor and manage vehicle fleet operations in real-time",
+      description: "Create and manage parking zones with interactive map and tariff configuration",
       icon: Truck,
       href: "/fleet-management"
     },
