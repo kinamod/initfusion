@@ -1,13 +1,13 @@
 import { Container, Section, Flex, Grid, Card, Heading, Text, Link, Box } from "@radix-ui/themes";
 import Image from "next/image";
-import { Truck, Route, Car as CarIcon, BarChart3, MessageCircle, CreditCard, Wrench, TrendingUp } from "lucide-react";
+import { MapPin, Route, Car as CarIcon, BarChart3, MessageCircle, CreditCard, Wrench, TrendingUp } from "lucide-react";
 
 export default function Home() {
   const tools = [
     {
-      title: "Fleet Management",
+      title: "Parking Zone Manager",
       description: "Create and manage parking zones with interactive map and tariff configuration",
-      icon: Truck,
+      icon: MapPin,
       href: "/fleet-management"
     },
     {
