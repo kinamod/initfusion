@@ -1,6 +1,6 @@
 import { Container, Section, Flex, Grid, Card, Heading, Text, Link, Box } from "@radix-ui/themes";
 import Image from "next/image";
-import { Truck, Route, UserCircle, BarChart3, MessageCircle, CreditCard, Wrench, TrendingUp } from "lucide-react";
+import { Truck, Route, Car as CarIcon, BarChart3, MessageCircle, CreditCard, Wrench, TrendingUp } from "lucide-react";
 
 export default function Home() {
   const tools = [
@@ -17,9 +17,9 @@ export default function Home() {
       href: "/route-optimization"
     },
     {
-      title: "Driver Portal",
-      description: "Driver onboarding, scheduling, and performance tracking",
-      icon: UserCircle,
+      title: "Parking Enforcement",
+      description: "Track vehicles, manage tickets, and identify parking violations in real-time",
+      icon: CarIcon,
       href: "/driver-portal"
     },
     {
