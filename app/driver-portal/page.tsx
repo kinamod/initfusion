@@ -255,12 +255,12 @@ export default function ParkopediaCarTracking() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="sticky top-0 z-50 text-white p-4" style={{ background: '#0A0944' }}>
+      <header className="sticky top-0 z-50 text-white p-4" style={{ background: '#7B3F8F' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <img
-            src="https://cdn.builder.io/api/v1/image/assets%2F76e39d6cb5b24501bed5149204e569f5%2Fb70e9ce726e84da6bb75c36c98e3fceb?format=webp&width=800"
-            alt="Parkopedia"
-            className="h-8 w-auto brightness-0 invert"
+            src="https://myringgo.co.uk/images/easypark/Ringgo_Arrive.png"
+            alt="RingGo by Arrive"
+            className="h-8 w-auto"
           />
           <div className="flex items-center gap-4">
             <label className="flex items-center gap-2 cursor-pointer">
@@ -271,7 +271,7 @@ export default function ParkopediaCarTracking() {
                 onChange={(e) => setIsSimulating(e.target.checked)}
                 className="w-12 h-6 appearance-none rounded-full relative cursor-pointer transition-colors"
                 style={{
-                  backgroundColor: isSimulating ? '#02FF7F' : '#6B7280'
+                  backgroundColor: isSimulating ? '#FF4B9D' : '#6B7280'
                 }}
               />
             </label>
@@ -285,7 +285,7 @@ export default function ParkopediaCarTracking() {
           <button
             onClick={addRandomCar}
             className="text-white px-4 py-2 rounded font-medium hover:opacity-90"
-            style={{ backgroundColor: '#0A0944' }}
+            style={{ backgroundColor: '#7B3F8F' }}
           >
             Add Random Car Entry
           </button>
@@ -335,7 +335,8 @@ export default function ParkopediaCarTracking() {
                             <td className="py-2 text-right">
                               <button
                                 onClick={() => exitCar(car.id)}
-                                className="text-xs text-blue-600 hover:text-blue-800"
+                                className="text-xs hover:opacity-80"
+                                style={{ color: '#FF4B9D' }}
                               >
                                 Exit
                               </button>
@@ -491,7 +492,7 @@ export default function ParkopediaCarTracking() {
               <button
                 onClick={saveTariffs}
                 className="flex-1 text-white px-4 py-2 rounded font-medium hover:opacity-90"
-                style={{ backgroundColor: '#0A0944' }}
+                style={{ backgroundColor: '#7B3F8F' }}
               >
                 Save
               </button>
