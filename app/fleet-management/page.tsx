@@ -316,13 +316,13 @@ export default function ParkingZoneManagement() {
 
   return (
     <div className="flex flex-col h-screen">
-      <header className="text-white p-4" style={{ background: '#0A0944' }}>
+      <header className="text-white p-4" style={{ background: '#5E026F' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link href="/">
             <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F76e39d6cb5b24501bed5149204e569f5%2Fb70e9ce726e84da6bb75c36c98e3fceb?format=webp&width=800"
-              alt="Parkopedia"
-              className="h-8 w-auto brightness-0 invert"
+              src="https://www.flowbird.com/wp-content/themes/wordpress-elementor-child/assets/images/logo-arrive-purple.png"
+              alt="Arrive"
+              className="h-8 w-auto"
               style={{ cursor: 'pointer' }}
             />
           </Link>
@@ -340,19 +340,19 @@ export default function ParkingZoneManagement() {
           <button
             onClick={handleStartDrawing}
             className="absolute top-4 right-4 text-white px-4 py-2 rounded font-medium z-[9999] hover:opacity-90"
-            style={{ background: '#0A0944' }}
+            style={{ background: '#5E026F' }}
           >
             Draw Zone
           </button>
         ) : (
           <div className="absolute top-4 right-4 flex gap-2 z-[9999]">
-            <div className="bg-white px-4 py-2 rounded shadow-lg font-medium" style={{ borderLeft: '3px solid #02FF7F' }}>
+            <div className="bg-white px-4 py-2 rounded shadow-lg font-medium" style={{ borderLeft: '3px solid #FFE4F7' }}>
               Points: {currentPolygon.length}
             </div>
             <button
               onClick={handleCompletePolygon}
               className="text-white px-4 py-2 rounded font-medium hover:opacity-90"
-              style={{ background: '#02FF7F', color: '#0A0944' }}
+              style={{ background: '#FFE4F7', color: '#5E026F' }}
             >
               Complete
             </button>
@@ -367,7 +367,7 @@ export default function ParkingZoneManagement() {
       </div>
 
       <div className="w-80 bg-white shadow-lg overflow-y-auto flex flex-col">
-        <div className="text-white text-lg font-bold p-4" style={{ background: '#0A0944' }}>
+        <div className="text-white text-lg font-bold p-4" style={{ background: '#5E026F' }}>
           Parking Zones
         </div>
 
@@ -386,7 +386,7 @@ export default function ParkingZoneManagement() {
                   key={zone.id}
                   onClick={() => handleSelectZone(zone.id)}
                   className="cursor-pointer hover:bg-gray-50"
-                  style={selectedZoneId === zone.id ? { backgroundColor: '#E8FFF6', borderLeft: '3px solid #02FF7F' } : {}}
+                  style={selectedZoneId === zone.id ? { backgroundColor: '#FFE4F7', borderLeft: '3px solid #5E026F' } : {}}
                 >
                   <td className="p-3 text-sm">
                     <div className="flex items-center gap-2">
@@ -423,7 +423,7 @@ export default function ParkingZoneManagement() {
                 <button
                   onClick={() => handleOpenTariffModal(selectedZone)}
                   className="text-white text-sm px-3 py-1 rounded hover:opacity-90"
-                  style={{ background: '#0A0944' }}
+                  style={{ background: '#5E026F' }}
                 >
                   Edit
                 </button>
@@ -483,7 +483,7 @@ export default function ParkingZoneManagement() {
               <button
                 onClick={handleSaveTariffs}
                 className="flex-1 px-4 py-2 rounded font-medium hover:opacity-90"
-                style={{ background: '#02FF7F', color: '#0A0944', fontWeight: 600 }}
+                style={{ background: '#FFE4F7', color: '#5E026F', fontWeight: 600 }}
               >
                 Save
               </button>
