@@ -59,6 +59,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--purple-9);
 }
 
 .tool-arrow {

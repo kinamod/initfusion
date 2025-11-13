@@ -1,54 +1,55 @@
 import { Container, Section, Flex, Grid, Card, Heading, Text, Link, Box } from "@radix-ui/themes";
 import Image from "next/image";
+import { Truck, Route, UserCircle, BarChart3, MessageCircle, CreditCard, Wrench, TrendingUp } from "lucide-react";
 
 export default function Home() {
   const tools = [
     {
       title: "Fleet Management",
       description: "Monitor and manage vehicle fleet operations in real-time",
-      icon: "🚗",
+      icon: Truck,
       href: "/fleet-management"
     },
     {
       title: "Route Optimization",
       description: "Optimize routes for efficient mobility solutions",
-      icon: "🗺️",
+      icon: Route,
       href: "/route-optimization"
     },
     {
       title: "Driver Portal",
       description: "Driver onboarding, scheduling, and performance tracking",
-      icon: "👤",
+      icon: UserCircle,
       href: "/driver-portal"
     },
     {
       title: "Analytics Dashboard",
       description: "Real-time analytics and reporting for mobility insights",
-      icon: "📊",
+      icon: BarChart3,
       href: "/analytics"
     },
     {
       title: "Customer Service",
       description: "Manage customer inquiries and support tickets",
-      icon: "💬",
+      icon: MessageCircle,
       href: "/customer-service"
     },
     {
       title: "Billing & Payments",
       description: "Handle invoicing, payments, and financial records",
-      icon: "💳",
+      icon: CreditCard,
       href: "/billing"
     },
     {
       title: "Maintenance Scheduler",
       description: "Schedule and track vehicle maintenance operations",
-      icon: "🔧",
+      icon: Wrench,
       href: "/maintenance"
     },
     {
       title: "Reporting Tools",
       description: "Generate custom reports and export data",
-      icon: "📈",
+      icon: TrendingUp,
       href: "/reporting"
     }
   ];
@@ -83,26 +84,29 @@ export default function Home() {
             </Box>
 
             <Grid columns={{ initial: "1", sm: "2", md: "3", lg: "4" }} gap="4">
-              {tools.map((tool) => (
-                <Link key={tool.title} href={tool.href} className="tool-link">
-                  <Card className="tool-card">
-                    <Flex direction="column" gap="3">
-                      <Box className="tool-icon-wrapper">
-                        <Text size="8">{tool.icon}</Text>
-                      </Box>
-                      <Heading as="h3" size="5">
-                        {tool.title}
-                      </Heading>
-                      <Text size="2" color="gray">
-                        {tool.description}
-                      </Text>
-                      <Text size="4" className="tool-arrow">
-                        →
-                      </Text>
-                    </Flex>
-                  </Card>
-                </Link>
-              ))}
+              {tools.map((tool) => {
+                const IconComponent = tool.icon;
+                return (
+                  <Link key={tool.title} href={tool.href} className="tool-link">
+                    <Card className="tool-card">
+                      <Flex direction="column" gap="3">
+                        <Box className="tool-icon-wrapper">
+                          <IconComponent size={32} strokeWidth={1.5} />
+                        </Box>
+                        <Heading as="h3" size="5">
+                          {tool.title}
+                        </Heading>
+                        <Text size="2" color="gray">
+                          {tool.description}
+                        </Text>
+                        <Text size="4" className="tool-arrow">
+                          →
+                        </Text>
+                      </Flex>
+                    </Card>
+                  </Link>
+                );
+              })}
             </Grid>
           </Flex>
         </Container>
