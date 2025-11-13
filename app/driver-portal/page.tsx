@@ -48,7 +48,7 @@ export default function ParkopediaCarTracking() {
   useEffect(() => {
     fetchZones();
     fetchCars();
-    const interval = setInterval(fetchCars, 3000);
+    const interval = setInterval(fetchCars, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -105,7 +105,6 @@ export default function ParkopediaCarTracking() {
           entryTime: new Date().toISOString()
         })
       });
-      fetchCars();
     } catch (error) {
       console.error('Failed to add car:', error);
     }
@@ -148,7 +147,6 @@ export default function ParkopediaCarTracking() {
           hasPCN
         })
       });
-      fetchCars();
     } catch (error) {
       console.error('Failed to exit car:', error);
     }
@@ -170,7 +168,6 @@ export default function ParkopediaCarTracking() {
           ticketPrice: tariff?.price || 1.00
         })
       });
-      fetchCars();
     } catch (error) {
       console.error('Failed to buy ticket:', error);
     }
