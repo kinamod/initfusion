@@ -323,7 +323,7 @@ export default function ParkingZoneManagement() {
             alt="Parkopedia"
             width={150}
             height={40}
-            className="h-8 w-auto"
+            className="h-8 w-auto brightness-0 invert"
           />
           <div className="flex items-center gap-6">
             <span className="text-sm font-semibold">Parking Zone Manager</span>
