@@ -492,7 +492,7 @@ export default function ParkopediaCarTracking() {
               <button
                 onClick={saveTariffs}
                 className="flex-1 text-white px-4 py-2 rounded font-medium hover:opacity-90"
-                style={{ backgroundColor: '#7B3F8F' }}
+                style={{ backgroundColor: '#FF4B9D' }}
               >
                 Save
               </button>
