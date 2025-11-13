@@ -366,9 +366,8 @@ export default function ParkingZoneManagement() {
                 <tr
                   key={zone.id}
                   onClick={() => handleSelectZone(zone.id)}
-                  className={`cursor-pointer ${
-                    selectedZoneId === zone.id ? 'bg-blue-50' : 'hover:bg-gray-50'
-                  }`}
+                  className="cursor-pointer hover:bg-gray-50"
+                  style={selectedZoneId === zone.id ? { backgroundColor: '#E8FFF6', borderLeft: '3px solid #02FF7F' } : {}}
                 >
                   <td className="p-3 text-sm">
                     <div className="flex items-center gap-2">
@@ -404,7 +403,8 @@ export default function ParkingZoneManagement() {
                 <h3 className="font-semibold">Tariffs</h3>
                 <button
                   onClick={() => handleOpenTariffModal(selectedZone)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded"
+                  className="text-white text-sm px-3 py-1 rounded hover:opacity-90"
+                  style={{ background: '#0A0944' }}
                 >
                   Edit
                 </button>
@@ -463,7 +463,8 @@ export default function ParkingZoneManagement() {
               </button>
               <button
                 onClick={handleSaveTariffs}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium"
+                className="flex-1 px-4 py-2 rounded font-medium hover:opacity-90"
+                style={{ background: '#02FF7F', color: '#0A0944', fontWeight: 600 }}
               >
                 Save
               </button>
