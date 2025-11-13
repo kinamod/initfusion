@@ -116,7 +116,11 @@ export default function ParkopediaCarTracking() {
       await addRandomCar();
     }
 
-    const activeCars = cars.filter(c => !c.exitTime);
+    // Fetch fresh car data to avoid stale closure
+    const response = await fetch('/api/cars');
+    const currentCars = await response.json();
+
+    const activeCars = currentCars.filter((c: Car) => !c.exitTime);
     for (const car of activeCars) {
       if (Math.random() < 0.65 && !car.ticketBoughtTime) {
         await buyTicket(car.id);
