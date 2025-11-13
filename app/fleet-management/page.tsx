@@ -318,7 +318,7 @@ export default function ParkingZoneManagement() {
       <header className="text-white p-4" style={{ background: '#0A0944' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <img
-            src="https://www.parkopedia.com/public/images/header-logo-new@2x.png"
+            src="https://cdn.builder.io/api/v1/image/assets%2F76e39d6cb5b24501bed5149204e569f5%2Fb70e9ce726e84da6bb75c36c98e3fceb?format=webp&width=800"
             alt="Parkopedia"
             className="h-8 w-auto brightness-0 invert"
           />
