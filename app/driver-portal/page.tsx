@@ -231,7 +231,7 @@ export default function ParkopediaCarTracking() {
   const isTicketExpired = (car: Car): boolean => {
     if (!car.ticketBoughtTime || !car.ticketDuration) return true;
     const ticketTime = new Date(car.ticketBoughtTime).getTime();
-    const elapsed = (Date.now() - ticketTime) / (1000 * 60);
+    const elapsed = ((Date.now() - ticketTime) / (1000 * 60)) * 10;
     return elapsed > car.ticketDuration;
   };
 
@@ -241,7 +241,7 @@ export default function ParkopediaCarTracking() {
 
   const calculateDuration = (entry: string, exit: string): string => {
     const ms = new Date(exit).getTime() - new Date(entry).getTime();
-    const minutes = Math.floor(ms / (1000 * 60));
+    const minutes = Math.floor((ms / (1000 * 60)) * 10);
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
     return hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
