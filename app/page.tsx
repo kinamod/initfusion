@@ -8,7 +8,10 @@ export default function Home() {
       title: "Parking Zone Manager",
       description: "Create and manage parking zones with interactive map and tariff configuration",
       icon: MapPin,
-      href: "/fleet-management"
+      href: "/fleet-management",
+      brand: "parkopedia",
+      brandColor: "#0A0944",
+      accentColor: "#02FF7F"
     },
     {
       title: "Route Optimization",
@@ -20,7 +23,10 @@ export default function Home() {
       title: "Parking Enforcement",
       description: "Track vehicles, manage tickets, and identify parking violations in real-time",
       icon: CarIcon,
-      href: "/driver-portal"
+      href: "/driver-portal",
+      brand: "ringgo",
+      brandColor: "#7B3F8F",
+      accentColor: "#FF4B9D"
     },
     {
       title: "Analytics Dashboard",
@@ -86,20 +92,45 @@ export default function Home() {
             <Grid columns={{ initial: "1", sm: "2", md: "3", lg: "4" }} gap="4">
               {tools.map((tool) => {
                 const IconComponent = tool.icon;
+                const hasBrand = tool.brand;
+                
                 return (
                   <Link key={tool.title} href={tool.href} className="tool-link">
-                    <Card className="tool-card">
+                    <Card 
+                      className="tool-card"
+                      style={hasBrand ? {
+                        borderTop: `3px solid ${tool.accentColor}`,
+                        position: 'relative'
+                      } : {}}
+                    >
                       <Flex direction="column" gap="3">
-                        <Box className="tool-icon-wrapper">
+                        <Box 
+                          className="tool-icon-wrapper"
+                          style={hasBrand ? {
+                            color: tool.brandColor
+                          } : {}}
+                        >
                           <IconComponent size={32} strokeWidth={1.5} />
                         </Box>
-                        <Heading as="h3" size="5">
+                        <Heading 
+                          as="h3" 
+                          size="5"
+                          style={hasBrand ? {
+                            color: tool.brandColor
+                          } : {}}
+                        >
                           {tool.title}
                         </Heading>
                         <Text size="2" color="gray">
                           {tool.description}
                         </Text>
-                        <Text size="4" className="tool-arrow">
+                        <Text 
+                          size="4" 
+                          className="tool-arrow"
+                          style={hasBrand ? {
+                            color: tool.accentColor
+                          } : {}}
+                        >
                           →
                         </Text>
                       </Flex>
