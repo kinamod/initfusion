@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
 import { Car as CarIcon, MapPin } from 'lucide-react';
 
 interface Zone {
@@ -257,11 +256,9 @@ export default function ParkopediaCarTracking() {
     <div className="min-h-screen bg-gray-50">
       <header className="text-white p-4" style={{ background: '#0A0944' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Image
+          <img
             src="https://www.parkopedia.com/public/images/header-logo-new@2x.png"
             alt="Parkopedia"
-            width={150}
-            height={40}
             className="h-8 w-auto brightness-0 invert"
           />
           <div className="flex items-center gap-4">
