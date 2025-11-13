@@ -82,7 +82,7 @@ export default function Home() {
           <Flex direction="column" gap="6">
             <Box style={{ textAlign: "center" }}>
               <Heading as="h2" size="8" mb="2">
-                Internal Tools
+                Consolidated Internal Tools
               </Heading>
               <Text size="4" color="gray">
                 Access all your Arrive mobility management tools in one place
