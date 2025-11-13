@@ -93,10 +93,20 @@ export default function Home() {
               {tools.map((tool) => {
                 const IconComponent = tool.icon;
                 const hasBrand = tool.brand;
-                
+
                 return (
-                  <Link key={tool.title} href={tool.href} className="tool-link">
-                    <Card 
+                  <Link
+                    key={tool.title}
+                    href={tool.href}
+                    className="tool-link"
+                    style={!hasBrand ? {
+                      opacity: 0.5,
+                      filter: 'grayscale(1)',
+                      cursor: 'not-allowed',
+                      pointerEvents: 'none'
+                    } : {}}
+                  >
+                    <Card
                       className="tool-card"
                       style={hasBrand ? {
                         borderTop: `3px solid ${tool.accentColor}`,
@@ -104,7 +114,7 @@ export default function Home() {
                       } : {}}
                     >
                       <Flex direction="column" gap="3">
-                        <Box 
+                        <Box
                           className="tool-icon-wrapper"
                           style={hasBrand ? {
                             color: tool.brandColor
@@ -112,8 +122,8 @@ export default function Home() {
                         >
                           <IconComponent size={32} strokeWidth={1.5} />
                         </Box>
-                        <Heading 
-                          as="h3" 
+                        <Heading
+                          as="h3"
                           size="5"
                           style={hasBrand ? {
                             color: tool.brandColor
@@ -124,8 +134,8 @@ export default function Home() {
                         <Text size="2" color="gray">
                           {tool.description}
                         </Text>
-                        <Text 
-                          size="4" 
+                        <Text
+                          size="4"
                           className="tool-arrow"
                           style={hasBrand ? {
                             color: tool.accentColor
