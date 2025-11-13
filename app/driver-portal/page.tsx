@@ -255,7 +255,7 @@ export default function ParkopediaCarTracking() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="sticky top-0 z-50 text-white p-4" style={{ background: '#7B3F8F' }}>
+      <header className="sticky top-0 z-50 p-4 shadow-md" style={{ background: 'white' }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <img
             src="https://myringgo.co.uk/images/easypark/Ringgo_Arrive.png"
@@ -264,7 +264,7 @@ export default function ParkopediaCarTracking() {
           />
           <div className="flex items-center gap-4">
             <label className="flex items-center gap-2 cursor-pointer">
-              <span className="text-sm">Simulation</span>
+              <span className="text-sm text-gray-700">Simulation</span>
               <input
                 type="checkbox"
                 checked={isSimulating}
@@ -309,7 +309,7 @@ export default function ParkopediaCarTracking() {
                     <button
                       onClick={() => openTariffModal(zone)}
                       className="text-xs px-2 py-1 rounded"
-                      style={{ backgroundColor: '#0A0944', color: 'white' }}
+                      style={{ backgroundColor: '#7B3F8F', color: 'white' }}
                     >
                       Edit Tariffs
                     </button>
