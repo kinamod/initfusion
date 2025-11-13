@@ -25,7 +25,28 @@
       }
     ],
     "color": "#ff6b6b",
-    "tariffs": null
+    "tariffs": [
+      {
+        "duration": "Up to 1 hour",
+        "price": 1
+      },
+      {
+        "duration": "Up to 2 hours",
+        "price": 2
+      },
+      {
+        "duration": "Up to 6 hours",
+        "price": 5
+      },
+      {
+        "duration": "Up to 12 hours",
+        "price": 9
+      },
+      {
+        "duration": "Up to 24 hours",
+        "price": 17
+      }
+    ]
   },
   {
     "id": "1763038933630",
