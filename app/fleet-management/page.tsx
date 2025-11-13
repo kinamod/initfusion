@@ -46,6 +46,7 @@ export default function ParkingZoneManagement() {
   const polygonMarkersRef = useRef<any[]>([]);
   const editMarkersRef = useRef<any[]>([]);
   const LRef = useRef<any>(null);
+  const isDrawingRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -92,7 +93,7 @@ export default function ParkingZoneManagement() {
   };
 
   const handleMapClick = (e: any) => {
-    if (!isDrawing || !LRef.current) return;
+    if (!isDrawingRef.current || !LRef.current) return;
 
     const newPoint: LatLng = {
       lat: e.latlng.lat,
@@ -108,7 +109,7 @@ export default function ParkingZoneManagement() {
     }).addTo(mapInstance.current);
 
     polygonMarkersRef.current.push(marker);
-    setCurrentPolygon([...currentPolygon, newPoint]);
+    setCurrentPolygon(prev => [...prev, newPoint]);
   };
 
   const renderZones = () => {
@@ -193,6 +194,7 @@ export default function ParkingZoneManagement() {
 
   const handleStartDrawing = () => {
     setIsDrawing(true);
+    isDrawingRef.current = true;
     setCurrentPolygon([]);
     polygonMarkersRef.current = [];
   };
@@ -219,8 +221,9 @@ export default function ParkingZoneManagement() {
 
       const createdZone = await response.json();
       setZones([...zones, createdZone]);
-      
+
       setIsDrawing(false);
+      isDrawingRef.current = false;
       setCurrentPolygon([]);
       polygonMarkersRef.current.forEach(marker => marker.remove());
       polygonMarkersRef.current = [];
@@ -231,6 +234,7 @@ export default function ParkingZoneManagement() {
 
   const handleCancelDrawing = () => {
     setIsDrawing(false);
+    isDrawingRef.current = false;
     setCurrentPolygon([]);
     polygonMarkersRef.current.forEach(marker => marker.remove());
     polygonMarkersRef.current = [];
