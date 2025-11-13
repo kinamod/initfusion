@@ -137,11 +137,15 @@ export default function ParkingZoneManagement() {
 
       if (isSelected) {
         zone.coordinates.forEach((coord, index) => {
-          const marker = L.circleMarker([coord.lat, coord.lng], {
-            radius: 8,
-            color: '#2563eb',
-            fillColor: '#2563eb',
-            fillOpacity: 1,
+          const icon = L.divIcon({
+            className: 'vertex-marker',
+            html: '<div style="width: 16px; height: 16px; background: #5E026F; border: 2px solid white; border-radius: 50%; cursor: move; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
+            iconSize: [16, 16],
+            iconAnchor: [8, 8]
+          });
+
+          const marker = L.marker([coord.lat, coord.lng], {
+            icon: icon,
             draggable: true
           }).addTo(mapInstance.current);
 
@@ -152,10 +156,10 @@ export default function ParkingZoneManagement() {
           marker.on('drag', (e: any) => {
             const newLat = e.latlng.lat;
             const newLng = e.latlng.lng;
-            
+
             const updatedCoords = [...zone.coordinates];
             updatedCoords[index] = { lat: newLat, lng: newLng };
-            
+
             const updatedZone = { ...zone, coordinates: updatedCoords };
             setZones(zones.map(z => z.id === zone.id ? updatedZone : z));
           });
