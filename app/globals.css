@@ -55,11 +55,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--purple-9);
+  color: var(--gray-11);
 }
 
 .tool-arrow {
-  color: var(--purple-9);
+  color: var(--gray-11);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
   margin-top: auto;
