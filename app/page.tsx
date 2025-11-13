@@ -1,3 +1,5 @@
+import { Container, Section, Flex, Grid, Card, Heading, Text, Link, Box } from "@radix-ui/themes";
+
 export default function Home() {
   const tools = [
     {
@@ -51,44 +53,60 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      <header className="header-container">
-        <div className="header-content">
-          <div className="logo-wrapper">
-            <div className="logo-icon">A</div>
-            <div className="logo-text-wrapper">
-              <h1 className="logo-title">Arrive</h1>
-              <p className="logo-subtitle">Mobility Solutions</p>
-            </div>
-          </div>
-        </div>
-      </header>
+    <Box className="page-wrapper">
+      <Box className="header-wrapper">
+        <Container size="4">
+          <Flex align="center" gap="3" className="logo-container">
+            <Box className="logo-icon">A</Box>
+            <Box>
+              <Heading as="h1" size="8" weight="bold" className="logo-title">
+                Arrive
+              </Heading>
+              <Text size="2" className="logo-subtitle">
+                Mobility Solutions
+              </Text>
+            </Box>
+          </Flex>
+        </Container>
+      </Box>
 
-      <main className="main-container">
-        <div className="content-wrapper">
-          <div className="page-header">
-            <h2 className="page-title">Internal Tools</h2>
-            <p className="page-description">
-              Access all your Arrive mobility management tools in one place
-            </p>
-          </div>
+      <Section size="3">
+        <Container size="4">
+          <Flex direction="column" gap="6">
+            <Box style={{ textAlign: "center" }}>
+              <Heading as="h2" size="8" mb="2">
+                Internal Tools
+              </Heading>
+              <Text size="4" color="gray">
+                Access all your Arrive mobility management tools in one place
+              </Text>
+            </Box>
 
-          <div className="tools-grid">
-            {tools.map((tool) => (
-              <a
-                key={tool.title}
-                href={tool.href}
-                className="tool-card"
-              >
-                <div className="tool-icon">{tool.icon}</div>
-                <h3 className="tool-title">{tool.title}</h3>
-                <p className="tool-description">{tool.description}</p>
-                <div className="tool-arrow">→</div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </main>
-    </div>
+            <Grid columns={{ initial: "1", sm: "2", md: "3", lg: "4" }} gap="4">
+              {tools.map((tool) => (
+                <Link key={tool.title} href={tool.href} className="tool-link">
+                  <Card className="tool-card">
+                    <Flex direction="column" gap="3">
+                      <Box className="tool-icon-wrapper">
+                        <Text size="8">{tool.icon}</Text>
+                      </Box>
+                      <Heading as="h3" size="5">
+                        {tool.title}
+                      </Heading>
+                      <Text size="2" color="gray">
+                        {tool.description}
+                      </Text>
+                      <Text size="4" className="tool-arrow">
+                        →
+                      </Text>
+                    </Flex>
+                  </Card>
+                </Link>
+              ))}
+            </Grid>
+          </Flex>
+        </Container>
+      </Section>
+    </Box>
   );
 }
