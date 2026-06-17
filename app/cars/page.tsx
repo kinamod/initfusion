@@ -123,15 +123,31 @@ export default function CarsTrackingPage() {
         const minutesAgo = Math.floor(Math.random() * 10) + 5;
         const entryTime = new Date(Date.now() - minutesAgo * 60 * 1000);
 
+        // Generate ticket data upfront: 70% get a ticket, 30% get PCN
+        const shouldBuyTicket = Math.random() < 0.70;
+        const carData: any = {
+          licensePlate: randomPlate,
+          zoneId: randomZone.id,
+          entryTime: entryTime.toISOString(),
+        };
+
+        if (shouldBuyTicket && randomZone.tariffs?.length) {
+          const randomTariff = randomZone.tariffs[Math.floor(Math.random() * randomZone.tariffs.length)];
+          const durationMinutes = randomTariff.duration === 'Up to 1 hour' ? 60 : randomTariff.duration === 'Up to 2 hours' ? 120 : randomTariff.duration === 'Up to 6 hours' ? 360 : randomTariff.duration === 'Up to 12 hours' ? 720 : 1440;
+          const minutesAfterEntry = Math.floor(Math.random() * 3) + 1;
+          const ticketTime = new Date(entryTime.getTime() + minutesAfterEntry * 60 * 1000);
+          carData.ticketBoughtTime = ticketTime.toISOString();
+          carData.ticketDuration = durationMinutes;
+          carData.ticketPrice = randomTariff.price;
+        } else {
+          carData.hasPCN = true;
+        }
+
         try {
           await fetch('/api/cars', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              licensePlate: randomPlate,
-              zoneId: randomZone.id,
-              entryTime: entryTime.toISOString(),
-            }),
+            body: JSON.stringify(carData),
           });
         } catch (error) {
           console.error('Error simulating car entry:', error);
@@ -142,32 +158,6 @@ export default function CarsTrackingPage() {
       const activeCars = currentCars.filter((c) => !c.exitTime);
       for (const car of activeCars) {
         if (Math.random() < 0.7) {
-          const zone = currentZones.find((z) => z.id === car.zoneId);
-          const shouldBuyTicket = Math.random() < 0.70; // 70% buy tickets, 30% don't
-          const hasPCN = !shouldBuyTicket; // PCN if no ticket
-
-          if (shouldBuyTicket && zone?.tariffs?.length) {
-            const randomTariff = zone.tariffs[Math.floor(Math.random() * zone.tariffs.length)];
-            const durationMinutes = randomTariff.duration === 'Up to 1 hour' ? 60 : randomTariff.duration === 'Up to 2 hours' ? 120 : randomTariff.duration === 'Up to 6 hours' ? 360 : randomTariff.duration === 'Up to 12 hours' ? 720 : 1440;
-            const minutesAfterEntry = Math.floor(Math.random() * 3) + 1;
-            const ticketTime = new Date(new Date(car.entryTime).getTime() + minutesAfterEntry * 60 * 1000);
-
-            try {
-              await fetch('/api/cars', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  id: car.id,
-                  ticketBoughtTime: ticketTime.toISOString(),
-                  ticketDuration: durationMinutes,
-                  ticketPrice: randomTariff.price,
-                }),
-              });
-            } catch (error) {
-              console.error('Error simulating ticket purchase:', error);
-            }
-          }
-
           try {
             await fetch('/api/cars', {
               method: 'PUT',
@@ -175,7 +165,6 @@ export default function CarsTrackingPage() {
               body: JSON.stringify({
                 id: car.id,
                 exitTime: new Date().toISOString(),
-                hasPCN: hasPCN,
               }),
             });
           } catch (error) {
