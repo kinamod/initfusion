@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
         ignored: [
           ...(Array.isArray(config.watchOptions?.ignored) ? config.watchOptions.ignored : []),
           '**/cars.json',
+          '**/zones.json',
         ],
       };
     }

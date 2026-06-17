@@ -955,5 +955,25 @@
     "ticketDuration": null,
     "ticketPrice": null,
     "hasPCN": false
+  },
+  {
+    "id": "1781734758887",
+    "licensePlate": "IJ25IJK",
+    "zoneId": "1764583255893",
+    "entryTime": "2026-06-17T22:19:16.665Z",
+    "exitTime": null,
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null
+  },
+  {
+    "id": "1781734762747",
+    "licensePlate": "UV31UVW",
+    "zoneId": "1764583255893",
+    "entryTime": "2026-06-17T22:19:20.523Z",
+    "exitTime": null,
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null
   }
 ]
