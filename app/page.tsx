@@ -40,7 +40,7 @@ export default function LandingPage() {
                   {/* Card Content */}
                   <div className="p-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition">
-                    Zone Manager
+                    Zones Manager
                     </h3>
                     <p className="text-sm text-gray-600 mb-4">
                       Create and manage parking zones on an interactive map, configure tariffs, and visualize parking areas with real-time coordinate tracking.
