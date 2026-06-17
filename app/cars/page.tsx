@@ -148,7 +148,7 @@ export default function CarsTrackingPage() {
 
           if (shouldBuyTicket && zone?.tariffs?.length) {
             const randomTariff = zone.tariffs[Math.floor(Math.random() * zone.tariffs.length)];
-            const minutes = parseInt(randomTariff.duration.match(/\d+/)?.[0] || '0') * 60;
+            const durationMinutes = randomTariff.duration === 'Up to 1 hour' ? 60 : randomTariff.duration === 'Up to 2 hours' ? 120 : randomTariff.duration === 'Up to 6 hours' ? 360 : randomTariff.duration === 'Up to 12 hours' ? 720 : 1440;
             const minutesAfterEntry = Math.floor(Math.random() * 3) + 1;
             const ticketTime = new Date(new Date(car.entryTime).getTime() + minutesAfterEntry * 60 * 1000);
 
@@ -159,7 +159,7 @@ export default function CarsTrackingPage() {
                 body: JSON.stringify({
                   id: car.id,
                   ticketBoughtTime: ticketTime.toISOString(),
-                  ticketDuration: minutes,
+                  ticketDuration: durationMinutes,
                   ticketPrice: randomTariff.price,
                 }),
               });
