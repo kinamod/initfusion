@@ -928,9 +928,32 @@
     "licensePlate": "OP28OPQ",
     "zoneId": "1762871836199",
     "entryTime": "2026-06-17T22:06:03.893Z",
-    "exitTime": null,
+    "exitTime": "2026-06-17T22:16:05.030Z",
     "ticketBoughtTime": null,
     "ticketDuration": null,
-    "ticketPrice": null
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781734567102",
+    "licensePlate": "YZ33YZA",
+    "zoneId": "1762526014030",
+    "entryTime": "2026-06-17T22:08:04.893Z",
+    "exitTime": "2026-06-17T22:16:06.030Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781734568103",
+    "licensePlate": "AA34AAB",
+    "zoneId": "1762448501626",
+    "entryTime": "2026-06-17T22:02:05.894Z",
+    "exitTime": "2026-06-17T22:16:06.893Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
   }
 ]
