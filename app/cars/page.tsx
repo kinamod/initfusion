@@ -142,16 +142,39 @@ export default function CarsTrackingPage() {
       // For each car in a zone without exit, decide what happens
       const activeCars = currentCars.filter((c) => !c.exitTime);
       for (const car of activeCars) {
+        const zone = currentZones.find((z) => z.id === car.zoneId);
+        const hasTicket = car.ticketBoughtTime !== null;
+
+        // If no ticket, 40% chance to buy one this cycle
+        if (!hasTicket && Math.random() < 0.4 && zone?.tariffs?.length) {
+          const randomTariff = zone.tariffs[Math.floor(Math.random() * zone.tariffs.length)];
+          const durationMinutes = randomTariff.duration === 'Up to 1 hour' ? 60 : randomTariff.duration === 'Up to 2 hours' ? 120 : randomTariff.duration === 'Up to 6 hours' ? 360 : randomTariff.duration === 'Up to 12 hours' ? 720 : 1440;
+
+          try {
+            await fetch('/api/cars', {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                id: car.id,
+                ticketBoughtTime: new Date().toISOString(),
+                ticketDuration: durationMinutes,
+                ticketPrice: randomTariff.price,
+              }),
+            });
+          } catch (error) {
+            console.error('Error simulating ticket purchase:', error);
+          }
+        }
+
+        // 70% chance to exit this cycle
         if (Math.random() < 0.7) {
-          const zone = currentZones.find((z) => z.id === car.zoneId);
           const entryTime = new Date(car.entryTime).getTime();
           const now = Date.now();
           const minutesParked = (now - entryTime) / (60 * 1000);
 
-          // 70% probability they leave now
           // If they've been parked 20+ minutes without a ticket, they get a PCN
-          const hasTicket = car.ticketBoughtTime !== null;
-          const shouldGetPCN = !hasTicket && minutesParked >= 20;
+          const ticketStatus = car.ticketBoughtTime !== null;
+          const shouldGetPCN = !ticketStatus && minutesParked >= 20;
 
           const updateData: any = {
             id: car.id,
