@@ -1,7 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: [
+          ...(Array.isArray(config.watchOptions?.ignored) ? config.watchOptions.ignored : []),
+          '**/cars.json',
+        ],
+      };
+    }
+    return config;
+  },
 };
 
 export default nextConfig;
