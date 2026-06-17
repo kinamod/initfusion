@@ -1,69 +1,68 @@
-import { writeFile, readFile } from 'fs/promises';
-import { resolve } from 'path';
-import { existsSync } from 'fs';
 import { NextRequest, NextResponse } from 'next/server';
-
-const carsFilePath = resolve(process.cwd(), 'cars.json');
-
-async function readCars() {
-  try {
-    if (!existsSync(carsFilePath)) {
-      return [];
-    }
-    const data = await readFile(carsFilePath, 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
-
-async function writeCars(cars: any[]) {
-  await writeFile(carsFilePath, JSON.stringify(cars, null, 2), 'utf-8');
-}
+import { getDb, deserializeCar } from '@/lib/db';
 
 export async function GET() {
-  const cars = await readCars();
-  return NextResponse.json(cars);
+  const db = getDb();
+  const rows = db.prepare('SELECT * FROM cars ORDER BY entryTime DESC').all() as Record<string, unknown>[];
+  return NextResponse.json(rows.map(deserializeCar), {
+    headers: { 'Cache-Control': 'no-store' },
+  });
 }
 
 export async function POST(request: NextRequest) {
   const newCar = await request.json();
-  const cars = await readCars();
-  
-  const carEntry = {
+  const db = getDb();
+
+  const car = {
     id: Date.now().toString(),
     licensePlate: newCar.licensePlate,
     zoneId: newCar.zoneId,
     entryTime: newCar.entryTime || new Date().toISOString(),
-    exitTime: null,
-    ticketBoughtTime: null,
-    ticketDuration: null, // in minutes
-    ticketPrice: null,
+    exitTime: newCar.exitTime ?? null,
+    ticketBoughtTime: newCar.ticketBoughtTime ?? null,
+    ticketDuration: newCar.ticketDuration ?? null,
+    ticketPrice: newCar.ticketPrice ?? null,
+    hasPCN: newCar.hasPCN ? 1 : 0,
   };
-  
-  cars.push(carEntry);
-  await writeCars(cars);
-  return NextResponse.json(carEntry, { status: 201 });
+
+  db.prepare(`
+    INSERT INTO cars (id, licensePlate, zoneId, entryTime, exitTime, ticketBoughtTime, ticketDuration, ticketPrice, hasPCN)
+    VALUES (@id, @licensePlate, @zoneId, @entryTime, @exitTime, @ticketBoughtTime, @ticketDuration, @ticketPrice, @hasPCN)
+  `).run(car);
+
+  return NextResponse.json(deserializeCar(car as Record<string, unknown>), { status: 201 });
 }
 
 export async function PUT(request: NextRequest) {
   const updatedCar = await request.json();
-  const cars = await readCars();
-  const index = cars.findIndex((c: any) => c.id === updatedCar.id);
-  
-  if (index !== -1) {
-    cars[index] = { ...cars[index], ...updatedCar };
-    await writeCars(cars);
-    return NextResponse.json(cars[index]);
+  const db = getDb();
+
+  const existing = db.prepare('SELECT * FROM cars WHERE id = ?').get(updatedCar.id) as Record<string, unknown> | undefined;
+  if (!existing) {
+    return NextResponse.json({ error: 'Car not found' }, { status: 404 });
   }
-  
-  return NextResponse.json({ error: 'Car not found' }, { status: 404 });
+
+  const merged = { ...existing, ...updatedCar, hasPCN: updatedCar.hasPCN != null ? (updatedCar.hasPCN ? 1 : 0) : existing.hasPCN };
+
+  db.prepare(`
+    UPDATE cars SET
+      licensePlate = @licensePlate,
+      zoneId = @zoneId,
+      entryTime = @entryTime,
+      exitTime = @exitTime,
+      ticketBoughtTime = @ticketBoughtTime,
+      ticketDuration = @ticketDuration,
+      ticketPrice = @ticketPrice,
+      hasPCN = @hasPCN
+    WHERE id = @id
+  `).run(merged);
+
+  return NextResponse.json(deserializeCar(merged));
 }
 
 export async function DELETE(request: NextRequest) {
   const { id } = await request.json();
-  const cars = await readCars();
-  const filteredCars = cars.filter((c: any) => c.id !== id);
-  await writeCars(filteredCars);
+  const db = getDb();
+  db.prepare('DELETE FROM cars WHERE id = ?').run(id);
   return NextResponse.json({ success: true });
 }
