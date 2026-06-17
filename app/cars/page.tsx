@@ -150,7 +150,7 @@ export default function CarsTrackingPage() {
       for (const car of activeCars) {
         if (Math.random() < 0.7) {
           const zone = currentZones.find((z) => z.id === car.zoneId);
-          const shouldBuyTicket = Math.random() < 0.65; // 65% buy tickets, 35% don't
+          const shouldBuyTicket = Math.random() < 0.70; // 70% buy tickets, 30% don't
           const hasPCN = !shouldBuyTicket; // PCN if no ticket
 
           if (shouldBuyTicket && zone?.tariffs) {

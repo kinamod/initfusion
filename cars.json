@@ -16,9 +16,9 @@
     "zoneId": "1762526014030",
     "entryTime": "2025-11-12T15:36:41.550Z",
     "exitTime": "2025-11-12T15:50:42.579Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2025-11-12T15:38:41.550Z",
+    "ticketDuration": 120,
+    "ticketPrice": 3.50,
     "hasPCN": false
   },
   {
@@ -38,10 +38,10 @@
     "zoneId": "1762871836199",
     "entryTime": "2025-11-12T15:42:43.550Z",
     "exitTime": "2025-11-12T15:50:44.576Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
-    "hasPCN": true
+    "ticketBoughtTime": "2025-11-12T15:44:43.550Z",
+    "ticketDuration": 60,
+    "ticketPrice": 2.00,
+    "hasPCN": false
   },
   {
     "id": "1762962644667",
@@ -49,9 +49,9 @@
     "zoneId": "1762448501626",
     "entryTime": "2025-11-12T15:39:44.550Z",
     "exitTime": "2025-11-12T15:50:45.578Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2025-11-12T15:41:44.550Z",
+    "ticketDuration": 120,
+    "ticketPrice": 3.50,
     "hasPCN": false
   },
   {
@@ -71,10 +71,10 @@
     "zoneId": "1762448480725",
     "entryTime": "2025-11-12T15:41:46.549Z",
     "exitTime": "2025-11-13T14:26:14.526Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
-    "hasPCN": true
+    "ticketBoughtTime": "2025-11-12T15:43:46.549Z",
+    "ticketDuration": 240,
+    "ticketPrice": 5.00,
+    "hasPCN": false
   },
   {
     "id": "1762962647688",
@@ -104,9 +104,9 @@
     "zoneId": "1762871836199",
     "entryTime": "2025-11-13T14:14:16.499Z",
     "exitTime": "2026-06-17T21:53:14.038Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2025-11-13T14:16:16.499Z",
+    "ticketDuration": 60,
+    "ticketPrice": 2.00,
     "hasPCN": false
   },
   {
@@ -126,9 +126,9 @@
     "zoneId": "1762526014030",
     "entryTime": "2026-06-17T21:53:05.298Z",
     "exitTime": "2026-06-17T21:53:13.106Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2026-06-17T21:55:05.298Z",
+    "ticketDuration": 120,
+    "ticketPrice": 3.50,
     "hasPCN": false
   },
   {
@@ -137,9 +137,9 @@
     "zoneId": "1764583255893",
     "entryTime": "2026-06-17T21:46:12.900Z",
     "exitTime": "2026-06-17T21:53:14.459Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2026-06-17T21:48:12.900Z",
+    "ticketDuration": 60,
+    "ticketPrice": 2.00,
     "hasPCN": false
   },
   {
@@ -148,9 +148,9 @@
     "zoneId": "1762448480725",
     "entryTime": "2026-06-17T21:45:13.900Z",
     "exitTime": "2026-06-17T21:53:15.171Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2026-06-17T21:47:13.900Z",
+    "ticketDuration": 120,
+    "ticketPrice": 3.50,
     "hasPCN": false
   },
   {
@@ -159,9 +159,9 @@
     "zoneId": "1762448501626",
     "entryTime": "2026-06-17T21:41:14.899Z",
     "exitTime": "2026-06-17T21:53:15.900Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2026-06-17T21:43:14.899Z",
+    "ticketDuration": 240,
+    "ticketPrice": 5.00,
     "hasPCN": false
   },
   {
@@ -170,9 +170,9 @@
     "zoneId": "1763043944163",
     "entryTime": "2026-06-17T21:39:16.900Z",
     "exitTime": "2026-06-17T21:53:19.047Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2026-06-17T21:41:16.900Z",
+    "ticketDuration": 60,
+    "ticketPrice": 2.00,
     "hasPCN": false
   },
   {
@@ -181,9 +181,9 @@
     "zoneId": "1763043944163",
     "entryTime": "2026-06-17T21:41:17.901Z",
     "exitTime": "2026-06-17T21:53:20.042Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2026-06-17T21:43:17.901Z",
+    "ticketDuration": 120,
+    "ticketPrice": 3.50,
     "hasPCN": false
   },
   {
@@ -192,10 +192,10 @@
     "zoneId": "1762448480725",
     "entryTime": "2026-06-17T21:41:18.901Z",
     "exitTime": "2026-06-17T21:53:20.900Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
-    "hasPCN": true
+    "ticketBoughtTime": "2026-06-17T21:43:18.901Z",
+    "ticketDuration": 60,
+    "ticketPrice": 2.00,
+    "hasPCN": false
   },
   {
     "id": "1781733201999",
@@ -203,9 +203,9 @@
     "zoneId": "1762448501626",
     "entryTime": "2026-06-17T21:39:19.900Z",
     "exitTime": "2026-06-17T21:53:22.043Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2026-06-17T21:41:19.900Z",
+    "ticketDuration": 120,
+    "ticketPrice": 3.50,
     "hasPCN": false
   },
   {
@@ -214,9 +214,9 @@
     "zoneId": "1762526014030",
     "entryTime": "2026-06-17T21:45:21.901Z",
     "exitTime": "2026-06-17T21:53:23.051Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2026-06-17T21:47:21.901Z",
+    "ticketDuration": 240,
+    "ticketPrice": 5.00,
     "hasPCN": false
   },
   {
@@ -225,9 +225,9 @@
     "zoneId": "1762448480725",
     "entryTime": "2026-06-17T21:48:22.900Z",
     "exitTime": "2026-06-17T21:53:24.049Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2026-06-17T21:50:22.900Z",
+    "ticketDuration": 60,
+    "ticketPrice": 2.00,
     "hasPCN": false
   },
   {
@@ -236,10 +236,10 @@
     "zoneId": "1762448480725",
     "entryTime": "2026-06-17T21:39:23.900Z",
     "exitTime": "2026-06-17T21:53:26.049Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
-    "hasPCN": true
+    "ticketBoughtTime": "2026-06-17T22:02:21.609Z",
+    "ticketDuration": 60,
+    "ticketPrice": 0,
+    "hasPCN": false
   },
   {
     "id": "1781733206996",
@@ -250,7 +250,7 @@
     "ticketBoughtTime": null,
     "ticketDuration": null,
     "ticketPrice": null,
-    "hasPCN": false
+    "hasPCN": true
   },
   {
     "id": "1781733208001",
@@ -269,10 +269,10 @@
     "zoneId": "1763043944163",
     "entryTime": "2026-06-17T21:40:26.901Z",
     "exitTime": "2026-06-17T21:53:28.042Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
-    "hasPCN": true
+    "ticketBoughtTime": "2026-06-17T21:42:26.901Z",
+    "ticketDuration": 120,
+    "ticketPrice": 3.50,
+    "hasPCN": false
   },
   {
     "id": "1781733209998",
@@ -280,10 +280,10 @@
     "zoneId": "1762448480725",
     "entryTime": "2026-06-17T21:48:27.900Z",
     "exitTime": "2026-06-17T21:53:29.062Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
-    "hasPCN": true
+    "ticketBoughtTime": "2026-06-17T21:50:27.900Z",
+    "ticketDuration": 60,
+    "ticketPrice": 2.00,
+    "hasPCN": false
   },
   {
     "id": "1781733211017",
@@ -291,9 +291,9 @@
     "zoneId": "1763043944163",
     "entryTime": "2026-06-17T21:47:28.902Z",
     "exitTime": "2026-06-17T21:53:30.038Z",
-    "ticketBoughtTime": null,
-    "ticketDuration": null,
-    "ticketPrice": null,
+    "ticketBoughtTime": "2026-06-17T21:49:28.902Z",
+    "ticketDuration": 120,
+    "ticketPrice": 3.50,
     "hasPCN": false
   },
   {
@@ -315,6 +315,7 @@
     "exitTime": "2026-06-17T21:55:18.183Z",
     "ticketBoughtTime": null,
     "ticketDuration": null,
-    "ticketPrice": null
+    "ticketPrice": null,
+    "hasPCN": false
   }
 ]
