@@ -146,14 +146,16 @@ export default function CarsTrackingPage() {
           const shouldBuyTicket = Math.random() < 0.70; // 70% buy tickets, 30% don't
           const hasPCN = !shouldBuyTicket; // PCN if no ticket
 
-          if (shouldBuyTicket && zone?.tariffs) {
-            const randomTariff = zone.tariffs[Math.floor(Math.random() * zone.tariffs.length)];
-            const minutes = parseInt(randomTariff.duration.match(/\d+/)?.[0] || '0') * 60;
-
-            // Ticket bought a few minutes after entry
+          if (shouldBuyTicket) {
+            const ticketOptions = [
+              { duration: 30, price: 1.50 },
+              { duration: 60, price: 2.00 },
+              { duration: 120, price: 3.50 },
+              { duration: 240, price: 5.00 },
+            ];
+            const option = ticketOptions[Math.floor(Math.random() * ticketOptions.length)];
             const minutesAfterEntry = Math.floor(Math.random() * 3) + 1;
-            const entryTimeMs = new Date(car.entryTime).getTime();
-            const ticketTime = new Date(entryTimeMs + minutesAfterEntry * 60 * 1000);
+            const ticketTime = new Date(new Date(car.entryTime).getTime() + minutesAfterEntry * 60 * 1000);
 
             try {
               await fetch('/api/cars', {
@@ -162,8 +164,8 @@ export default function CarsTrackingPage() {
                 body: JSON.stringify({
                   id: car.id,
                   ticketBoughtTime: ticketTime.toISOString(),
-                  ticketDuration: minutes,
-                  ticketPrice: randomTariff.price,
+                  ticketDuration: option.duration,
+                  ticketPrice: option.price,
                 }),
               });
             } catch (error) {
