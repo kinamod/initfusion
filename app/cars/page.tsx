@@ -78,18 +78,11 @@ function formatDuration(minutes: number | null) {
   return `${hours}h`;
 }
 
-interface EditState {
-  car: Car;
-  hasPCN: boolean;
-  ticketStatus: 'none' | 'paid';
-}
-
 export default function CarsTrackingPage() {
   const [zones, setZones] = useState<Zone[]>([]);
   const [cars, setCars] = useState<Car[]>([]);
   const [expandedZones, setExpandedZones] = useState<Set<string>>(new Set());
   const [simulationEnabled, setSimulationEnabled] = useState(false);
-  const [editState, setEditState] = useState<EditState | null>(null);
   const carsRef = useRef<Car[]>([]);
   const zonesRef = useRef<Zone[]>([]);
 
@@ -289,40 +282,6 @@ export default function CarsTrackingPage() {
     }
   };
 
-  const openEdit = (car: Car) => {
-    setEditState({
-      car,
-      hasPCN: car.hasPCN ?? false,
-      ticketStatus: car.ticketBoughtTime ? 'paid' : 'none',
-    });
-  };
-
-  const saveEdit = async () => {
-    if (!editState) return;
-    const { car, hasPCN, ticketStatus } = editState;
-    const updates: Record<string, unknown> = { id: car.id, hasPCN };
-    if (ticketStatus === 'paid' && !car.ticketBoughtTime) {
-      updates.ticketBoughtTime = new Date().toISOString();
-      updates.ticketDuration = 60;
-      updates.ticketPrice = 0;
-    } else if (ticketStatus === 'none') {
-      updates.ticketBoughtTime = null;
-      updates.ticketDuration = null;
-      updates.ticketPrice = null;
-    }
-    try {
-      await fetch('/api/cars', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updates),
-      });
-      await fetchCars();
-    } catch (error) {
-      console.error('Error updating car:', error);
-    }
-    setEditState(null);
-  };
-
   const deleteCar = async (carId: string) => {
     try {
       await fetch('/api/cars', {
@@ -410,7 +369,7 @@ export default function CarsTrackingPage() {
                               <tr>
                                 <th className="px-1 py-1 text-left font-semibold">Plate</th>
                                 <th className="px-1 py-1 text-left font-semibold">Status</th>
-                                <th className="px-1 py-1 text-center font-semibold">Actions</th>
+                                <th className="px-1 py-1 text-center font-semibold">Exit</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -434,20 +393,12 @@ export default function CarsTrackingPage() {
                                       </div>
                                     </td>
                                     <td className="px-1 py-1 text-center">
-                                      <div className="flex items-center justify-center gap-1">
-                                        <button
-                                          onClick={() => openEdit(car)}
-                                          className="text-xs px-1 py-0 bg-gray-500 text-white rounded hover:bg-gray-600 transition whitespace-nowrap"
-                                        >
-                                          Edit
-                                        </button>
-                                        <button
-                                          onClick={() => exitCar(car.id)}
-                                          className="text-xs px-1 py-0 bg-blue-600 text-white rounded hover:bg-blue-700 transition whitespace-nowrap"
-                                        >
-                                          Exit
-                                        </button>
-                                      </div>
+                                      <button
+                                        onClick={() => exitCar(car.id)}
+                                        className="text-xs px-1 py-0 bg-blue-600 text-white rounded hover:bg-blue-700 transition whitespace-nowrap"
+                                      >
+                                        Exit
+                                      </button>
                                     </td>
                                   </tr>
                                 );
@@ -468,7 +419,6 @@ export default function CarsTrackingPage() {
                               <tr>
                                 <th className="px-1 py-1 text-left font-semibold">Plate</th>
                                 <th className="px-1 py-1 text-left font-semibold">Status</th>
-                                <th className="px-1 py-1 text-center font-semibold">Edit</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -490,14 +440,6 @@ export default function CarsTrackingPage() {
                                         />
                                         {car.hasPCN && <span className="text-xs font-bold text-red-600">PCN</span>}
                                       </div>
-                                    </td>
-                                    <td className="px-1 py-1 text-center">
-                                      <button
-                                        onClick={() => openEdit(car)}
-                                        className="text-xs px-1 py-0 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
-                                      >
-                                        Edit
-                                      </button>
                                     </td>
                                   </tr>
                                 );
@@ -542,9 +484,6 @@ export default function CarsTrackingPage() {
                         <th className="px-4 py-2 text-left font-semibold text-gray-700">
                           Status
                         </th>
-                        <th className="px-4 py-2 text-left font-semibold text-gray-700">
-                          Actions
-                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -588,20 +527,12 @@ export default function CarsTrackingPage() {
                               </div>
                             </td>
                             <td className="px-4 py-3">
-                              <div className="flex items-center gap-2">
-                                <button
-                                  onClick={() => openEdit(car)}
-                                  className="text-xs text-gray-600 hover:text-gray-900 font-medium"
-                                >
-                                  Edit
-                                </button>
-                                <button
-                                  onClick={() => deleteCar(car.id)}
-                                  className="text-xs text-red-600 hover:text-red-800 font-medium"
-                                >
-                                  Delete
-                                </button>
-                              </div>
+                              <button
+                                onClick={() => deleteCar(car.id)}
+                                className="text-xs text-red-600 hover:text-red-800 font-medium"
+                              >
+                                Delete
+                              </button>
                             </td>
                           </tr>
                         );
@@ -615,56 +546,6 @@ export default function CarsTrackingPage() {
         </div>
       </main>
 
-      {editState && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl p-6 w-80 max-w-full">
-            <h3 className="text-base font-semibold text-gray-900 mb-1">Edit Status</h3>
-            <p className="text-sm text-gray-500 font-mono mb-4">{editState.car.licensePlate}</p>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Ticket</label>
-                <select
-                  value={editState.ticketStatus}
-                  onChange={(e) => setEditState({ ...editState, ticketStatus: e.target.value as 'none' | 'paid' })}
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="none">No Ticket</option>
-                  <option value="paid">Paid</option>
-                </select>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id="pcn-toggle"
-                  checked={editState.hasPCN}
-                  onChange={(e) => setEditState({ ...editState, hasPCN: e.target.checked })}
-                  className="w-4 h-4 accent-red-600"
-                />
-                <label htmlFor="pcn-toggle" className="text-sm font-medium text-gray-700">
-                  Issue PCN
-                </label>
-              </div>
-            </div>
-
-            <div className="flex gap-2 mt-6">
-              <button
-                onClick={saveEdit}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition"
-              >
-                Save
-              </button>
-              <button
-                onClick={() => setEditState(null)}
-                className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded hover:bg-gray-200 transition"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
