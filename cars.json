@@ -18,7 +18,7 @@
     "exitTime": "2025-11-12T15:50:42.579Z",
     "ticketBoughtTime": "2025-11-12T15:38:41.550Z",
     "ticketDuration": 120,
-    "ticketPrice": 3.50,
+    "ticketPrice": 3.5,
     "hasPCN": false
   },
   {
@@ -40,7 +40,7 @@
     "exitTime": "2025-11-12T15:50:44.576Z",
     "ticketBoughtTime": "2025-11-12T15:44:43.550Z",
     "ticketDuration": 60,
-    "ticketPrice": 2.00,
+    "ticketPrice": 2,
     "hasPCN": false
   },
   {
@@ -51,7 +51,7 @@
     "exitTime": "2025-11-12T15:50:45.578Z",
     "ticketBoughtTime": "2025-11-12T15:41:44.550Z",
     "ticketDuration": 120,
-    "ticketPrice": 3.50,
+    "ticketPrice": 3.5,
     "hasPCN": false
   },
   {
@@ -73,7 +73,7 @@
     "exitTime": "2025-11-13T14:26:14.526Z",
     "ticketBoughtTime": "2025-11-12T15:43:46.549Z",
     "ticketDuration": 240,
-    "ticketPrice": 5.00,
+    "ticketPrice": 5,
     "hasPCN": false
   },
   {
@@ -106,7 +106,7 @@
     "exitTime": "2026-06-17T21:53:14.038Z",
     "ticketBoughtTime": "2025-11-13T14:16:16.499Z",
     "ticketDuration": 60,
-    "ticketPrice": 2.00,
+    "ticketPrice": 2,
     "hasPCN": false
   },
   {
@@ -128,7 +128,7 @@
     "exitTime": "2026-06-17T21:53:13.106Z",
     "ticketBoughtTime": "2026-06-17T21:55:05.298Z",
     "ticketDuration": 120,
-    "ticketPrice": 3.50,
+    "ticketPrice": 3.5,
     "hasPCN": false
   },
   {
@@ -139,7 +139,7 @@
     "exitTime": "2026-06-17T21:53:14.459Z",
     "ticketBoughtTime": "2026-06-17T21:48:12.900Z",
     "ticketDuration": 60,
-    "ticketPrice": 2.00,
+    "ticketPrice": 2,
     "hasPCN": false
   },
   {
@@ -150,7 +150,7 @@
     "exitTime": "2026-06-17T21:53:15.171Z",
     "ticketBoughtTime": "2026-06-17T21:47:13.900Z",
     "ticketDuration": 120,
-    "ticketPrice": 3.50,
+    "ticketPrice": 3.5,
     "hasPCN": false
   },
   {
@@ -161,7 +161,7 @@
     "exitTime": "2026-06-17T21:53:15.900Z",
     "ticketBoughtTime": "2026-06-17T21:43:14.899Z",
     "ticketDuration": 240,
-    "ticketPrice": 5.00,
+    "ticketPrice": 5,
     "hasPCN": false
   },
   {
@@ -172,7 +172,7 @@
     "exitTime": "2026-06-17T21:53:19.047Z",
     "ticketBoughtTime": "2026-06-17T21:41:16.900Z",
     "ticketDuration": 60,
-    "ticketPrice": 2.00,
+    "ticketPrice": 2,
     "hasPCN": false
   },
   {
@@ -183,7 +183,7 @@
     "exitTime": "2026-06-17T21:53:20.042Z",
     "ticketBoughtTime": "2026-06-17T21:43:17.901Z",
     "ticketDuration": 120,
-    "ticketPrice": 3.50,
+    "ticketPrice": 3.5,
     "hasPCN": false
   },
   {
@@ -194,7 +194,7 @@
     "exitTime": "2026-06-17T21:53:20.900Z",
     "ticketBoughtTime": "2026-06-17T21:43:18.901Z",
     "ticketDuration": 60,
-    "ticketPrice": 2.00,
+    "ticketPrice": 2,
     "hasPCN": false
   },
   {
@@ -205,7 +205,7 @@
     "exitTime": "2026-06-17T21:53:22.043Z",
     "ticketBoughtTime": "2026-06-17T21:41:19.900Z",
     "ticketDuration": 120,
-    "ticketPrice": 3.50,
+    "ticketPrice": 3.5,
     "hasPCN": false
   },
   {
@@ -216,7 +216,7 @@
     "exitTime": "2026-06-17T21:53:23.051Z",
     "ticketBoughtTime": "2026-06-17T21:47:21.901Z",
     "ticketDuration": 240,
-    "ticketPrice": 5.00,
+    "ticketPrice": 5,
     "hasPCN": false
   },
   {
@@ -227,7 +227,7 @@
     "exitTime": "2026-06-17T21:53:24.049Z",
     "ticketBoughtTime": "2026-06-17T21:50:22.900Z",
     "ticketDuration": 60,
-    "ticketPrice": 2.00,
+    "ticketPrice": 2,
     "hasPCN": false
   },
   {
@@ -271,7 +271,7 @@
     "exitTime": "2026-06-17T21:53:28.042Z",
     "ticketBoughtTime": "2026-06-17T21:42:26.901Z",
     "ticketDuration": 120,
-    "ticketPrice": 3.50,
+    "ticketPrice": 3.5,
     "hasPCN": false
   },
   {
@@ -282,7 +282,7 @@
     "exitTime": "2026-06-17T21:53:29.062Z",
     "ticketBoughtTime": "2026-06-17T21:50:27.900Z",
     "ticketDuration": 60,
-    "ticketPrice": 2.00,
+    "ticketPrice": 2,
     "hasPCN": false
   },
   {
@@ -293,7 +293,7 @@
     "exitTime": "2026-06-17T21:53:30.038Z",
     "ticketBoughtTime": "2026-06-17T21:49:28.902Z",
     "ticketDuration": 120,
-    "ticketPrice": 3.50,
+    "ticketPrice": 3.5,
     "hasPCN": false
   },
   {
@@ -317,5 +317,521 @@
     "ticketDuration": null,
     "ticketPrice": null,
     "hasPCN": false
+  },
+  {
+    "id": "1781733934897",
+    "licensePlate": "ST30STU",
+    "zoneId": "1763043944163",
+    "entryTime": "2026-06-17T21:58:32.696Z",
+    "exitTime": "2026-06-17T22:05:34.843Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733935902",
+    "licensePlate": "ST30STU",
+    "zoneId": "1762448480725",
+    "entryTime": "2026-06-17T21:58:33.694Z",
+    "exitTime": "2026-06-17T22:05:34.983Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733936900",
+    "licensePlate": "UV31UVW",
+    "zoneId": "1762962572398",
+    "entryTime": "2026-06-17T22:00:34.695Z",
+    "exitTime": "2026-06-17T22:05:37.876Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733938004",
+    "licensePlate": "QR29QRS",
+    "zoneId": "1762448480725",
+    "entryTime": "2026-06-17T21:51:35.695Z",
+    "exitTime": "2026-06-17T22:05:36.836Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733938895",
+    "licensePlate": "UV31UVW",
+    "zoneId": "1762526014030",
+    "entryTime": "2026-06-17T22:00:36.695Z",
+    "exitTime": "2026-06-17T22:05:38.019Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733939935",
+    "licensePlate": "MN27MNO",
+    "zoneId": "1764583255893",
+    "entryTime": "2026-06-17T21:54:37.694Z",
+    "exitTime": "2026-06-17T22:05:41.830Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733940935",
+    "licensePlate": "QR29QRS",
+    "zoneId": "1762448480725",
+    "entryTime": "2026-06-17T21:59:38.696Z",
+    "exitTime": "2026-06-17T22:05:40.826Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733941893",
+    "licensePlate": "MN27MNO",
+    "zoneId": "1764583255893",
+    "entryTime": "2026-06-17T21:51:39.695Z",
+    "exitTime": "2026-06-17T22:05:41.972Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733942888",
+    "licensePlate": "CD22CDE",
+    "zoneId": "1763043944163",
+    "entryTime": "2026-06-17T21:58:40.694Z",
+    "exitTime": "2026-06-17T22:05:42.899Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733943891",
+    "licensePlate": "KL26KLM",
+    "zoneId": "1763043944163",
+    "entryTime": "2026-06-17T21:59:41.694Z",
+    "exitTime": "2026-06-17T22:05:43.320Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733944958",
+    "licensePlate": "UV31UVW",
+    "zoneId": "1764583255893",
+    "entryTime": "2026-06-17T21:53:42.696Z",
+    "exitTime": "2026-06-17T22:05:43.951Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733946012",
+    "licensePlate": "EF23EFG",
+    "zoneId": "1763043944163",
+    "entryTime": "2026-06-17T21:51:43.695Z",
+    "exitTime": "2026-06-17T22:05:44.833Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733946893",
+    "licensePlate": "WX32XYZ",
+    "zoneId": "1764583255893",
+    "entryTime": "2026-06-17T21:56:44.694Z",
+    "exitTime": "2026-06-17T22:05:48.947Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733947892",
+    "licensePlate": "ST30STU",
+    "zoneId": "1762448480725",
+    "entryTime": "2026-06-17T21:56:45.694Z",
+    "exitTime": "2026-06-17T22:05:49.881Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733950598",
+    "licensePlate": "QR29QRS",
+    "zoneId": "1763043944163",
+    "entryTime": "2026-06-17T22:00:47.694Z",
+    "exitTime": "2026-06-17T22:05:50.840Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733951006",
+    "licensePlate": "YZ33YZA",
+    "zoneId": "1762448480725",
+    "entryTime": "2026-06-17T21:57:46.694Z",
+    "exitTime": "2026-06-17T22:05:52.923Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733951044",
+    "licensePlate": "ST30STU",
+    "zoneId": "1763043944163",
+    "entryTime": "2026-06-17T21:58:48.695Z",
+    "exitTime": "2026-06-17T22:05:50.979Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733951938",
+    "licensePlate": "UV31UVW",
+    "zoneId": "1762448501626",
+    "entryTime": "2026-06-17T21:58:49.693Z",
+    "exitTime": "2026-06-17T22:05:51.203Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733952898",
+    "licensePlate": "AA34AAB",
+    "zoneId": "1762448501626",
+    "entryTime": "2026-06-17T21:51:50.694Z",
+    "exitTime": "2026-06-17T22:05:52.048Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733954104",
+    "licensePlate": "UV31UVW",
+    "zoneId": "1762448501626",
+    "entryTime": "2026-06-17T21:56:51.694Z",
+    "exitTime": "2026-06-17T22:05:57.832Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733954977",
+    "licensePlate": "WX32XYZ",
+    "zoneId": "1762962572398",
+    "entryTime": "2026-06-17T21:51:52.694Z",
+    "exitTime": "2026-06-17T22:05:53.833Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733955894",
+    "licensePlate": "EF23EFG",
+    "zoneId": "1762962572398",
+    "entryTime": "2026-06-17T21:52:53.694Z",
+    "exitTime": "2026-06-17T22:05:55.831Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733956890",
+    "licensePlate": "OP28OPQ",
+    "zoneId": "1762526014030",
+    "entryTime": "2026-06-17T21:51:54.693Z",
+    "exitTime": "2026-06-17T22:05:55.971Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733957893",
+    "licensePlate": "QR29QRS",
+    "zoneId": "1762962572398",
+    "entryTime": "2026-06-17T21:56:55.694Z",
+    "exitTime": "2026-06-17T22:05:58.831Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733958931",
+    "licensePlate": "WX32XYZ",
+    "zoneId": "1762962572398",
+    "entryTime": "2026-06-17T21:53:56.693Z",
+    "exitTime": "2026-06-17T22:05:58.970Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733959893",
+    "licensePlate": "MN27MNO",
+    "zoneId": "1763043944163",
+    "entryTime": "2026-06-17T21:58:57.693Z",
+    "exitTime": "2026-06-17T22:05:59.201Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733960891",
+    "licensePlate": "ST30STU",
+    "zoneId": "1762448501626",
+    "entryTime": "2026-06-17T21:57:58.694Z",
+    "exitTime": "2026-06-17T22:05:59.874Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733961933",
+    "licensePlate": "KL26KLM",
+    "zoneId": "1762871836199",
+    "entryTime": "2026-06-17T21:52:59.694Z",
+    "exitTime": "2026-06-17T22:06:00.830Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733962892",
+    "licensePlate": "AA34AAB",
+    "zoneId": "1762526014030",
+    "entryTime": "2026-06-17T21:56:00.693Z",
+    "exitTime": "2026-06-17T22:06:01.830Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733963891",
+    "licensePlate": "YZ33YZA",
+    "zoneId": "1762448480725",
+    "entryTime": "2026-06-17T21:58:01.693Z",
+    "exitTime": "2026-06-17T22:06:02.839Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733964894",
+    "licensePlate": "QR29QRS",
+    "zoneId": "1762962572398",
+    "entryTime": "2026-06-17T21:54:02.694Z",
+    "exitTime": "2026-06-17T22:06:03.832Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733965893",
+    "licensePlate": "GH24GHI",
+    "zoneId": "1762448480725",
+    "entryTime": "2026-06-17T21:57:03.693Z",
+    "exitTime": "2026-06-17T22:06:04.838Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733966897",
+    "licensePlate": "YZ33YZA",
+    "zoneId": "1762448501626",
+    "entryTime": "2026-06-17T21:53:04.694Z",
+    "exitTime": "2026-06-17T22:06:05.839Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733967898",
+    "licensePlate": "UV31UVW",
+    "zoneId": "1762962572398",
+    "entryTime": "2026-06-17T21:57:05.694Z",
+    "exitTime": "2026-06-17T22:06:06.841Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733968894",
+    "licensePlate": "CD22CDE",
+    "zoneId": "1762962572398",
+    "entryTime": "2026-06-17T21:58:06.693Z",
+    "exitTime": "2026-06-17T22:06:07.841Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733969898",
+    "licensePlate": "BB35BBC",
+    "zoneId": "1763043944163",
+    "entryTime": "2026-06-17T22:01:07.693Z",
+    "exitTime": "2026-06-17T22:06:08.831Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733970891",
+    "licensePlate": "CD22CDE",
+    "zoneId": "1764583255893",
+    "entryTime": "2026-06-17T21:57:08.693Z",
+    "exitTime": "2026-06-17T22:06:10.839Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733971898",
+    "licensePlate": "MN27MNO",
+    "zoneId": "1762526014030",
+    "entryTime": "2026-06-17T21:57:09.693Z",
+    "exitTime": "2026-06-17T22:06:10.979Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733972896",
+    "licensePlate": "OP28OPQ",
+    "zoneId": "1763043944163",
+    "entryTime": "2026-06-17T21:57:10.693Z",
+    "exitTime": "2026-06-17T22:06:11.932Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733973986",
+    "licensePlate": "AB21ABC",
+    "zoneId": "1762871836199",
+    "entryTime": "2026-06-17T21:59:11.694Z",
+    "exitTime": "2026-06-17T22:06:12.832Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733974893",
+    "licensePlate": "MN27MNO",
+    "zoneId": "1762448501626",
+    "entryTime": "2026-06-17T21:58:12.694Z",
+    "exitTime": "2026-06-17T22:06:13.835Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733975893",
+    "licensePlate": "AA34AAB",
+    "zoneId": "1762448480725",
+    "entryTime": "2026-06-17T22:00:13.694Z",
+    "exitTime": "2026-06-17T22:06:15.835Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733976896",
+    "licensePlate": "WX32XYZ",
+    "zoneId": "1762448501626",
+    "entryTime": "2026-06-17T21:57:14.694Z",
+    "exitTime": "2026-06-17T22:06:15.979Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": true
+  },
+  {
+    "id": "1781733977893",
+    "licensePlate": "YZ33YZA",
+    "zoneId": "1764583255893",
+    "entryTime": "2026-06-17T21:55:15.694Z",
+    "exitTime": "2026-06-17T22:06:16.918Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733978977",
+    "licensePlate": "MN27MNO",
+    "zoneId": "1763043944163",
+    "entryTime": "2026-06-17T21:55:16.694Z",
+    "exitTime": "2026-06-17T22:06:17.901Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733979894",
+    "licensePlate": "CD22CDE",
+    "zoneId": "1762448501626",
+    "entryTime": "2026-06-17T21:59:17.694Z",
+    "exitTime": "2026-06-17T22:06:18.694Z",
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null,
+    "hasPCN": false
+  },
+  {
+    "id": "1781733981900",
+    "licensePlate": "ST30STU",
+    "zoneId": "1762448480725",
+    "entryTime": "2026-06-17T21:52:19.694Z",
+    "exitTime": null,
+    "ticketBoughtTime": null,
+    "ticketDuration": null,
+    "ticketPrice": null
   }
 ]

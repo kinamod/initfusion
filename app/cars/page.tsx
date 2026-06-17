@@ -214,8 +214,17 @@ export default function CarsTrackingPage() {
   const fetchCars = async () => {
     try {
       const response = await fetch('/api/cars');
-      const data = await response.json();
-      setCars(data);
+      const incoming: Car[] = await response.json();
+      setCars((prev) => {
+        const prevById = new Map(prev.map((c) => [c.id, c]));
+        const next = incoming.map((c) => {
+          const existing = prevById.get(c.id);
+          if (existing && JSON.stringify(existing) === JSON.stringify(c)) return existing;
+          return c;
+        });
+        if (next.length === prev.length && next.every((c, i) => c === prev[i])) return prev;
+        return next;
+      });
     } catch (error) {
       console.error('Error fetching cars:', error);
     }
