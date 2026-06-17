@@ -226,15 +226,32 @@ export default function CarsTrackingPage() {
 
     if (!randomZone) return;
 
+    const shouldBuyTicket = Math.random() < 0.70;
+    const tariffs = randomZone.tariffs || [];
+    const randomTariff = tariffs[Math.floor(Math.random() * tariffs.length)] || { duration: 'Up to 2 hours', price: 2.0 };
+    const durationMinutes = randomTariff.duration === 'Up to 1 hour' ? 60 : randomTariff.duration === 'Up to 2 hours' ? 120 : randomTariff.duration === 'Up to 6 hours' ? 360 : randomTariff.duration === 'Up to 12 hours' ? 720 : 1440;
+
     try {
+      const newCar = {
+        licensePlate: randomPlate,
+        zoneId: randomZone.id,
+        entryTime: new Date().toISOString(),
+      };
+
+      if (shouldBuyTicket) {
+        Object.assign(newCar, {
+          ticketBoughtTime: new Date().toISOString(),
+          ticketDuration: durationMinutes,
+          ticketPrice: randomTariff.price,
+        });
+      } else {
+        Object.assign(newCar, { hasPCN: true });
+      }
+
       await fetch('/api/cars', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          licensePlate: randomPlate,
-          zoneId: randomZone.id,
-          entryTime: new Date().toISOString(),
-        }),
+        body: JSON.stringify(newCar),
       });
       await fetchCars();
     } catch (error) {
